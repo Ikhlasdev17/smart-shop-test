@@ -1,0 +1,261 @@
+{
+    "start": "Salem bul sayt qaraqalpaq tiline otkerildi",
+    "sidebar__items": [
+        {
+            "id": 1,
+            "label": "Bas bet",
+            "path": "/",
+            "icon": "bx-grid-alt",
+            "groupTitle": "Ulıwma"
+        },
+        {
+            "id": 2,
+            "label": "Klientler",
+            "path": "/clients",
+            "icon": "bxs-user",
+            "groupTitle": "Menyu"
+        },
+        {
+            "id": 3,
+            "label": "Jumisshilar",
+            "path": "/sellers",
+            "icon": "bxs-user-detail"
+        },
+        {
+            "id": 4,
+            "label": "Kategoriyalar",
+            "path": "/categories",
+            "icon": "bx-layer"
+        },
+        {
+            "id": 5,
+            "label": "Ónimler",
+            "path": "/products",
+            "icon": "bx-shopping-bag"
+        },
+        {
+            "id": 6,
+            "label": "Satıwlar",
+            "path": "/offers",
+            "icon": "bx-cart-alt"
+        },
+        {
+            "id": 7,
+            "label": "Operatsiyalar", 
+            "icon": "bx-copy-alt",
+            "submenu": [
+                {
+                    "id": "subitem1",
+                    "label": "Klientler",
+                    "path": "/operations/client",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem2",
+                    "label": "Buyırtpa beriw",
+                    "path": "/operations/offer",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem3",
+                    "label": "Buyırtpanı qaytarıw",
+                    "path": "/operations/return",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "label": "Finans",
+            "path": "/finance",
+            "icon": "bx-money-withdraw",
+            "submenu": [
+                {
+                    "id": "subitem4",
+                    "label": "Ǵárejetler",
+                    "path": "/consumptions/consumption",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem5",
+                    "label": "Tabıslar",
+                    "path": "/consumptions/income",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem6",
+                    "label": "Sap payda",
+                    "path": "/casheir",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem15",
+                    "label": "Финанс",
+                    "path": "/finans/valutes",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "label": "Telek",
+            "path": "",
+            "icon": "bxs-bank",
+            "submenu": [
+                {
+                    "id": "subitem7",
+                    "label": "Ónimler",
+                    "path": "/warehouse/products",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem8",
+                    "label": "Kem qalǵan ónimler",
+                    "path": "/warehouse/lowProducts",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem9",
+                    "label": "Jaramsız ónimler",
+                    "path": "/warehouse/defect",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        }
+    ],
+    "main": "Bas bet",
+    "clients": "Klientler",
+    "sellers": "Satiwshilar",
+    "categories": "Kategoriyalar",
+    "products": "O'nimler",
+    "offers": "Satiwlar",
+    "order": "Buyirtpa beriw",
+    "return": "Buyirtpani qaytariw",
+    "consumption": "Ǵárejetler",
+    "income": "Tabislar",
+    "some_product": "Kem qalg'an o'nimler",
+    "defect": "Jaramsiz o'nimler",
+    "number_of_product": "O'nimler sani",
+    "fio": "FIO",
+    "balance": "Esap",
+    "stir": "STIR",
+    "about__client":"Klient haqqinda",
+    "action": "Ha'reket",
+    "search": "Izlew...",
+    "add__client": "Klient qosiw",
+    "save": "Saqlaw",
+    
+
+
+    "count": "Sani",
+    "from": "Waqittan...",
+    "to": "Waqitqa deyin...",
+    "ish_haqini_hisoblash": "Is haqin esaplaw",
+    "satiwshi_qosiw": "Jańa satıwshı qosıw",
+    "satiwshini_janalaw": "Satiwshini jan'alaw",
+    "admin": "Adminstrator",
+    "lavozim_tanlash": "Lawazimdi tan'law",
+    "ish_haqi": "Is haqi",
+    "ish_tarixi": "Jumıs tariyxı",
+    "oluvchi_haqida": "Alıwshı haqqında",
+    "yangi_oluvchi_qoshish": "Jańa alıwshı qosıw",
+    "yangi_sotuvchi_qoshish": "Jańa satıwshı qosıw",
+    "ulgurji_foiz": "Optom procenti",
+    "minimum_foiz": "Minimum procenti",
+    "maksumum_foiz": "Maksimum procenti",
+    "minimum_mahsulot": "Minimum sanı",
+    "kategoriya_qoshish": "Kategoriya qosıw",
+    "import": "Import",
+    "export": "Eksport ",
+    "mahsulot_qoshish": "Ónim qosıw",
+    "brend": "Brend",
+    "cost_price": "Ózine túser bahası",
+    "whole_price": "Optom bahası",
+    "max_price": "Maksimium bahası",
+    "min_price": "Minimum bahasi",
+    "cash": "Naq aqsha",
+    "card": "Plastik karta",
+    "total_income": "Ulıwma kirim",
+    "all": "Hámmesi",
+    "qarz": "Qariz",
+    "kirim": "Kirim",
+    "qarz_muddati": "Qarız múddeti",
+    "total_price": "Ulıwma summa",
+    "description": "Kommentariya",
+    "qarzni_tolash_sanasi": "Qarızdı tólew sánesi",
+    "hozir_bor": "Házir bar",
+    "kimga": "Kimge",
+    "date": "Sáne",
+    "yaroqsiz_mahsulotlar_soni": "Jaraqsız ónimler sanı",
+    "brend_nomi": "Brend atı",
+    "statistika": "Statistika",
+    "malumot": "Maǵlıwmat",
+    "korish": "Kóriw",
+    "profile": "Profil",
+    "sozlamalar": "Sazlamalar",
+    "chiqish": "Shıǵıw",
+    "saqlash": "Saqlaw",
+    "kategoriya_tanlash": "Kategoriyanı saylań",
+    "brend_nomini_tanlang": "Brend atın kiritiń",
+    "mahsulot_nomini_tanlang": "Ónim atın kiritiń",
+    "kilogram": "Kilogramm",
+    "dona": "Dana",
+    "tonna": "Tonna",
+    "meter": "Metr",
+    "sm": "sm",
+    "gramm": "Gramm",
+    "liter": "Litr",
+    "rasm_yuklang": "Súwret júkleń",
+    "rasimni_tanlash_text": "Súwretti qurılmańızdan saylań yáki usı jerge alıp kelip qoyıń",
+    "shaxs_turi": "Shaxs túri",
+    "telefon_raqami": "Telefon nomeri",
+    "mijoz_haqida": "Alıwshı haqqında",
+    "ism_familiya": "Atı Familyası",
+    "parol": "Parol",
+    "pinkod": "Pinkod",
+    "kategoriya_nomi": "Kategoriya atı",
+    "mahsulot_soni": "Ónim sanı",
+    "muaffaqiyatli": "Áwmetli juwmaqlandı!",
+    "kuting": "Iltimas, biraz kútiń!",
+    "xatolik": "Server menen qátelik bar!",
+    "malumotni_togri_kiriting": "Iltimas, maǵlıwmatlardı tuwrı kiritiń!",
+    "malumotni_toliq_kiriting": "Iltimas, maǵlıwmatlardı qayta kiritiń!",
+    "parol_yoki_login_xato": "Parol yamasa Login qáte!",
+    "bosh_sahifaga_qaytish": "Bas betke qaytıw",
+    "qayta_urinib_koring": "Jáne urınıp kóriń",
+    "kategoriyani_yangilash": "Kategoriyani jan'alaw",
+    "jismoniy": "Fizikalıq shaxs",
+    "yuridik": "Yuridikalıq shaxs",
+    "barcha_mahsulotlar": "Ba'rshe o'nimler",
+    "print": "Basip shig'ariw",
+    "faylni_yuklang": "Fayldi ju'klen'",
+    "faylni_yuklang_text": "Fayldi qurilman'izdan tan'lan' yaki usi jerge alip kelip qoyin'",
+    "fayl_yuklandi": "Fayl ju'klendi",
+    "sotuvchiga_pinkod": "Satiwshinin' pinkodi",
+    "copied": "Nusqa alindi!",
+    "yangilash": "Jan'alaw",
+    "yanvar": "Yanvar",
+    "fevral": "Fevral",
+    "mart": "Mart",
+    "aprel": "Aprel",
+    "may": "May",
+    "iyun": "Iyun",
+    "iyul": "Iyul",
+    "avgust": "Avgust",
+    "sentyabr": "Sentyabr",
+    "oktyabr": "Oktyabr",
+    "noyabr": "Noyabr",
+    "dekabr": "Dekabr",
+    "sum": "Summa",
+    "min_product": "Minimum o'nim",
+    "import_product": "O'nimlerdi import qiliw",
+    "product_qr": "O'nim ushin QR-kodi",
+    "minus": "Minus",
+    
+    "kirim_qoshish": "Kirim qosiw",
+    "xarajat_qoshish": "Shig'im qosiw",
+    "tolov_turi": "To'lem tu'ri",
+
+    
+    "valuta_juftligi": "Valyuta birligi",
+    "kurs": "Kurs",
+    "valyutalar": "Valyutalar",
+    "valyuta_qosiw":"Valyuta qosiw",
+    "oy": "Ay",
+    "sof_foyda": "Sap payda",
+    "toplam": "Toplam №"
+
+}

@@ -1,0 +1,113 @@
+{
+    "menuItems": [
+        {
+            "id": 1,
+            "label": "Asosiy",
+            "path": "/",
+            "icon": "bx-grid-alt",
+            "groupTitle": "Umumiy"
+        },
+        {
+            "id": 2,
+            "label": "Mijozlar",
+            "path": "/clients",
+            "icon": "bxs-user",
+            "groupTitle": "Menyu"
+        },
+        {
+            "id": 3,
+            "label": "Sotuvchilar",
+            "path": "/sellers",
+            "icon": "bxs-user-detail"
+        },
+        {
+            "id": 4,
+            "label": "Kategoriyalar",
+            "path": "/categories",
+            "icon": "bx-layer"
+        },
+        {
+            "id": 5,
+            "label": "Mahsulotlar",
+            "path": "/products",
+            "icon": "bx-shopping-bag"
+        },
+        {
+            "id": 6,
+            "label": "Sotuvlar",
+            "path": "/offers",
+            "icon": "bx-cart-alt"
+        },
+        {
+            "id": 7,
+            "label": "Operatsiyalar", 
+            "icon": "bx-copy-alt",
+            "submenu": [
+                {
+                    "id": "subitem1",
+                    "label": "Mijoz",
+                    "path": "/operations/client",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem2",
+                    "label": "Buyurtma berish",
+                    "path": "/operations/offer",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem3",
+                    "label": "Buyurtmani qaytarish",
+                    "path": "/operations/return",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "label": "Moliya",
+            "path": "/finance",
+            "icon": "bx-money-withdraw",
+            "submenu": [
+                {
+                    "id": "subitem4",
+                    "label": "Xarajatlar",
+                    "path": "/consumptions/consumption",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem5",
+                    "label": "Kirimlar",
+                    "path": "/consumptions/income",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem6",
+                    "label": "Submenu 3",
+                    "path": "/",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "label": "Omborxona",
+            "path": "",
+            "icon": "bxs-bank",
+            "submenu": [
+                {
+                    "id": "subitem7",
+                    "label": "Mahsulotlar",
+                    "path": "/warehouse/products",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem8",
+                    "label": "Kam qolgan mahsulotlar",
+                    "path": "/warehouse/lowProducts",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem9",
+                    "label": "Yaroqsiz mahsulotlar",
+                    "path": "/warehouse/defect",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        }
+    ]
+}

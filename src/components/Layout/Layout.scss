@@ -1,0 +1,78 @@
+@import '../../index.scss';
+
+.wrapper{
+    width: 100%;
+    min-height: 100vh;
+    padding-top: $topnav-height;
+    .layout__sider {
+        background-color: #fff;
+        width: $sidebar-width!important;
+    }
+
+    .layout__content{
+        width: 100%;
+        padding-left: 250px;
+        
+        
+    }
+
+    .main-content{
+        padding: 40px 20px;
+    }
+}
+
+
+.layout__footer {
+    background: #fff;
+    height: 60px;
+    width: 100%;
+}
+
+.layout__sider {
+}
+
+
+
+.toggle__menu {
+    position: fixed;
+    z-index: 999999;
+    background-color: transparent!important;
+    color: #fff!important;
+    border: none !important;
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i {
+        font-size: 1.4rem;
+    }
+}
+
+
+@media screen and (max-width: 1200px) {
+    .layout__content{
+        width: 100%;
+        padding-left: 0!important;
+        &.collapsed{
+            padding-left: 0!important;
+            margin-left: 0!important;
+        }
+        
+    }
+
+    
+}
+
+@media screen and (min-width: 1200px) {
+    .layout__content{
+        width: 100%;
+        padding-left: 250px;
+        &.collapsed{
+            padding-left: 50px!important;
+            margin-left: 0!important;
+        }
+        
+    }
+}

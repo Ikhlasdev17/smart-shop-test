@@ -1,0 +1,120 @@
+@import '../../index.scss';
+@import '../Main/Main.scss';
+
+.product__table-product {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    .product__table-product__image{
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        max-width: 60px;
+
+        img {
+            width: 60px; height: 60px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,.2);
+            object-fit: contain;
+        }
+    }
+    
+
+
+    .product__tabel-product_name {
+        h3 {
+            color: $gray-txt-color;
+        }
+    }
+
+}
+
+
+.content-select {
+    height: 30px;
+    overflow: hidden;
+}
+
+.content-body {
+    color: $gray-txt-color!important;
+}
+
+
+.photo__uploader {
+    height: 200px!important;
+    
+    .ant-upload-drag-icon {
+        font-size: 60px!important;
+        padding: 0!important;
+        margin: 0!important;
+        height: 0 !important;
+        color: $primary-color;
+    }
+
+    h4{
+        font-size: 1rem;
+        font-weight: bold;
+        color: $gray-txt-color!important;
+    }
+
+    p {
+        color: $gray-txt-color;
+        padding: 0 1rem;
+    }
+
+    .success-icon{
+        color: rgba(0,255,0,.7);
+        font-size: 60px!important;
+    }
+}
+
+.table-button__group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+
+    button {
+        background-color: $primary-color;
+        color: #fff;
+        width: 25px!important;
+        height: 25px!important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0!important;
+
+        i {
+            font-size: 15px!important;
+        }
+    }
+}
+
+.qr_code_frame {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin: 0 auto;
+    height: 280px;
+    width: 270px;
+}
+
+.table-row-light {
+    background-color: #ffffff;
+}
+.table-row-dark {
+    background-color: #fbfbfb;
+}
+ 
+
+.table-row:nth-child(2n) td {
+    background-color: $bg-second;
+}
+
+
+
+.table-action{
+    display: flex!important;
+    align-items: center;
+    justify-content: center;
+}

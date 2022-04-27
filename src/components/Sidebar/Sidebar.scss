@@ -1,0 +1,65 @@
+@import '../../index.scss';
+
+.sidebar-menu{
+    width: 100%;
+    height: 160vh;
+
+    margin-top: 40px!important;
+    * {
+        color: $gray-txt-color!important;
+    }
+
+    .itemGroupTitle {
+        font-weight: 400;
+        font-size: 16px;
+        color: #888;
+    }
+}
+
+.menu-group{
+    margin: 15px 0 10px;
+}
+
+.group-title {
+    padding-left: 25px;
+    height: 40px;
+    
+}
+
+.menu-item{
+    font-size: 16px;
+    color: $gray-txt-color;
+    i {
+        margin-right: 13px;
+    }
+
+    &.active {
+        background-color: $hovered-color;
+        color: #000!important;
+
+        .bx {
+            color: $primary-color!important;
+            transform: scale(1.1);
+        }
+    }
+}   
+
+ 
+
+.bx {
+    font-size: 18px!important;
+    translation: .3s ease;
+}
+
+
+.sidebar__item__group__title {
+    margin-left: 20px;
+    margin-top: 20px;
+    top: 50px;
+    color: #c4c4c4!important;
+}
+
+.group__item {
+    margin-top: 15px!important;
+    margin-bottom: 15px!important;
+}

@@ -1,0 +1,66 @@
+@import '../../index.scss';
+
+.topnav {
+    width: 100%;
+    height: $topnav-height;
+    background-color: $primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right:30px;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+
+    .header__brand {
+        width: $sidebar-width;
+        background: $primary-second;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .topnav__right-menu {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+    }
+
+    .topnav__left {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+}
+
+.dropdown {
+    cursor: pointer;
+    width: 110px;
+}
+
+.dropdown-btn {
+    cursor: pointer;
+    background: transparent;
+
+    &:disabled{
+        opacity: .5;
+        cursor: default;
+    }
+}
+
+.top-nav_icon {
+    font-size: 15px!important;
+}
+
+.fi-ga.drop {
+    font-size: 70px!important;
+}
