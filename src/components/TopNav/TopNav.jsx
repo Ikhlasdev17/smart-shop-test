@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Dropdown, Layout, Menu, Space } from 'antd';
-const { Header } = Layout;
 import logo from '../../assets/images/SmartSHOP.svg'
 
 import brandIcon from '../../assets/images/top-nav-brand-name-icon.svg'
@@ -11,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import './TopNav.scss'
 import { userLogout } from '../../redux/userSlice';
 import i18next from 'i18next';
+const { Header } = Layout;
 
 
 const languages = [
@@ -38,7 +38,7 @@ const brandMenu = (
 
 const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
   const dispatch = useDispatch()
-  const [currentLang, setCurrentLang] = useState(document.cookie.split('i18next=')[1] || 'ru')
+  const [currentLang, setCurrentLang] = useState(localStorage.getItem('i18next') || 'ru')
   const [currentLangLabel, setCurrentLabel] = useState(languages.filter(item => item.lang === currentLang)[0].label)
 
   const changeLang = (lang, label) => {

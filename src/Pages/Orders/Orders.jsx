@@ -1,7 +1,5 @@
 import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton } from 'antd'
 import React, { useState, useEffect } from 'react'
-const { RangePicker } = DatePicker;
-const {Option} = Select;
 
 import axios from 'axios';
 import { fetchingProducts, fetchedProducts } from '../../redux/productsSlice';
@@ -20,6 +18,8 @@ import { useTranslation } from 'react-i18next';
 import Content from './Content';
 
 
+const { RangePicker } = DatePicker;
+const {Option} = Select;
 
 const Orders = () => {
   const dispatch = useDispatch()

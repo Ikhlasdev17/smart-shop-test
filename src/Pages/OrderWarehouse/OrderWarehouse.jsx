@@ -1,8 +1,6 @@
 import { Select,DatePicker, Table, Skeleton, Input, InputNumber, Button, message } from 'antd'
 import React, { useState, useEffect } from 'react'
 import ModalAction from '../../components/ModalAction/ModalAction';
-const { RangePicker } = DatePicker;
-const {Option} = Select;
 
 import axios from 'axios';
 import { fetchingProducts, fetchedProducts } from '../../redux/productsSlice';
@@ -16,7 +14,9 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
-  
+
+const { RangePicker } = DatePicker;
+const {Option} = Select;
 
 const OrderWarehouse = () => {
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ const OrderWarehouse = () => {
   const [from, setFrom] = useState('2020-12-10')
   const [to, setTo] = useState(moment(now).format('YYYY-MM-DD')) 
   const [loading, setLoading] = useState(true)
-
+  
   const [currency, setCurrency] = useState([])
 
   const [sendOrder, setSendOrder] = useState(false)

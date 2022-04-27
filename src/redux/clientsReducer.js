@@ -15,7 +15,7 @@ const clientSlice = createSlice({
             state.clientsFetchingStatus = 'loading'
         },
         fetchedClients: (state, action) => {
-            state.clients = action.payload,
+            state.clients = action.payload
             state.clientsFetchingStatus = 'default'
         },
         clientsFetchingError: (state) => {

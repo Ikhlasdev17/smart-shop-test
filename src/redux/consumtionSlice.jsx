@@ -14,7 +14,7 @@ const consumptionsSlice = createSlice({
     reducers: {
         fetchingConsumption: (state) => {state.consumptionsLoadingStatus = 'loading'},
         fetchedConsumptions: (state, action) => {
-            state.consumptions = action.payload,
+            state.consumptions = action.payload
             state.consumptionsLoadingStatus = 'default'
         },
         addConsumptions: (state, action) => {

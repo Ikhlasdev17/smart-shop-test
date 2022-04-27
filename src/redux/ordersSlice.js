@@ -13,7 +13,7 @@ const ordersSlice = createSlice({
     reducers: {
         fetchingOrders: (state) => {state.ordersFetchingStatus = 'loading'},
         fetchedOrders: (state, action) => {
-            state.orders = action.payload,
+            state.orders = action.payload
             state.ordersFetchingStatus = 'default'
         },
         fetchingError: (state, action) => {

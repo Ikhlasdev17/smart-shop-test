@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Button, Layout, Menu, Typography } from "antd";
 import TopNav from "../TopNav/TopNav";
 
-const { Header, Footer, Sider, Content } = Layout;
 
 import "./Layout.scss";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
@@ -28,6 +27,7 @@ import {userLogout} from '../../redux/userSlice'
 import Valutes from "../../Pages/Valutes/Valutes";
 import ReturnOrder from "../../Pages/ReturnOrder/ReturnOrder";
 import Casheir from "../../Pages/Casheir/Casheir";
+const { Header, Footer, Sider, Content } = Layout;
 
 const Wrapper = () => {
   let navigate = useNavigate();

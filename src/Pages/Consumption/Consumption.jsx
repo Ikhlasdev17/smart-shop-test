@@ -1,4 +1,4 @@
-import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton } from 'antd'
+import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton, Pagination } from 'antd'
 import React, { useState, useEffect } from 'react'
 
 import axios from 'axios';

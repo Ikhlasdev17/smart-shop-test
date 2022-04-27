@@ -7,6 +7,8 @@ import { addNewCategory, fetchedCategories, fetchingCategories, updatingCategory
 import { setToken, URL } from '../../assets/api/URL'
 import { useTranslation } from 'react-i18next';
 
+import swal from 'sweetalert'
+
 const Content = ({ type, currentCategory, setOpen }) => {
     const dispatch = useDispatch()
     const { categories, categoriesFetchingStatus } = useSelector(state => state.categoriesReducer);

@@ -10,6 +10,7 @@ import { addSeller, fetchingSellers } from '../../redux/sellersSlice';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 
+import swal from  'sweetalert'
 
 const { Option } = Select;
  

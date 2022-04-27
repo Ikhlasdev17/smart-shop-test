@@ -11,7 +11,7 @@ const productsSlice = createSlice({
     reducers: {
         fetchingProducts: state =>{ state.productsFetchingStatus = 'loading'},
         fetchedProducts: (state, action) => {
-            state.productsFetchingStatus = 'default',
+            state.productsFetchingStatus = 'default'
             state.products = action.payload 
         },
         fetchingError: (state) => {

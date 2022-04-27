@@ -15,7 +15,7 @@ const sellersSlice = createSlice({
             state.sellersFetchingStatus = 'loading'
         },
         fetchedSellers: (state, action) => {
-            state.sellers = action.payload,
+            state.sellers = action.payload
             state.sellersFetchingStatus = 'default'
         },
         fetchingErrorSellers: state =>{

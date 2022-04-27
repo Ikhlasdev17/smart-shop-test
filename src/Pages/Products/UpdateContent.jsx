@@ -6,7 +6,8 @@ import { Button, Col, Form, Input, InputNumber, Row, Select } from 'antd';
 import { fetchedCategories, fetchingCategories } from '../../redux/categoriesSlice';
 import { fetchingProducts, addProduct, updateProduct } from '../../redux/productsSlice';
 import Dragger from 'antd/lib/upload/Dragger';
-
+import swal from 'sweetalert';
+import { useTranslation } from 'react-i18next';
 const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date }) => {
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
@@ -33,6 +34,8 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
   const [uploaded, setUploaded] = useState('')
 
   const [imageUploading, setImageUploading] = useState(false)
+
+  const {t} = useTranslation()
 
   const [product, setProduct] = useState({
     product_id: currentProduct?.id,
@@ -98,7 +101,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
         setCostPriceCode(currency?.filter(item => item.code === currentProduct?.cost_price.code)[0].id )
 
 
-    } ,[open, currency, currentProduct, currentProduct.max_price.price, currentProduct.max_price.code ])
+    } ,[currency, currentProduct, currentProduct.max_price.price, currentProduct.max_price.code ])
 
 
 
@@ -142,7 +145,8 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
     } else {
-        dispatch(fetchingErrorCategories())
+        // dispatch(fetchingErrorCategories())
+        console.info('err')
     }
 
     
