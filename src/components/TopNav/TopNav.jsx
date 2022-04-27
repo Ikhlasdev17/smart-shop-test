@@ -104,9 +104,8 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
             {currentLangLabel}
             </span>
         </Dropdown>
-        <Dropdown overlay={profileMenu} placement="bottomLeft" className="dropdown">
-          <Avatar src={avatarLogo}/>
-
+        <Dropdown overlay={profileMenu} placement="bottomLeft" >
+          <Avatar width="40" src={avatarLogo} style={{cursor: 'pointer'}}/>
         </Dropdown>
       </div>
     </header>
