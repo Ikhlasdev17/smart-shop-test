@@ -1,0 +1,77 @@
+@import '../../index.scss';
+
+.modal-action{
+    position: absolute;
+    top: 0;right: 0;bottom: 0;
+    width: 400px;
+    background: $main-bg;
+    z-index: 9999;
+    transition: all 0.5s ease;
+
+
+    .modal-action__topnav {
+        height: $topnav-height;
+        background: $primary-color;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        justify-content: flex-start;
+        h1{
+            color: #fff;
+            font-size: 20px;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .closeBtn {
+            height: 100%;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            left: 0;
+
+            i {
+                color: #fff;
+                font-size: 20px;
+            }
+        }
+    }    
+
+    .modal-content {
+        background-color: $bg-second;
+        margin: 20px;
+        border-top: 2px solid $border-color;
+        padding: 30px 50px;
+    }
+
+
+
+
+
+    &.inactive{
+        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    }
+
+    &.active {
+        clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+    }
+}
+
+.overlay{
+    // position: fixed;
+    position: absolute;
+    top: 0;right: 0;bottom: 0;left: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9999;
+    transition: all 0.3s ease;
+
+    // &.inactive{
+    //     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    // }
+
+    // &.active {
+    //     clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+    // }
+}

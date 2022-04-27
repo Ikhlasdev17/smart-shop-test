@@ -1,0 +1,48 @@
+
+@import '../../index.scss';
+@import '../Main/Main.scss';
+
+.table-action {
+    width: 25px!important;
+    height: 25px!important;
+    cursor: pointer;
+    color: #fff!important;
+    background-color: $primary-color!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0!important;
+    border-radius: 1px;
+
+    &:first-child{
+        margin-right: 10px;
+    }
+}
+
+
+.form__input {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.1);
+    padding: 5px 10px;
+
+    &:focus{
+        box-shadow: 0 0 3px #40A9FF;
+    }
+}
+
+
+.form__label {
+    display: flex;
+    flex-direction: column;
+    span {
+        color: #1E282C;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+        margin-bottom: 5px;
+    }
+
+    padding: .5rem 0;
+    margin: 1rem 0;
+    justify-content: flex-start!important;
+}

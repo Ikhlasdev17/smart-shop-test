@@ -1,0 +1,259 @@
+{
+    "start": "Salom bu sayt ozbek tiliga ogirildi",
+    "sidebar__items": [
+        {
+            "id": 1,
+            "label": "Bosh sahifa",
+            "path": "/",
+            "icon": "bx-grid-alt",
+            "groupTitle": "Umumiy"
+        },
+        {
+            "id": 2,
+            "label": "Mijozlar",
+            "path": "/clients",
+            "icon": "bxs-user",
+            "groupTitle": "Menyu"
+        },
+        {
+            "id": 3,
+            "label": "Xodimlar",
+            "path": "/sellers",
+            "icon": "bxs-user-detail"
+        },
+        {
+            "id": 4,
+            "label": "Kategoriyalar",
+            "path": "/categories",
+            "icon": "bx-layer"
+        },
+        {
+            "id": 5,
+            "label": "Mahsulotlar",
+            "path": "/products",
+            "icon": "bx-shopping-bag"
+        },
+        {
+            "id": 6,
+            "label": "Sotuvlar",
+            "path": "/offers",
+            "icon": "bx-cart-alt"
+        },
+        {
+            "id": 7,
+            "label": "Operatsiyalar", 
+            "icon": "bx-copy-alt",
+            "submenu": [
+                {
+                    "id": "subitem1",
+                    "label": "Mijoz",
+                    "path": "/operations/client",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem2",
+                    "label": "Buyurtma berish",
+                    "path": "/operations/offer",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem3",
+                    "label": "Buyurtmani qaytarish",
+                    "path": "/operations/return",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "label": "Moliya",
+            "path": "/finance",
+            "icon": "bx-money-withdraw",
+            "submenu": [
+                {
+                    "id": "subitem4",
+                    "label": "Xarajatlar",
+                    "path": "/consumptions/consumption",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem5",
+                    "label": "Kirimlar",
+                    "path": "/consumptions/income",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem6",
+                    "label": "Sof foyda",
+                    "path": "/casheir",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem15",
+                    "label": "Finans",
+                    "path": "/finans/valutes",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "label": "Omborxona",
+            "path": "",
+            "icon": "bxs-bank",
+            "submenu": [
+                {
+                    "id": "subitem7",
+                    "label": "Mahsulotlar",
+                    "path": "/warehouse/products",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem8",
+                    "label": "Kam qolgan mahsulotlar",
+                    "path": "/warehouse/lowProducts",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem9",
+                    "label": "Yaroqsiz mahsulotlar",
+                    "path": "/warehouse/defect",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
+        }
+    ],
+    "main": "Bosh sahifa",
+    "clients": "Mijozlar",
+    "sellers": "Sotuvchilar",
+    "categories": "Kategoriyalar",
+    "products": "Mahsulotlar",
+    "offers": "Sotuvlar",
+    "order": "Buyurtma berish",
+    "return": "Buyurtmani qaytarish",
+    "consumption": "Xarajatlar",
+    "income": "Kirimlar",
+    "some_product": "Kam qolgan mahsulotlar",
+    "defect": "Yaroqsiz mahsulotlar" ,
+    "number_of_product": "Mahsulotlar soni",
+    "fio": "FIO",
+    "balance": "Hisob",
+    "stir": "STIR",
+    "about__client": "Mijoz haqida",
+    "action": "Harakat",
+    "search": "Qidirish...",
+    "add__client": "Mijoz qoshish",
+    "save": "Saqlash",
+    "count": "Soni",
+    "from": "Vaqtdan",
+    "to": "Vaqtacha",
+    "ish_haqini_hisoblash": "Ish haqini hisoblash",
+    "satiwshi_qosiw": "Sotuvchi qoshish",
+    "satiwshini_janalaw": "Sotuvchini yangilash",
+    "admin": "Adminstrator",
+    "lavozim_tanlash": "Lavozimni tanlang",
+    "ish_haqi": "Ish haqi",
+    "ish_tarixi": "Ish tarixi",
+    "oluvchi_haqida": "Oluvchi haqida",
+    "yangi_oluvchi_qoshish": "Yangi oluvchi qoshish",
+    "yangi_sotuvchi_qoshish": "Yangi sotuvchi qoshish",
+    "ulgurji_foiz": "Ulgurji qoshish",
+    "minimum_foiz": "Minimum foiz",
+    "maksumum_foiz": "Maksimum foiz",
+    "minimum_mahsulot": "Mimimum mahsulot",
+    "kategoriya_qoshish": "Kategoriya qoshish",
+    "import": "Import",
+    "export": "Eksport ",
+    "mahsulot_qoshish": "Mahsulot qoshish",
+    "brend": "Brend",
+    "cost_price": "Tan narxi",
+    "whole_price": "Ulgirji narxi",
+    "max_price": "Maksimum narxi",
+    "min_price": "Minimum narxi",
+    "cash": "Naqd",
+    "card": "Plastik kartasida",
+    "total_income": "Umumiy summa",
+    "all": "Barchasi",
+    "qarz": "Qarz",
+    "qarz_muddati": "Qarz muddati",
+    "total_price": "Umumiy summa",
+    "description": "Tavsif",
+    "qarzni_tolash_sanasi": "Qarzni qaytarish vaqti",
+    "hozir_bor": "Hozir bor",
+    "kimga": "Kimga",
+    "date": "Sana",
+    "yaroqsiz_mahsulotlar_soni": "Yaroqsiz mahsulot soni",
+    "brend_nomi": "Brend nomi",
+    "statistika": "Statistika",
+    "malumot": "Malumot",
+    "korish": "Ko'rish",
+    "profile": "Profil",
+    "sozlamalar": "Sozlamalar",
+    "chiqish": "Chiqish",
+    "saqlash": "Saqlash",
+    "kategoriya_tanlash": "Kategoriyani tanlash",
+    "brend_nomini_tanlang": "Brend nomini tanlang",
+    "mahsulot_nomini_tanlang": "Mahsulot nomini kiriting",
+    "kilogram": "Kilogram",
+    "dona": "Dona",
+    "tonna": "Tonna",
+    "meter": "Metr",
+    "sm": "sm",
+    "gramm": "Gramm",
+    "liter": "Litr",
+    "rasm_yuklang": "Rasim yuklang",
+    "rasimni_tanlash_text": "Rasimni qurilmangizdan tanlang yoki shu yerga olib kelib tashlang",
+    "shaxs_turi": "Shaxs turi",
+    "telefon_raqami": "Telefon raqami",
+    "mijoz_haqida": "Mijoz haqida",
+    "ism_familiya": "Ism Familiya",
+    "parol": "Parol",
+    "pinkod": "Pinkod",
+    "kategoriya_nomi": "Kategoriya nomi",
+    "mahsulot_soni": "Mahsulot soni",
+    "muaffaqiyatli": "Muaffaqiyatli yakunlandi!",
+    "kuting": "Iltimos, kutib turing!",
+    "xatolik": "Server bilan xatolik!",
+    "malumotni_togri_kiriting": "Iltimos, Malumotlarni tog'ri kiriting!",
+    "malumotni_toliq_kiriting": "Iltimos, Malumotlarni toliq kiring!",
+    "parol_yoki_login_xato": "Parol yoki login notog'ri!",
+    "bosh_sahifaga_qaytish": "Bosh sahifaga qaytish",
+    "qayta_urinib_koring": "Iltimos, qayta urinib koring",
+    "kategoriyani_yangilash": "Kategoriyani yangilash",
+    "yuridik": "Yuridik shaxs",
+    "jismoniy": "Jismoniy shaxs",
+    "barcha_mahsulotlar": "Barcha mahsulotlar",
+    "print": "Chop etish",
+    "faylni_yuklang": "Faylni yuklang",
+    "faylni_yuklang_text": "Faylni qurulmangizdan tanlang yoki shu yerga olib kelib qoying",
+    "fayl_yuklandi": "Fayl yuklandi",
+    "sotuvchiga_pinkod": "Sotuvchining pinkodi",
+    "seller": "Sotuvchi",
+    "copied": "Nusxa olindi!", 
+    "yangilash": "Обновлять ",
+    "yanvar": "Yanvar",
+    "fevral": "Fevral",
+    "mart": "Mart",
+    "aprel": "Aprel",
+    "may": "May",
+    "iyun": "Iyun",
+    "iyul": "Iyul",
+    "avgust": "Avgust",
+    "sentyabr": "Sentabr",
+    "oktyabr": "Oktabr",
+    "noyabr": "Noyabr",
+    "dekabr": "Dekabr",
+    "sum": "Summa",
+    "min_product": "Minimum mahsulot",
+    "import_product": "Mahsulotlarni import  qilish",
+    "product_qr": "Mahsulot uchun QR kod",
+    "kirim": "Kirim",
+    "minus": "Minus",
+    
+    "kirim_qoshish": "Kirim qoshish",
+    "xarajat_qoshish": "Xarajat qoshish",
+    "tolov_turi": "To'lov turi",
+
+
+    "valuta_juftligi": "Valyuta juftligi",
+    "kurs": "Kurs",
+
+    "valyutalar": "Valyutalar",
+    "valyuta_qosiw": "Valyuta qoshish",
+    "oy": "Oy",
+    "sof_foyda": "Sof foyda"
+
+}

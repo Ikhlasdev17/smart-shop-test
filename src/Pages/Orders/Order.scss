@@ -1,0 +1,29 @@
+.top__elements {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin-bottom: 20px;
+    .top__elements-right {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        span {
+            padding: 7px 10px;
+            background-color: #F9F9F9;
+            color: #000;
+            min-width: 150px;
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .top__elements {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .top__elements-right{
+            flex-direction: column;
+        }
+    }
+}

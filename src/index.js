@@ -1,17 +1,57 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import 'antd/dist/antd.css'
+import { Provider } from 'react-redux'
+import rootReducer from './reducer/rootReducer'
+import { configureStore } from '@reduxjs/toolkit'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Login } from './Pages/Login/Login';
+import Wrapper from './components/Layout/Layout';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpApi from 'i18next-http-backend';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import 'flag-icons/css/flag-icons.css'
+ 
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
+
+
+const store = configureStore({reducer: rootReducer, devTools: process.env.NODE_ENV !== 'production'})
+
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector)
+  .use(HttpApi)
+  .init({
+    lnh: 'uz',
+    supportedLngs: ['uz', 'ru', 'qq'],
+    detection: {
+      order: [ 'cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
+      caches: ['cookie']
+    },
+    backend: {
+      loadPath: '/locales/{{lng}}/translation.json',
+    },
+    react: { useSuspense: false }
+  });
+
+
+  
+
+ 
+
+
+ReactDOM.render(
+    <Provider store={store}>
+    <Router>
+            <Routes>
+                  <Route path="/*" element={<Wrapper />} />
+                  <Route path="/login" element={<Login />} />
+            </Routes>
+    </Router>
+    </Provider>,
+  document.getElementById('root')
+)
