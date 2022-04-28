@@ -9,6 +9,8 @@ import { Login } from './Pages/Login/Login';
 import Wrapper from './components/Layout/Layout';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
 
 import 'flag-icons/css/flag-icons.css'
 
@@ -18,8 +20,6 @@ if (process.env.NODE_ENV === 'production') {
   console.warn = () => {}
 }
 
-import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
 
 
 const store = configureStore({reducer: rootReducer, devTools: process.env.NODE_ENV !== 'production'})
