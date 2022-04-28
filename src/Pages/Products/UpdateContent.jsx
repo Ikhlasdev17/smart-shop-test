@@ -12,7 +12,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
   const [currency, setCurrency] = useState(currency_date)
-  const [currentRate, setCurrentRate] = useState(0)
+  const [currentRate, setCurrentRate] = useState(USD_RATE)
   const [priceInUZS, setPriceInUZS] = useState(0)
   const [currentWhosale, setCurrentWhosale] = useState()
   const [USD, setUSD] = useState(USD_RATE)
@@ -156,8 +156,9 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
   
   
   const handleCurrency = (e) => {
-    const currentCategory = categories.filter(item => item.id === product.category_id)[0] 
-    setCurrentWhosale((priceInUZS * currentCategory.whole_percent / 100) + priceInUZS)
+    const currentCategory = categories.filter(item => item.id === product.category_id)[0]  
+      setCurrentWhosale(((priceInUZS / currentRate) * currentCategory.whole_percent / 100) + (priceInUZS / currentRate))
+     
     setCurrentRate(currency && currency[product.cost_price.currency_id - 1]?.rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
     const USD_VALUTE = currency?.filter(item => item.code === 'USD')[0]
     setProduct(prev => ({...product, cost_price: {...prev.cost_price, price: e}}))
@@ -166,46 +167,68 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
       const val = (e * currentRate)
 
       setPriceInUZS(val)
-
       setMinPrice((val * currentCategory.min_percent / 100) + val)
       setMaxPrice((val * currentCategory.max_percent / 100) + val)
       
-      if (whole_price_code === 2){
-        setWholePrice((e * currentCategory.whole_percent / 100) + e)
+      if (whole_price_code === 2){ 
+        setWholePrice((e * currentCategory.whole_percent / 100) + e) 
+        setCurrentWhole((e * currentCategory.whole_percent / 100) + e)
       } else {
-        setWholePrice((val * currentCategory.whole_percent / 100) + val)
+        setCurrentWhole(((val) * currentCategory.whole_percent / 100) + (val))
+        setWholePrice(((val) * currentCategory.whole_percent / 100) + (val))
       }
       
-      setCurrentWhole((val * currentCategory.whole_percent / 100) + val)
     } else {
+      if (whole_price_code === 2){ 
+        setCurrentWhole(Math.round(((e / USD_RATE) * currentCategory.whole_percent / 100) + (e / USD_RATE) * 100) / 100)
+        setWholePrice(Math.round(((e / USD_RATE) * currentCategory.whole_percent / 100) + (e / USD_RATE) * 100) / 100)
+      } else {
+        setWholePrice((e * currentCategory.whole_percent / 100) + e) 
+        setCurrentWhole((e * currentCategory.whole_percent / 100) + e)
+      }
       setPriceInUZS(Math.floor(e))
 
       setMinPrice((e * currentCategory.min_percent / 100) + e)
       setMaxPrice((e * currentCategory.max_percent / 100) + e)
-      setWholePrice((e * currentCategory.whole_percent / 100) + e)
       
-      setCurrentWhole((e * currentCategory.whole_percent / 100) + e)
+      
+     
     }
 
-  } 
+  }  
 
 
- 
-  
   useEffect(() => {
     const currentCategory = categories.filter(item => item.id === product.category_id)[0] 
-    setProduct(prev => (
-      {...product, 
-        price_wholesale: {...prev.price_wholesale, 
-          price: (priceInUZS * currentCategory.whole_percent / 100) + priceInUZS},
-        price_max: {...prev.price_max, 
-          price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
-        price_min: {...prev.price_min,
-          price: (priceInUZS * currentCategory.min_percent / 100) + priceInUZS}, 
-        
-      }))
+    
 
-      setCurrentWhosale((priceInUZS * currentCategory.whole_percent / 100) + priceInUZS)
+
+      if (whole_price_code === 2) {
+        setProduct(prev => (
+          {...product, 
+            price_wholesale: {...prev.price_wholesale, 
+              price: ((priceInUZS / currentRate) * currentCategory.whole_percent / 100) + (priceInUZS / currentRate)},
+            price_max: {...prev.price_max, 
+              price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
+            price_min: {...prev.price_min,
+              price: (priceInUZS * currentCategory.min_percent / 100) + priceInUZS}, 
+            
+          }))
+          setCurrentWhosale(((priceInUZS / currentRate) * currentCategory.whole_percent / 100) + (priceInUZS / currentRate))
+      } else {
+        setProduct(prev => (
+          {...product, 
+            price_wholesale: {...prev.price_wholesale, 
+              price: (priceInUZS * currentCategory.whole_percent / 100) + priceInUZS},
+            price_max: {...prev.price_max, 
+              price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
+            price_min: {...prev.price_min,
+              price: (priceInUZS * currentCategory.min_percent / 100) + priceInUZS}, 
+            
+          }))
+          setCurrentWhosale((priceInUZS * currentCategory.whole_percent / 100) + priceInUZS)
+      }
+
 
       setCurrentRate(currency && currency[product.cost_price.currency_id - 1]?.rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
 
