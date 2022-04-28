@@ -98,14 +98,27 @@ const Baskets = () => {
 
       <div className="content">
           <div className="content-top">
-             <DatePicker.RangePicker 
-             className="form__input wdith_3"
-             onChange={(value, strings) => {
-                 setFrom(strings[0])
-                 setTo(strings[1])
-             }}   
-             placeholder={[t('from'), t('to')]}
-             />
+          <div className="content-top__group">
+
+            <DatePicker
+              className="content__range-picker content-top__input form__input "
+              placeholder={t('from')}
+              onChange={(value, string) => {
+                setFrom(string)
+              } }
+              value={moment(from)}
+              />
+
+
+            <DatePicker
+              className="content__range-picker content-top__input form__input  "
+              placeholder={t('from')}
+              onChange={(value, string) => {
+                setTo(string)
+              } }
+              value={moment(to)}
+              />
+              </div> 
           </div>
 
           <div className="content-body">

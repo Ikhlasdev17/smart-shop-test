@@ -113,7 +113,6 @@ const Sellers = () => {
 
         <div className="content">
             <div className="content-top">
-                <Space>
                 <Button className="btn btn-primary btn-md"
                     onClick={e => {
                         setModalType('change_all_salary')
@@ -124,7 +123,6 @@ const Sellers = () => {
                     setModalType('add')
                     setOpen(true);
                 }}><i className="bx bx-plus"></i>{t('satiwshi_qosiw')}</Button>
-                </Space>
             </div>
 
             <div className="content-body">

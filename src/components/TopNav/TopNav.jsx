@@ -38,7 +38,7 @@ const brandMenu = (
 
 const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
   const dispatch = useDispatch()
-  const [currentLang, setCurrentLang] = useState(localStorage.getItem('i18next') || 'ru')
+  const [currentLang, setCurrentLang] = useState(document.cookie.split('=')[1] || 'ru')
   const [currentLangLabel, setCurrentLabel] = useState(languages.filter(item => item.lang === currentLang)[0].label)
 
   const changeLang = (lang, label) => {
@@ -94,14 +94,16 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
         <Dropdown overlay={brandMenu} placement="bottomLeft" className="dropdown">
           <span >
             <img src={brandIcon} alt="" />
+            <span className='dropdown__text'>
             Brand Nomi
+            </span>
           </span>
         </Dropdown>
         <Dropdown overlay={languageMenu} placement="bottomLeft" className="dropdown">
             <span>
             <i className={`fi fi-${languages.filter(item => item.lang === currentLang)[0].icon} drop top-nav_icon`}></i>
             {" "}
-            {currentLangLabel}
+            <span className='dropdown__text'>{currentLangLabel}</span>
             </span>
         </Dropdown>
         <Dropdown overlay={profileMenu} placement="bottomLeft" >

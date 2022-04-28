@@ -85,7 +85,7 @@
                     "icon": "bx bx-cart-alt"
                 },{
                     "id": "subitem15",
-                    "label": "Finans",
+                    "label": "Valyuta",
                     "path": "/finans/valutes",
                     "icon": "bx bx-cart-alt"
                 }

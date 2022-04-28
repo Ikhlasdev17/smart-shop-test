@@ -73,6 +73,7 @@ const Wrapper = () => {
  
   console.log = function() {return 'Salom'}
   return (
+
     <Layout className="wrapper">
       <TopNav setLogged={setLogged} width={width} setCollapsed={() => setCollapsed(!collapsed)} collapsed={collapsed} />
       <Layout className={`main-wrapper`}>

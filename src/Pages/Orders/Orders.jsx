@@ -130,7 +130,8 @@ const Orders = () => {
 
   const orderType = [ 
     {id: 'debt', name: t('qarz')},
-    {id: 'card', name: t('kirim')}
+    {id: 'paid', name: t('kirim')},
+    {id: 'cash', name: t('cash')}
   ]
   
 
@@ -139,7 +140,7 @@ const Orders = () => {
   useEffect(async () => {
     dispatch(fetchingOrders());
 
-    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}`, setToken())
+    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${category}`, setToken())
 
     if (response.status === 200) {
       dispatch(fetchedOrders(response.data.payload.data.baskets));
@@ -153,7 +154,7 @@ const Orders = () => {
 
    
     
-  } ,[search, filter, page])
+  } ,[search, filter, page, category])
 
 
   useEffect(() => {
@@ -218,10 +219,27 @@ const Orders = () => {
               
 
 
-          <RangePicker 
-            className="form__input"
-            placeholder={[t('from'), t('to')]}
-          />
+              {/* <div className="content-top__group">
+
+              <DatePicker
+                className="content__range-picker content-top__input form__input "
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setFrom(string)
+                } }
+                value={moment(from)}
+                />
+
+
+              <DatePicker
+                className="content__range-picker content-top__input form__input  "
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setTo(string)
+                } }
+                value={moment(to)}
+                />
+                </div> */}
 
           <DatePicker 
             className="form__input wdith_3"

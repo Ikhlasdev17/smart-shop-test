@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'
@@ -30,11 +30,10 @@ i18n
   .use(LanguageDetector)
   .use(HttpApi)
   .init({
-    lng: 'uz',
     supportedLngs: ['uz', 'ru', 'qq'],
     detection: {
-      order: [ 'localStorage', 'htmlTag', 'localStorage', 'path', 'subdomain'],
-      caches: ['localStorage']
+      order: [ 'cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
+      caches: ['cookie']
     },
     backend: {
       loadPath: '/locales/{{lng}}/translation.json',
@@ -50,12 +49,9 @@ i18n
 
 ReactDOM.render(
     <Provider store={store}>
-    <Router>
-            <Routes>
-                  <Route path="/*" element={<Wrapper />} />
-                  <Route path="/login" element={<Login />} />
-            </Routes>
-    </Router>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <App />
+      </Suspense>
     </Provider>,
   document.getElementById('root')
 )

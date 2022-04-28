@@ -117,11 +117,11 @@ const OrderWarehouse = () => {
       </div>,
       count: item?.count,
       cost_price: <div className="form-group">
-        <InputNumber size="small" className="form__input form-group__item table_input" placeholder={item.product.cost_price.price} onChange={(e) => {
+        <InputNumber size="small" className=" form__input  table_input" placeholder={item.product.cost_price.price} onChange={(e) => {
         handleChange(e, item, 'price')
       }} />
 
-      <Select placeholder={currentCurrency?.code} size="small" className="form__input-small form-group__min-item" style={{width: '80px'}}>
+      <Select placeholder={currentCurrency?.code} size="small" className="table_input form__input-small form-group__min-item" style={{width: '80px'}}>
           {currency?.map(item => (
               <Select.Option value={item.id}>{item.code}</Select.Option>
           ))}
@@ -166,7 +166,9 @@ const OrderWarehouse = () => {
 
       <div className="content">
           <div className="content-top">
-              <Select
+              <div style={{display: 'flex', flexWrap: 'wrap', gap: '30px'}}>
+
+                <Select
               className="form__input content-select content-top__input wdith_3"
               showSearch
               placeholder="Kategoriyalar"
@@ -177,18 +179,31 @@ const OrderWarehouse = () => {
               >
                   <Option>Hello</Option>
               </Select>
+              <div className="content-top__group">
 
 
-              <RangePicker
-                className="content__range-picker content-top__input form__input wdith_3"
-                placeholder={['Vaqtdan...','Vaqtgacha...']}
-                onChange={(value, strings) => {
-                  setFrom(strings[0])
-                  setTo(strings[1])
+
+              <DatePicker
+                className="content__range-picker content-top__input form__input "
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setFrom(string)
                 } }
+                value={moment(from)}
+                />
 
-                value={[moment(from), moment(to)]}
-              />
+
+              <DatePicker
+                className="content__range-picker content-top__input form__input  "
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setTo(string)
+                } }
+                value={moment(to)}
+                />
+                </div>  
+                
+              </div> 
 
               <Button onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>

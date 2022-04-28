@@ -155,6 +155,7 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
             className="form__input"
             format="+998(##)###-##-##"
             mask={"_"}
+            style={{padding: '5px'}}
             onValueChange={e => {
               setUser({...user, phone: `+998${e.floatValue}`})
             }}

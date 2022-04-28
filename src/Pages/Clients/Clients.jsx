@@ -100,7 +100,7 @@ const Clients = () => {
       setLoading(false)
       dispatch(clientsFetchingError())
     })
-  } ,[search])
+  } ,[open, search, currentPage])
  
 
 
@@ -109,9 +109,9 @@ const Clients = () => {
   return (  
     <div className="section main-page">
       
-      {/* <Drawer title="Update user" placement="right" visible={open} onClose={() => setOpen(false)}>
+      <Drawer title="Update user" placement="right" visible={open} onClose={() => setOpen(false)}>
         <Content modalType={modalType} currentClient={currentClient} setOpen={() => setOpen()} />
-      </Drawer> */}
+      </Drawer>
       <h1 className="heading">{t('clients')}</h1>
 
       <div className="content">

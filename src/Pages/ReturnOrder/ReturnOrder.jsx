@@ -108,7 +108,7 @@ const ReturnOrder = () => {
 
       <div className="content">
           <div className="content-top">
-              <Input placeholder={t('search')} className="form__input" onChange={(e) => setSearch(e.target.value)} />
+              <Input placeholder={t('search')} className="form__input wdith_3" onChange={(e) => setSearch(e.target.value)} />
 
               <Button onClick={() =>sendToReturn()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>

@@ -280,7 +280,7 @@ const Products = () => {
               <Pagination 
                 total={lastPage * perPage} 
                 pageSize={perPage ? perPage : 0}
-                defaultCurrent={page}
+                current={page}
                 onChange={c => setPage(c)}
                 showSizeChanger={false}
               />

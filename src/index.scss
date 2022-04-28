@@ -27,7 +27,7 @@ $f-family: 'Source Sans Pro', sans-serif;
 $topnav-height: 50px;
 $sidebar-width: 250px;
 $border-color: #D2D6DE;
-$gray-txt-color: #7C8394;
+$gray-txt-color: #555;
 $hovered-color: #EEF3FF;
 
 
@@ -176,6 +176,15 @@ img {
 }
 
 @media (max-width: 768px) {
+    .topnav__right-menu{
+        gap: 15px!important;
+    }
+    .dropdown{
+        width: 30px;
+    }
+    .dropdown__text{
+        display: none!important;
+    }
     .content-top {
         display: flex;
         flex-direction: column;
@@ -183,14 +192,23 @@ img {
         input, select{
             width: 100% !important;
         }
+
+        button{
+            width: 100%;
+        }
     }
 
     .form__input {
         width: 100%!important;
         box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.05);
         margin: 0!important;
-        padding: 0!important;
-    
+        border: 1px solid rgba(0,0,0,.1)!important;
+
+
+        &[type="text"]{
+            padding: 5px!important;
+        }
+
         * {
             border: none!important;
             outline: none !important;
@@ -205,8 +223,33 @@ img {
         &.wdith_3{
             width: 100%!important;
         }
+
+
+
+
     }
+
+
+.content__range-picker {
+    padding: 5px 10px!important;
+    width: 50%!important;
+}
     
+    .content-top__group{
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        width: 100%!important;
+
+        .form__input {
+            width: 100%!important;
+        }
+    }
+
+    .main-content{
+        padding: 40px 10px!important;
+    }
+
 }
 
 
@@ -218,9 +261,18 @@ img {
 }
 
 .table_input {
-    width: 200px!important;
-    border: 1px solid #eee!important;
-    padding: 5px 0;
+    border: 1px solid #999!important;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 150px!important;
+    height: 30px!important;
+
+    * {  
+    &::placeholder{
+        color: #666!important;
+    } 
+    }
 }
 
 
@@ -244,3 +296,4 @@ img {
         width: 50%!important;
     }
 }
+
