@@ -192,7 +192,7 @@ const Products = () => {
       setPerPage(response.data.payload.per_page)
     }
     
-  } ,[search, page, category, refresh])
+  } ,[open, search, page, category, refresh])
 
 
   useEffect( async () => {

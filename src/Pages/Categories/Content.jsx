@@ -20,7 +20,7 @@ const Content = ({ type, currentCategory, setOpen }) => {
             min: null,
             max: null,
             wholesale: null,
-            min_product: 0,
+            min_product: null,
         }})
 
         const {t} = useTranslation()
@@ -32,7 +32,7 @@ const Content = ({ type, currentCategory, setOpen }) => {
             category_id: currentCategory?.id,
             name: currentCategory?.name,
             percents: {
-                min: currentCategory?.min_product,
+                min: currentCategory?.min_percent,
                 max: currentCategory?.max_percent,
                 wholesale: currentCategory?.whole_percent,
                 min_product: currentCategory?.min_product
@@ -40,6 +40,9 @@ const Content = ({ type, currentCategory, setOpen }) => {
         })
     }
 }, [currentCategory])
+
+
+console.info(currentCategory)
 
 useEffect(() => {
         if (type === 'add') {
@@ -162,10 +165,10 @@ useEffect(() => {
 
       <Form.Item label={t('maksumum_foiz')} >
         <InputNumber prefix="%" className="form__input" placeholder={t('maksumum_foiz')} onChange={(e) => {setCategory(prev => ({...category, percents: {...prev.percents, max: e}}))}}  value={category.percents.max} />
-      </Form.Item>
+      </Form.Item> 
 
-      <Form.Item label={t('min_product')}>
-        <Input className="form__input" placeholder={t('min_product')} onChange={(e) => {setCategory(prev => ({...category, percents: {...prev.percents, min_product: e.target.value}}))}} />
+      <Form.Item label={t('min_product')} >
+        <InputNumber  className="form__input" placeholder={t('min_product')} onChange={(e) => {setCategory(prev => ({...category, percents: {...prev.percents, min_product: e}}))}}  value={category.percents.min_product} />
       </Form.Item>
 
 

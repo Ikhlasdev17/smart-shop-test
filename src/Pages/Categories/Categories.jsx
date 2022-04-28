@@ -30,14 +30,14 @@ const Categories = () => {
               max_percent: item.max_percent,
               min_product: item.min_product,
               action: (
-                <>
+                <div className='table-button__group'>
                   <Button className="table-action" onClick={() => {
                       setCurrentCategory(prev => item)
                       setModalType('update')
                       setOpen(!open)
                   }}><i className="bx bx-edit"></i></Button>
                   <Button className="table-action"><i className="bx bx-trash"></i></Button>
-                </>
+                </div>
               )
             })
       
@@ -98,7 +98,7 @@ const Categories = () => {
             dispatch(fetchingErrorCategories())
         }
         
-    }, [search])
+    }, [search, open])
 
  
 

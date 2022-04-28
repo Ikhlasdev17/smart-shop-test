@@ -12,6 +12,11 @@ import HttpApi from 'i18next-http-backend';
 
 import 'flag-icons/css/flag-icons.css'
 
+if (process.env.NODE_ENV === 'production') {
+  console.error = () => {}
+  console.debug = () => {}
+  console.warn = () => {}
+}
 
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
