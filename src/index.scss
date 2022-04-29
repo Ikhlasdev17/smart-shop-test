@@ -338,3 +338,19 @@ img {
         transform: rotate(0deg);
     }
 }
+ 
+
+.ant-layout-footer {
+    padding: 0!important;
+}
+
+.layout__footer {
+    height: 60px;
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 130px;
+        object-fit: cover;
+    }
+}

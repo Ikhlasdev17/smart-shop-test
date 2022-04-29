@@ -27,6 +27,9 @@ import {userLogout} from '../../redux/userSlice'
 import Valutes from "../../Pages/Valutes/Valutes";
 import ReturnOrder from "../../Pages/ReturnOrder/ReturnOrder";
 import Casheir from "../../Pages/Casheir/Casheir";
+import logo from '../../assets/images/LOGOTEXNOPOS.png'
+
+
 const { Header, Footer, Sider, Content } = Layout;
 
 const Wrapper = () => {
@@ -115,11 +118,12 @@ const Wrapper = () => {
               
             </Routes>
           </Content>
-          <Footer
-            className="layout__footer"
-            style={{ backgroundColor: "#fff" }}
+          <Footer 
+        style={{ backgroundColor: "#fff",  }}
           >
-            <Typography variant="h3">TexnoPOS IT Center</Typography>
+            <footer className="layout__footer">
+            <img src={logo} alt="" />
+            </footer>
           </Footer>
         </Layout>
       </Layout>

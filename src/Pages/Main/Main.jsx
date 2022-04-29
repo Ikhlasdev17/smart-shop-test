@@ -30,24 +30,33 @@ const Main = () => {
   const {t} = useTranslation()
   const [category_id, setCategoryId] = useState('')
   const [categories, setCategories] = useState([])
+  const [employes, setEmployes] = useState([])
+  const [employeeId, setEmployeeId] = useState('')
 
   useEffect(async () => {
     dispatch(fetchingProducts());
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id}`, setToken())
+    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id}&employee_id=${employeeId}`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload)
       setLoading(false)
     }
 
-  } ,[from, to, category_id])
+  } ,[from, to, category_id, employeeId])
 
   useEffect(() => {
     axios.get(`${URL}/api/categories`, setToken())
     .then(res => setCategories(res.data.payload))
+
+
+    axios.get(`${URL}/api/employees`, setToken())
+    .then(res => {
+      setEmployes(res.data.payload)
+    })
+    
   }, [])
 
 
@@ -91,6 +100,8 @@ const Main = () => {
 
       <div className="content">
           <div className="content-top">
+              <div className="content-top__group">
+
               <Select
               className="form__input content-select content-top__input wdith_3"
               showSearch
@@ -108,6 +119,26 @@ const Main = () => {
                     ))
                   }
               </Select>
+
+              
+              <Select
+              className="form__input content-select content-top__input wdith_3"
+              showSearch
+              placeholder={t('sellers')}
+              optionFilterProp="children"
+              onChange={e => setEmployeeId(e)}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+              >
+                <Option value={""}>{t('all')}</Option>
+                  {
+                    employes?.map(item => (
+                      <Option value={item.id}>{item.name}</Option>
+                    ))
+                  }
+              </Select>
+                      </div>
 
 
               <div className="content-top__group">

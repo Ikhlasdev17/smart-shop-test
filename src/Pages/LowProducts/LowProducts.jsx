@@ -130,14 +130,14 @@ const LowProducts = () => {
         handleChange(e, item, 'price')
       }} />
 
-      <Select placeholder={currentCurrency?.code} size="small" className="form__input-small form-group__min-item" style={{width: '80px'}}>
+      <Select placeholder={currentCurrency?.code} size="small" className="table_input form__input-small form-group__min-item" style={{width: '80px'}}>
           {currency?.map(item => (
               <Select.Option value={item.id}>{item.code}</Select.Option>
           ))}
       </Select>
       </div>,
       addCount: <>
-        <InputNumber size="small" className="form__input table_input" placeholder={item.count} onChange={(e) => {
+        <InputNumber size="small" className="form__input table_input" onChange={(e) => {
             handleChange(e, item, 'count')
         }}/>
       </>

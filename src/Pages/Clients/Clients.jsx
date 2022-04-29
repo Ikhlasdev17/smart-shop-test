@@ -91,7 +91,7 @@ const Clients = () => {
 
     axios.get(`${URL}/api/clients?search=${search}&page=${currentPage}`, setToken())
     .then(res => {
-      dispatch(fetchedClients(res.data.payload.data)) 
+      dispatch(fetchedClients(res.data.payload.data.clients)) 
       setLoading(false)
       setLastPage(res.data.payload.last_page)
       setPerPage(res.data.payload.per_page)

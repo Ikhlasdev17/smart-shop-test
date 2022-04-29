@@ -1,8 +1,9 @@
 import { Button, Table } from 'antd';
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 const Content = ({ currentBasket }) => {
-
+    const {t} = useTranslation()
 
   
     const dataSource = [];
@@ -18,12 +19,12 @@ const Content = ({ currentBasket }) => {
     
     const columns = [
       {
-        title: 'Mahsulot',
+        title: t('products'),
         dataIndex: 'product',
         key: 'key',
       },
       {
-        title: 'Soni',
+        title: t('count'),
         dataIndex: 'count',
         key: 'key',
       }

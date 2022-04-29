@@ -46,7 +46,7 @@
             "submenu": [
                 {
                     "id": "subitem1",
-                    "label": "Mijoz",
+                    "label": "Qarz to'laganlar",
                     "path": "/operations/client",
                     "icon": "bx bx-cart-alt"
                 },{
@@ -254,6 +254,7 @@
     "valyutalar": "Valyutalar",
     "valyuta_qosiw": "Valyuta qoshish",
     "oy": "Oy",
-    "sof_foyda": "Sof foyda"
+    "sof_foyda": "Sof foyda",
+    "toplam": "Toplam №"
 
 }

@@ -63,17 +63,17 @@ const Defect = () => {
   
   const columns = [
     {
-      title: 'Toplam №',
+      title: t('toplam'),
       dataIndex: 'product',
       key: 'key',
     },
     {
-      title: 'Mahsulot soni',
+      title: t('number_of_product'),
       dataIndex: 'count',
       key: 'key',
     },
     {
-      title: 'Harakat',
+      title: t('action'),
       dataIndex: 'action',
       key: 'key',
     }
@@ -81,7 +81,6 @@ const Defect = () => {
  
 
   return (
-    
     <div className="section main-page">
       <Drawer visible={open} onClose={() => setOpen(false)} title={t('defect')}>
         <Content currentBasket={currentBasket} />
@@ -91,8 +90,6 @@ const Defect = () => {
       <div className="content">
           <div className="content-top">
           </div>
-
-
           <div className="content-body" >
           <Table  className="content-table" dataSource={dataSource} columns={columns} />
           </div>

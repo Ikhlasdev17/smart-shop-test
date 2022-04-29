@@ -247,13 +247,14 @@
     "xarajat_qoshish": "Добавить расходы",
     "tolov_turi": "Тип платежа",
 
-    
+     
     "valuta_juftligi": "Валютная пара",
     "kurs": "Курс",
     "valyutalar": "Валюты",
     "valyuta_qosiw": "Добавить валюту",
     "oy": "Месяц",
-    "sof_foyda": "Чистая прибыль"
+    "sof_foyda": "Чистая прибыль",
+    "toplam": "Toplam №"
 }
 
 

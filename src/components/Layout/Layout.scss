@@ -21,14 +21,15 @@
     }
 }
 
-
 .layout__footer {
-    background: #fff;
-    height: 60px;
     width: 100%;
-}
-
-.layout__sider {
+    padding: 0!important;
+    margin: 0!important;
+    height: 60px;
+    img {
+        width: 100px;
+        height: 100%;
+    }
 }
 
 

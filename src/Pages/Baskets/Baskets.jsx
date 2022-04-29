@@ -6,7 +6,6 @@ import axios from 'axios';
 import moment from 'moment';
 
 import {setToken, URL} from '../../assets/api/URL';
-import { fetchedCategories, fetchingCategories, fetchingErrorCategories } from '../../redux/categoriesSlice';
 
 import { useTranslation } from 'react-i18next';
 
@@ -24,14 +23,14 @@ const Baskets = () => {
     useEffect(() => {
         setLoading(true) 
 
-        fetch(`${URL}/api/payment/history/?from=${from !== '' ? from : '2020-01-01'}&to=${to !== '' ? to : moment(Date.now()).format('YYYY-MM-DD')}`, {
+        fetch(`${URL}/api/payment/history/?from=${from !== '' ? from : '2020-01-01'}&to=${to}`, {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer " +localStorage.getItem('token')
             },
         }).then(res => res.json())
         .then(data => {
-            setBaskets(data.payload)
+            setBaskets(data.payload.data.histories)
             setLoading(false)
         })
         
@@ -43,7 +42,7 @@ const Baskets = () => {
     baskets?.map(item => {
         dataSource.push({
             key: item?.payment_id,
-            name: <div className="table-title"> <h2>{item?.clinet.name}</h2></div>,
+            name: <div className="table-title"> <h2>{item?.client.name}</h2></div>,
             cash: item?.amount_paid.cash,
             card: item?.amount_paid.card,
             total: item?.amount_paid.card + item?.amount_paid.cash,
