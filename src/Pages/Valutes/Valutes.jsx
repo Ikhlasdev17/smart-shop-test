@@ -32,7 +32,7 @@ const Valutes = () => {
         item.rate.length > 0 && 
         dataSource.push({
             key: item.id,
-            valute: <><strong>{item.code}</strong> = <strong>{item.rate.length > 0 && item.rate.map(item => item.code)}</strong></>,
+            valute: <><strong>{item.code}</strong> => <strong>{item.rate.length > 0 && item.rate.map(item => item.code)}</strong></>,
             rate: <><strong>{item.rate.map(item => item.rate).toLocaleString()} {item.rate.length > 0 && item.rate.map(item => item.code)}</strong></>,
             descr: <></>,
             action: <>
@@ -40,9 +40,7 @@ const Valutes = () => {
 
                 <Button className="" onClick={() => {
                     setOpen(!open)
-                    setCurrentValute(item)
-                    // setModalType('update')
-                    // setCurrentProduct(item)
+                    setCurrentValute(item) 
                 }}><i className="bx bx-edit"></i></Button>
                 <Button className=""><i className="bx bx-trash"></i></Button>
                 </div>
@@ -69,14 +67,6 @@ const Valutes = () => {
         <h1 className="heading">{t('valyutalar')}</h1>
 
         <div className="content">
-            <div className="content-top">     
-            <Button className="btn btn-primary btn-md" onClick={() => {
-            setOpen(true)
-            // setModalType('add')
-            }}><i className="bx bx-plus"></i> {t('valyuta_qosiw')}</Button>
-            </div>
-
-
             <div className="content-body" >
             <Skeleton loading={loading} active avatar rows={15} width="100%" block>
             <Table size="medium" rowClassName={"table-row"} className="content-table" width="100%"  dataSource={dataSource} columns={columns} />

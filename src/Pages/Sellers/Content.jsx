@@ -15,7 +15,7 @@ import swal from  'sweetalert'
 const { Option } = Select;
  
 
-const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, refresh}) => {
+const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallary, refresh}) => {
   const dispatch = useDispatch()
 
   const [user, setUser] = useState(modalType === 'add' ? {
@@ -68,12 +68,15 @@ const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, ref
 
   const generatePincode = () => {
     axios.get(`${URL}/api/pincode/generate`, setToken())
-    .then(res => setUser({...user, pincode: res.data.payload.pincode}))
+    .then(res => {
+      setUser({...user, pincode: res.data.payload.pincode})
+      console.info(res.data.payload.pincode)
+    })
   }
 
   useEffect(() => {
     generatePincode()
-  }, []) 
+  }, [open]) 
 
   const addSallary = async () => {
     if (user.name !== "" && user.phone !== "" && user.password !== "" && user.flex !== "" && user.salary !== "" && user.role !== ""){
@@ -163,22 +166,22 @@ const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, ref
         <>
         <div className="form__label">
           <span>{t('ish_haqi')}</span>
-          <InputNumber value={user.salary} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
+          <InputNumber value={300} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
             setUser({...user, salary: e})}} />
-        </div>
-        <div className="form__label">
-          <span>FLEX</span>
-            <InputNumber 
-              className="form__input"
-              required
-              placeholder="FLEX" 
-              onChange={e => {setUser({...user, flex: e})}} 
-              value={user.flex}
-              formatter={value => `${value}%`}
-              parser={value => value.replace('%', '')} />
           </div>
-          <Button onClick={updateSallary} className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>
-            </>
+          <div className="form__label">
+            <span>FLEX</span>
+              <InputNumber 
+                className="form__input"
+                required
+                placeholder="FLEX" 
+                onChange={e => {setUser({...user, flex: e})}} 
+                value={user?.flex}
+                formatter={value => `${value}%`}
+                parser={value => value.replace('%', '')} />
+            </div>
+            <Button onClick={updateSallary} className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>
+              </>
       ) : (
         <>
         <Form layout="vertical" onFinish={(e) => handleSubmit(e)}>
@@ -219,6 +222,7 @@ const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, ref
           <NumberFormat
             className="form__input"
             format="+998(##)###-##-##"
+            style={{padding: '5px'}}
             mask={"_"}
             onValueChange={e => {
               setUser({...user, phone: `+998${e.floatValue}`})
@@ -246,8 +250,8 @@ const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, ref
             parser={value => value.replace('%', '')} />
           </Form.Item>
 
-          <Form.Item label={t('pinkod')} name="pincode" required className="form-group">
-          <Input.Group compact required className='form-group'>
+          <Form.Item label={t('pinkod')} name="pincode" required>
+          <div className='form-group'>
             <div className="form-group__item">
             <CopyToClipboard text={user.pincode} onCopy={() => setCopied(true)}>
               <div className={copied ? 'pincode__field copied' : 'pincode__field'}>
@@ -259,9 +263,8 @@ const   Content = ({ setRefresh, setOpen, modalType = 'add', currentSallary, ref
             <Button className='btn btn-primary' onClick={e => generatePincode()}>
               {t('yangilash')}
             </Button>
-
             </div>
-            </Input.Group>
+            </div>
           </Form.Item>
           <br />
           <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>

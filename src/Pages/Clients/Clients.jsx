@@ -37,7 +37,7 @@ const Clients = () => {
         key: item.id,
         name: <div className="table-title"> <h2>{item.full_name}</h2> <p>{item.phone}</p></div>,
         balance: item.balance,
-        stir: item.stir ? item.stir : 'Jismoniy Shaxs',
+        stir: item.tin ? item.tin : 'Jismoniy Shaxs',
         excerpt: item.about,
         type: item.type,
         action: (

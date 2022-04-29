@@ -70,6 +70,12 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
             title: t('muaffaqiyatli'),
             icon: 'success'
           })
+          setUser({ 
+            full_name: "",
+            phone: "",
+            type: "J",
+            about: "",
+          })
         } else {
           swal({
             title: t('malumotni_togri_kiriting'),
@@ -144,9 +150,9 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
 
         {user.type === 'Y' ? <div className="form__label">
           <span>STIR</span>
-          <InputNumber className="form__input" placeholder="123 456 789" onChange={e => {
+          <InputNumber formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} className="form__input" placeholder="123 456 789" onChange={e => {
             setUser({...user, tin: e})
-          }} value={user.tin} required maxLength={9}/>
+          }} value={user.tin} required maxLength={11}/>
         </div> : ''}
 
         <div className="form__label">

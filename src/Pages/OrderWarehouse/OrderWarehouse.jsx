@@ -122,11 +122,11 @@ const OrderWarehouse = () => {
       </div>,
       count: item?.count,
       cost_price: <div className="form-group">
-        <InputNumber size="small" className=" form__input  table_input" placeholder={item.product.cost_price.price} onChange={(e) => {
+        <InputNumber size="small" className="form__input  table_input" placeholder={item.product.cost_price.price} onChange={(e) => {
         handleChange(e, item, 'price')
       }} />
 
-      <Select placeholder={currentCurrency?.code} size="small" className="table_input form__input-small form-group__min-item" style={{width: '80px'}}>
+      <Select placeholder={currentCurrency?.code} size="small" className="table_inptop__grouput form__input-small form-group__min-item" style={{width: '80px'}}>
           {currency?.map(item => (
               <Select.Option value={item.id}>{item.code}</Select.Option>
           ))}
@@ -172,7 +172,8 @@ const OrderWarehouse = () => {
       <div className="content">
           <div className="content-top">
 
-                <Select
+               <div className='flex'>
+               <Select
               className="form__input content-select content-top__input wdith_3"
               showSearch
               placeholder="Kategoriyalar"
@@ -184,8 +185,6 @@ const OrderWarehouse = () => {
                   <Option>Hello</Option>
               </Select>
               <div className="content-top__group">
-
-
 
               <DatePicker
                 className="content__range-picker content-top__input form__input "
@@ -206,7 +205,7 @@ const OrderWarehouse = () => {
                 value={moment(to)}
                 />
                 
-              </div> 
+              </div></div> 
 
               <Button onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>

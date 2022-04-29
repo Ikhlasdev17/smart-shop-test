@@ -28,20 +28,27 @@ const Main = () => {
   const [to, setTo] = useState(moment(now).format('YYYY-MM-DD')) 
   const [loading, setLoading] = useState(true)
   const {t} = useTranslation()
+  const [category_id, setCategoryId] = useState('')
+  const [categories, setCategories] = useState([])
 
   useEffect(async () => {
     dispatch(fetchingProducts());
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}`, setToken())
+    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id}`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload)
       setLoading(false)
     }
 
-  } ,[from, to])
+  } ,[from, to, category_id])
+
+  useEffect(() => {
+    axios.get(`${URL}/api/categories`, setToken())
+    .then(res => setCategories(res.data.payload))
+  }, [])
 
 
   const dataSource = [];
@@ -89,11 +96,17 @@ const Main = () => {
               showSearch
               placeholder={t('categories')}
               optionFilterProp="children"
+              onChange={e => setCategoryId(e)}
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               >
-                  <Option>Hello</Option>
+                <Option value={""}>{t('all')}</Option>
+                  {
+                    categories?.map(item => (
+                      <Option value={item.id}>{item.name}</Option>
+                    ))
+                  }
               </Select>
 
 

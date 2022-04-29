@@ -107,7 +107,7 @@ const Sellers = () => {
         <div className="section main-page">
         
         <Drawer title={modalType === 'add' ? t('satiwshi_qosiw') : modalType === 'update' ? t('satiwshini_janalaw') : modalType === 'change_all_salary' ? t('ish_haqini_hisoblash') : '' } placement="right" visible={open} onClose={() => setOpen(false)}>
-            {modalType === 'history' ? <History currId={currentID} /> : <Content setRefresh={() => setRefresh()} currentSallary={currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
+            {modalType === 'history' ? <History currId={currentID} /> : <Content open={open} setRefresh={() => setRefresh()} currentSallary={currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
         </Drawer>
         <h1 className="heading">{t('sellers')}</h1>
 

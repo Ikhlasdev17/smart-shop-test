@@ -148,10 +148,11 @@ img {
     gap: 1rem;
     display: flex;
     align-items: center;
+    justify-content: center;
 
     .form-group__item {
         width: 70%!important;
-        padding: 0 1rem 0 0 ;
+        padding: 0 ;
     }
 
     .form-group__min-item {
@@ -176,6 +177,11 @@ img {
 }
 
 @media (max-width: 768px) {
+    .flex{
+        display: flex;
+        flex-direction: column;
+        width: 100%!important;
+    }
     .topnav__right-menu{
         gap: 15px!important;
     }
@@ -196,6 +202,9 @@ img {
         button{
             width: 100%;
         }
+
+
+        
     }
 
     .form__input {
@@ -223,6 +232,8 @@ img {
         &.wdith_3{
             width: 100%!important;
         }
+
+        
 
 
 
