@@ -29,6 +29,8 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   const componentRef = useRef();
   const {t} = useTranslation()
 
+  const [photoUploaded, setPhotoUploaded] = useState('default')
+
     const [product, setProduct] = useState({
       category_id: 1,
       name: "",
@@ -206,6 +208,8 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   console.warn(qr_code_link)
 
   const photoUploader = (e) => {
+    setPhotoUploaded('loading')
+    
     const formData = new FormData()
     formData.append('file', e.file.originFileObj)
     formData.append('upload_preset', "smart-shop")
@@ -213,6 +217,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
 
     axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
       setProduct(prev => ({...product, image: res.data.secure_url}))
+      setPhotoUploaded('ok')
     })
   } 
 
@@ -293,7 +298,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
           />
         </Form.Item>
 
-        <Form.Item className="form__item" label="Tan narxi" required>
+        <Form.Item className="form__item" label={t('cost_price')} required>
         <Input.Group compact label={t('cost_price')} required className='form-group'>
           <div className="form-group__item">
           <InputNumber 
@@ -400,16 +405,21 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
           )
         } 
             <Dragger className="photo__uploader" onChange={photoUploader} showUploadList={false}>
-                  {product.image === '' ? (
+                  {photoUploaded === 'default' ? (
                     <>
                       <i className='bx bx-cloud-upload ant-upload-drag-icon'></i>
                   <h4>{t('rasm_yuklang')}</h4>
                   <p>{t('rasimni_tanlash_text')}</p>
                     </>
-                  ) : (
+                  ) : photoUploaded === 'ok' ? (
                     <>
                       <i className='bx bx-check-circle success-icon'></i>
                       <h4>{t('muaffaqiyatli')}</h4>
+                    </>
+                  ) : photoUploaded === 'loading' && (
+                    <>
+                      <i className='bx bx-time-five ant-upload-drag-icon'></i>
+                      <h4>{t('kuting')}</h4>
                     </>
                   )}
             </Dragger> 

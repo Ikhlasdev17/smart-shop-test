@@ -56,7 +56,7 @@ const Content = ({ type, categories, setOpen }) => {
               category_id: categories[0].id,
               whom: "",
               price: null,
-              date: "",
+              date: moment(Date.now()).format('YYYY-MM-DD'),
               description: "",
               type: type,
               payment_type: "card",

@@ -68,7 +68,7 @@ useEffect(() => {
             const res = await axios.post(`${URL}/api/category`, {
                 name: category.name,
                 percents: {
-                    min_product: category.percents.min_product || 0,
+                    min_product: category.percents.min_product,
                     min: category.percents.min,
                     max: category.percents.max,
                     wholesale: category.percents.wholesale
@@ -101,7 +101,16 @@ useEffect(() => {
 
     const updateCategory = async () => {
         if (category.category_id !== null && category.name !== "" && category.percents.min !== null && category.percents.max !== null && category.percents.wholesale !== null){
-            const res = await axios.patch(`${URL}/api/category`, category, setToken())
+            const res = await axios.patch(`${URL}/api/category`, {
+                category_id: category.category_id,
+                name: category.name,
+                percents: {
+                    min_product: category.percents.min_product,
+                    min: category.percents.min,
+                    max: category.percents.max,
+                    wholesale: category.percents.wholesale
+                }
+            }, setToken())
         
         if(res.status === 200) {
             dispatch(fetchingCategories())
@@ -110,7 +119,7 @@ useEffect(() => {
                 max_percent: category.percents.max,
                 min_percent: category.percents.min,
                 name: category.name,
-                min_product: category.percents.min,
+                min_product: category.percents.min_product,
                 whole_percent: category.percents.wholesale
             }))
 

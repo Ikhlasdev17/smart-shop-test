@@ -48,10 +48,8 @@ i18n
 
 
 ReactDOM.render(
-    <Provider store={store}>
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <App />
-      </Suspense>
+    <Provider store={store}> 
+        <App /> 
     </Provider>,
   document.getElementById('root')
 )

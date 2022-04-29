@@ -38,7 +38,7 @@ const brandMenu = (
 
 const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
   const dispatch = useDispatch()
-  const [currentLang, setCurrentLang] = useState(document.cookie.split('=')[1] || 'ru')
+  const [currentLang, setCurrentLang] = useState(document.cookie.split('=')[1])
   const [currentLangLabel, setCurrentLabel] = useState(languages.filter(item => item.lang === currentLang)[0].label)
 
   const changeLang = (lang, label) => {

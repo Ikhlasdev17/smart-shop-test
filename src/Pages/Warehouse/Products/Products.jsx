@@ -77,7 +77,8 @@ const Products = () => {
 
 
     const sendToDefect = () => {
-      setShowTable(true)
+      if (defectProducts.length > 0) {
+        setShowTable(true)
       message.loading({
         duration: 1,
         content: t('kuting')
@@ -90,7 +91,8 @@ const Products = () => {
           content: t('muaffaqiyatli')
         })
       })
-    }
+      }
+    } 
 
 
 

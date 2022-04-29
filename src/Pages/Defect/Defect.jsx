@@ -83,7 +83,7 @@ const Defect = () => {
   return (
     
     <div className="section main-page">
-      <Drawer visible={open} onClose={() => setOpen(false)} title="Yaroqsiz mahsulotlar">
+      <Drawer visible={open} onClose={() => setOpen(false)} title={t('defect')}>
         <Content currentBasket={currentBasket} />
       </Drawer>
       <h1 className="heading">{t('defect')}</h1>

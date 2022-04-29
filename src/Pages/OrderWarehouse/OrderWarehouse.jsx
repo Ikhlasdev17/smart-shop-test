@@ -47,7 +47,6 @@ const OrderWarehouse = () => {
       setLoading(false)
     }
 
-    console.info(response)
 
   } ,[from, to, sendOrder])
 
@@ -69,6 +68,12 @@ const OrderWarehouse = () => {
 
   const handleChange = (e, currentItem, type) => {
     const index = updatedProducts.findIndex(item => item.product_id === currentItem.product.id) 
+
+    if (type === 'count' && e > currentItem.count) {
+      message.warn(t('malumotni_togri_kiriting'))
+      e = currentItem.count
+    }
+
     if (index === -1) {
         updatedProducts = [...updatedProducts,  {
             product_id: currentItem.product.id,
@@ -166,7 +171,6 @@ const OrderWarehouse = () => {
 
       <div className="content">
           <div className="content-top">
-              <div style={{display: 'flex', flexWrap: 'wrap', gap: '30px'}}>
 
                 <Select
               className="form__input content-select content-top__input wdith_3"
@@ -201,7 +205,6 @@ const OrderWarehouse = () => {
                 } }
                 value={moment(to)}
                 />
-                </div>  
                 
               </div> 
 

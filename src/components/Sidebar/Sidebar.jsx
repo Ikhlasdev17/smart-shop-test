@@ -19,20 +19,7 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
         setSelected(pathName.pathname)
       }, [pathName])
       const sidebarItems = t('sidebar__items', { returnObjects: true } )
-
-      useEffect(() => {
-
-        setTimeout(() => {
-           setLoading(true)
-        }, 1000)
-  
-      }, []);
-
-      if (!loading){
-        return (
-            <h1>Loading...</h1>
-        )
-      } 
+ 
 
       return (  
         <Menu mode="inline" className="sidebar-menu" onClick={() => {

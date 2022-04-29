@@ -77,6 +77,7 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
                 message.success(t('muaffaqiyatli'))
                 setTableLoading(false)
                 setOpen(false)
+                setNewArr([])
             })
             .catch(err => {
                 message.error(t('xatolik'))
@@ -123,11 +124,7 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
             seSelectedKeys([]) 
         }
     }
-
-
-    console.info(newArr)
-    
-
+ 
 
     const dataSource = [];
 
