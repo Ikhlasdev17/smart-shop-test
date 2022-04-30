@@ -16,8 +16,8 @@ const Content = ({ type, currentCategory, setOpen }) => {
     const [category, setCategory] = useState({
         category_id: null,
         name: '',
-        min_product: null,
         percents: {
+            min_product: null,
             min: null,
             max: null,
             wholesale: null,
@@ -31,8 +31,8 @@ const Content = ({ type, currentCategory, setOpen }) => {
             setCategory({
             category_id: currentCategory?.id,
             name: currentCategory?.name,
-            min_product: currentCategory?.min_product,
             percents: {
+                min_product: currentCategory?.min_product,
                 min: currentCategory?.min_percent,
                 max: currentCategory?.max_percent,
                 wholesale: currentCategory?.whole_percent,
@@ -49,8 +49,8 @@ useEffect(() => {
             setCategory({
                 category_id: null,
                 name: '',
-                min_product: 0,
                 percents: {
+                    min_product: 0,
                     min: null,
                     max: null,
                     wholesale: null,
@@ -67,8 +67,8 @@ useEffect(() => {
 
             const res = await axios.post(`${URL}/api/category`, {
                 name: category.name,
-                min_product: category.min_product,
                 percents: {
+                    min_product: category.percents.min_product,
                     min: category.percents.min,
                     max: category.percents.max,
                     wholesale: category.percents.wholesale
@@ -83,6 +83,15 @@ useEffect(() => {
                     icon: 'success'
                 })
 
+                setCategory({
+                    category_id: null,
+                    name: '',
+                    percents: {
+                        min_product: 0,
+                        min: null,
+                        max: null,
+                        wholesale: null,
+                    }})
                 setOpen(false)
 
 
@@ -104,8 +113,8 @@ useEffect(() => {
             const res = await axios.patch(`${URL}/api/category`, {
                 category_id: category.category_id,
                 name: category.name,
-                min_product: category.min_product,
                 percents: {
+                    min_product: category.percents.min_product,
                     min: category.percents.min,
                     max: category.percents.max,
                     wholesale: category.percents.wholesale
@@ -119,7 +128,7 @@ useEffect(() => {
                 max_percent: category.percents.max,
                 min_percent: category.percents.min,
                 name: category.name,
-                min_product: category.min_product,
+                min_product: category.percents.min_product,
                 whole_percent: category.percents.wholesale
             }))
 
@@ -177,7 +186,7 @@ useEffect(() => {
       </Form.Item> 
 
       <Form.Item label={t('min_product')} >
-        <InputNumber  className="form__input" placeholder={t('min_product')} onChange={(e) => {setCategory(prev => ({...category, min_product: e}))}}  value={category.min_product} />
+        <InputNumber  className="form__input" placeholder={t('min_product')} onChange={(e) => {setCategory(prev => ({...category,  percents: {...prev.percents, min_product: e}}))}}  value={category.percents.min_product} />
       </Form.Item>
 
 

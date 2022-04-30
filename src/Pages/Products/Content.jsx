@@ -117,7 +117,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
           setProduct(prev => (
             {...product, 
               price_wholesale: {...prev.price_wholesale, 
-                price: Math.round(((priceInUZS / USD) * currentCategory.whole_percent / 100) + (priceInUZS / USD))},
+                price: ((priceInUZS / USD) * currentCategory.whole_percent / 100) + (priceInUZS / USD)},
               price_max: {...prev.price_max, 
                 price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
               price_min: {...prev.price_min,
@@ -151,7 +151,6 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
 
       axios.post(`${URL}/api/product`, product , setToken())
       .then(res => {
-        // dispatch(addProduct(res.data.payload));
         swal({
           title: t('muaffaqiyatli'),
           icon: 'success'
@@ -191,7 +190,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
         <iframe  ref={componentRef} width="280" height="280" className="qr_code_frame" src={qr_code_link} title="Bu yerda mahsulotning qr kodi bolishi kerak edi!">
 
         </iframe>
- 
+
 
         <div className="product__qr__code__content">
           <Input.Group compact>
@@ -340,7 +339,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
           <Select className="form__select form__input"  value={product.price_wholesale.currency_id} required onChange={e => {
             setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, currency_id: e}}))
             if (e === 2) {
-              setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: (Math.floor(currentWhosale / USD))}}))
+              setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: (Math.round((currentWhosale / USD) * 100) / 100)}}))
             } else {
               setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: currentWhosale}}))
             }

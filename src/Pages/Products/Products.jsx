@@ -46,11 +46,22 @@ const Products = () => {
     const res = await axios.get(`${URL}/api/categories`, setToken())
     .then(res => {
       dispatch(fetchedCategories(res.data.payload))
-    })
+    }) 
     
     }, []) 
 
-    console.warn(products)
+
+    const unit_id_options = [
+      {id: 1, label: t('dona')},
+      {id: 2, label: t('tonna')},
+      {id: 3, label: t('kilogram')},
+      {id: 4, label: t('gramm')},
+      {id: 5, label: t('meter')},
+      {id: 6, label: t('sm')},
+      {id: 7, label: t('liter')},
+    ]
+
+
 
   
   const dataSource = [];
@@ -73,7 +84,7 @@ const Products = () => {
       whole_price: <span><strong>{item?.whole_price.price.toLocaleString()}</strong> {item?.whole_price.code}</span>,
       max_price: <span><strong>{item?.max_price.price.toLocaleString()}</strong> {item?.max_price.code}</span>,
       min_price: <span><strong>{item?.min_price.price.toLocaleString()}</strong> {item?.min_price.code}</span>,
-      warehouse: <strong>{item?.warehouse?.count || 0}</strong>,
+      warehouse: <span className='table-text-group'><strong>{item?.warehouse?.count || 0} </strong> <p>{unit_id_options?.filter(x => x.id === item?.warehouse?.unit?.id)[0]?.label || ''}</p></span>,
       actions: (<div className="table-button__group">
           <Button onClick={e => { 
             setOpen(!open)
@@ -154,14 +165,14 @@ const Products = () => {
       key: 'whole_price',
     },
     {
-      title: t('max_price'),
-      dataIndex: 'max_price',
-      key: 'max_price',
-    },
-    {
       title: t('min_price'),
       dataIndex: 'min_price',
       key: 'min_price',
+    },
+    {
+      title: t('max_price'),
+      dataIndex: 'max_price',
+      key: 'max_price',
     },
     {
       title: t('hozir_bor'),

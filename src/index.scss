@@ -354,3 +354,17 @@ img {
         object-fit: cover;
     }
 }
+
+.table-text-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+    p {
+        color: $gray-txt-color;
+        font-size: .800rem;
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+    }
+}

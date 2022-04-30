@@ -29,6 +29,7 @@
     "redux": "^4.1.2",
     "sass": "^1.50.0",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -296,7 +296,6 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
 
         <Form.Item className="form__item" label="Brend nomini kiriting" required>
           <Input
-            required
             placeholder="Brend nomi"
             value={product.brand}
             onChange={e => {

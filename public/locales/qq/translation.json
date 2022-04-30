@@ -191,7 +191,7 @@
     "kategoriya_tanlash": "Kategoriyanı saylań",
     "brend_nomini_tanlang": "Brend atın kiritiń",
     "mahsulot_nomini_tanlang": "Ónim atın kiritiń",
-    "kilogram": "Kilogramm",
+    "kilogram": "Kg",
     "dona": "Dana",
     "tonna": "Tonna",
     "meter": "Metr",
@@ -255,6 +255,10 @@
     "valyutalar": "Valyutalar",
     "valyuta_qosiw":"Valyuta qosiw",
     "oy": "Ay",
-    "sof_foyda": "Sap payda"
+    "sof_foyda": "Sap payda",
+    "delete": "Mag'luwmatti o'shirmekshisizbe?",
+    "deleted": "Mag'luwmat o'shirildi!",
+    "yes": "Awa",
+    "no": "Yaq"
 
 }

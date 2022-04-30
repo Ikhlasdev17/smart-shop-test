@@ -7,7 +7,11 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import {setToken, URL} from '../../assets/api/URL';
-import { fetchedCategories, fetchingCategories, fetchingErrorCategories } from '../../redux/categoriesSlice';
+import { deleteCategory, fetchedCategories, fetchingCategories, fetchingErrorCategories } from '../../redux/categoriesSlice';
+import swal from 'sweetalert';
+
+import Swal from 'sweetalert2';
+
 const {Option} = Select;
 const Categories = () => {
     const [open, setOpen] = useState()
@@ -19,29 +23,55 @@ const Categories = () => {
     const [search, setSearch] = useState('')
     const { t } = useTranslation()
     const dataSource = [];
+    const [refresh, setRefresh] = useState(false)
 
- 
-        categories?.map(item => {
-            dataSource.push({
-              key: item.id,
-              name: <div className="table-title"> <h2>{item.name}</h2></div>,
-              whole_percent: item.whole_percent,
-              min_percent: item.min_percent,
-              max_percent: item.max_percent,
-              min_product: item.min_product,
-              action: (
-                <div className='table-button__group'>
-                  <Button className="table-action" onClick={() => {
-                      setCurrentCategory(prev => item)
-                      setModalType('update')
-                      setOpen(!open)
-                  }}><i className="bx bx-edit"></i></Button>
-                  <Button className="table-action"><i className="bx bx-trash"></i></Button>
-                </div>
-              )
-            })
+
+    const deleteCategoryFunc = (id) => {
+      Swal.fire({
+        title: t('delete'), 
+        icon: 'warning',
+        showCancelButton: true, 
+        confirmButtonText: t('yes'),
+        cancelButtonText: t('no')
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: t('deleted'),
+            icon: 'success'
+          })
+          dispatch(fetchingCategories())
+          axios.delete(`${URL}/api/category/${id}`, setToken())
+          .then(res => {
+            dispatch(deleteCategory(id))
+            setRefresh(!refresh)
+          })
+        }
+      })
       
-          }) 
+    }
+
+
+    categories?.map(item => {
+        dataSource.push({
+          key: item.id,
+          name: <div className="table-title"> <h2>{item.name}</h2></div>,
+          whole_percent: item.whole_percent,
+          min_percent: item.min_percent,
+          max_percent: item.max_percent,
+          min_product: item.min_product,
+          action: (
+            <div className='table-button__group'>
+              <Button className="table-action" onClick={() => {
+                  setCurrentCategory(prev => item)
+                  setModalType('update')
+                  setOpen(!open)
+              }}><i className="bx bx-edit"></i></Button>
+              <Button className="table-action" onClick={e => deleteCategoryFunc(item.id)}><i className="bx bx-trash"></i></Button>
+            </div>
+          )
+        })
+  
+      }) 
 
  
 
@@ -98,7 +128,7 @@ const Categories = () => {
             dispatch(fetchingErrorCategories())
         }
         
-    }, [search, open])
+    }, [refresh, search, open])
 
  
 

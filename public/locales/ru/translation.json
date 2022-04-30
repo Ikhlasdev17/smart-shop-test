@@ -190,11 +190,11 @@
     "kategoriya_tanlash": "Выберите категорию",
     "brend_nomini_tanlang": "Введите название бренда",
     "mahsulot_nomini_tanlang": "Введите название товара",
-    "kilogram": "Килограмм",
+    "kilogram": "Кг",
     "dona": "Штук",
-    "tonna": "Тона",
+    "tonna": "Тонна",
     "meter": "Метр",
-    "sm": "см",
+    "sm": "Cм",
     "gramm": "Грамм",
     "liter": "Литр",
     "rasm_yuklang": "Загрузить изображение",
@@ -254,7 +254,11 @@
     "valyuta_qosiw": "Добавить валюту",
     "oy": "Месяц",
     "sof_foyda": "Чистая прибыль",
-    "toplam": "Toplam №"
+    "toplam": "Toplam №",
+    "delete": "Вы хотите удалить данные?",
+    "deleted": "Данные удалены!",
+    "yes": "Да",
+    "no": "Нет"
 }
 
 

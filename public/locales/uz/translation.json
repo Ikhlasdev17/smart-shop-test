@@ -187,7 +187,7 @@
     "kategoriya_tanlash": "Kategoriyani tanlash",
     "brend_nomini_tanlang": "Brend nomini tanlang",
     "mahsulot_nomini_tanlang": "Mahsulot nomini kiriting",
-    "kilogram": "Kilogram",
+    "kilogram": "Kg",
     "dona": "Dona",
     "tonna": "Tonna",
     "meter": "Metr",
@@ -255,6 +255,10 @@
     "valyuta_qosiw": "Valyuta qoshish",
     "oy": "Oy",
     "sof_foyda": "Sof foyda",
-    "toplam": "Toplam №"
+    "toplam": "Toplam №",
+    "delete": "Malumotni o'chirib tashlamoqchimisiz?",
+    "deleted": "Malumot o'chirildi!",
+    "yes": "Xa",
+    "no": "Yo'q"
 
 }
