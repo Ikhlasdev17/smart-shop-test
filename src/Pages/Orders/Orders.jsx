@@ -24,7 +24,7 @@ const {Option} = Select;
 const Orders = () => {
   const dispatch = useDispatch()
   const { orders, ordersFetchingStatus } = useSelector(state => state.ordersReducer)
-  const [category,setCategory] = useState('') 
+  const [category,setCategory] = useState(['']) 
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
@@ -129,18 +129,27 @@ const Orders = () => {
 
 
   const orderType = [ 
-    {id: 'debt', name: t('qarz')},
-    {id: 'paid', name: t('kirim')},
+    {id: 'debt', name: t('qarz')}, // debt|paid|cashS
+    {id: 'card', name: t('card')},
     {id: 'cash', name: t('cash')}
   ]
   
+
+  let text = ''
+  category.map((item, index) => {
+    if (index !== (category.length - 1)){
+      text += `${item}|` 
+    } else {
+      text += `${item}` 
+    }
+  })
 
 
 
   useEffect(async () => {
     dispatch(fetchingOrders());
 
-    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${category}`, setToken())
+    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}`, setToken())
 
     if (response.status === 200) {
       dispatch(fetchedOrders(response.data.payload.data.baskets));
@@ -162,9 +171,16 @@ const Orders = () => {
     .then(res => setBaskets(res.data.payload))
   } ,[])
 
+  
 
-
-
+  const handleCategorySelect = (e, value) => {
+    console.info(value)
+    if (e[e.length - 1] === '') {
+      setCategory([''])
+    } else {
+      setCategory(e?.filter(item => item !== ''))
+      }
+  }
 
  
 
@@ -189,12 +205,14 @@ const Orders = () => {
       <div className="content">
           <div className="content-top">
 
-                <Input 
+           <div className="select-group">
+                  <Input 
                 placeholder={t('search')}
                 onChange={e => setSearch(e.target.value)}
                 className="form__input"
                 />
               <Select
+              mode='multiple'
               className="form__input content-select content-top__input"
               showSearch
               placeholder={t('categories')}
@@ -202,7 +220,7 @@ const Orders = () => {
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
-              onChange={e => setCategory(e)}
+              onChange={(e, value) => handleCategorySelect(e, value)}
               value={category}
               >
 
@@ -215,31 +233,9 @@ const Orders = () => {
                     })
                   }
               </Select>
+           </div>
 
-              
-
-
-              {/* <div className="content-top__group">
-
-              <DatePicker
-                className="content__range-picker content-top__input form__input "
-                placeholder={t('from')}
-                onChange={(value, string) => {
-                  setFrom(string)
-                } }
-                value={moment(from)}
-                />
-
-
-              <DatePicker
-                className="content__range-picker content-top__input form__input  "
-                placeholder={t('from')}
-                onChange={(value, string) => {
-                  setTo(string)
-                } }
-                value={moment(to)}
-                />
-                </div> */}
+       
 
           <DatePicker 
             className="form__input wdith_3"

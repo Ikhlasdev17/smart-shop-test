@@ -32,7 +32,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   const [photoUploaded, setPhotoUploaded] = useState('default')
 
     const [product, setProduct] = useState({
-      category_id: 1,
+      category_id: null,
       name: "",
       brand: "",
       image: '',
@@ -80,7 +80,6 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
     } else {
-        // dispatch(fetchingErrorCategories())
         alert('error')
     }
 
@@ -106,18 +105,22 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
     }
   }
 
+
+  console.info(categories)
+
   
   
   useEffect(() => {
-    const currentCategory = categories?.filter(item => item.id === product.category_id)[0] 
+    if (product.category_id !== null) {
+      const currentCategory = categories?.filter(item => item.id === product.category_id)[0] 
     
-
+    console.info(currentCategory)
       if (categories && categories.length > 0){
         if (product.price_wholesale.currency_id === 2) {
           setProduct(prev => (
             {...product, 
               price_wholesale: {...prev.price_wholesale, 
-                price: ((priceInUZS / USD) * currentCategory.whole_percent / 100) + (priceInUZS / USD)},
+                price: ((priceInUZS / USD) * currentCategory?.whole_percent / 100) + (priceInUZS / USD)},
               price_max: {...prev.price_max, 
                 price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
               price_min: {...prev.price_min,
@@ -127,7 +130,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
           setProduct(prev => (
             {...product, 
               price_wholesale: {...prev.price_wholesale, 
-                price: (priceInUZS * currentCategory.whole_percent / 100) + priceInUZS},
+                price: (priceInUZS * currentCategory?.whole_percent / 100) + priceInUZS},
               price_max: {...prev.price_max, 
                 price: (priceInUZS * currentCategory.max_percent / 100) + priceInUZS},
               price_min: {...prev.price_min,
@@ -141,6 +144,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
         setCurrentRate(currency && currency[product.cost_price.currency_id - 1].rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
       
       }
+    }
 
   } , [product.cost_price, product.category_id, product.cost_price.currency_id])
 
@@ -168,6 +172,11 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
 
       })
  
+    } else {
+      swal({
+        title: t('malumotni_toliq_kiriting'),
+        icon: 'warning'
+      })
     }
 
   }
@@ -262,10 +271,10 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   }
 
   return (
-    <div >
+    <div className={`product__form ${product.category_id !== null && 'active'}`}>
       <Form layout="vertical" onFinish={handleSubmit}>
         <Form.Item className="form__item" label={t('kategoriya_tanlash')} required>
-          <Select value={product.category_id} onChange={e => setProduct({...product, category_id: e})} required className="form__input">
+          <Select placeholder={t('kategoriya_tanlash')} required value={product.category_id} onChange={e => setProduct({...product, category_id: e})} className="form__input">
             {
               categories?.map(item => (
                 <Select.Option key={item.id} value={item.id}>

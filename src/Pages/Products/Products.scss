@@ -118,3 +118,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.product__form {
+    height: 80px;
+    overflow: hidden;
+    transition: all .5s ease;
+
+    &.active{
+        height: auto;
+    }
+}

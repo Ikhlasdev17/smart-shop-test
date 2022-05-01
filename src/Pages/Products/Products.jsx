@@ -2,7 +2,7 @@ import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton, Pagination }
 import React, { useState, useEffect } from 'react'
 
 import axios from 'axios';
-import { fetchingProducts, fetchedProducts } from '../../redux/productsSlice';
+import { fetchingProducts, fetchedProducts, deleteProduct } from '../../redux/productsSlice';
 
 import './Products.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 const { RangePicker } = DatePicker;
 const {Option} = Select;
@@ -62,6 +63,31 @@ const Products = () => {
     ]
 
 
+    const deleteProductFunc = (id) => {
+      Swal.fire({
+        title: t('delete'), 
+        icon: 'warning',
+        showCancelButton: true, 
+        confirmButtonText: t('yes'),
+        cancelButtonText: t('no')
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: t('deleted'),
+            icon: 'success'
+          })
+          dispatch(fetchingProducts())
+          axios.delete(`${URL}/api/product/${id}`, setToken())
+          .then(res => {
+            dispatch(deleteProduct(id))
+            setRefresh(!refresh)
+          })
+        }
+      })
+      
+    }
+
+
 
   
   const dataSource = [];
@@ -96,7 +122,7 @@ const Products = () => {
             setModalType('update')
             setCurrentProduct(item)
           }}><i className="bx bx-edit"></i></Button>
-          <Button className=""><i className="bx bx-trash"></i></Button>
+          <Button className="" onClick={() => deleteProductFunc(item?.id)}><i className="bx bx-trash"></i></Button>
           </div>
       )
     })

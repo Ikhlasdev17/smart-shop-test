@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wrapper from './components/Layout/Layout';
 import { Login } from './Pages/Login/Login'; 
-import loadingLogo from '../src/assets/images/SmartShop2.png'
+import loadingLogo from '../src/assets/images/LOGOTEXNOPOS.png'
 
 function App() { 
 

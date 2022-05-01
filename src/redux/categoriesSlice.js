@@ -32,7 +32,7 @@ const categoriesSlice = createSlice({
             state.categoriesFetchingStatus = 'default'
         },
         deleteCategory: (state, action) => {
-            state.categories.filter(item => item.id !== action.payload)
+            state.categories = state.categories.filter(item => item.id !== action.payload)
             state.categoriesFetchingStatus = 'default'
         }
     }

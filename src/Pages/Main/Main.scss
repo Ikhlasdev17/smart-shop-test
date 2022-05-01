@@ -29,6 +29,10 @@
     gap: 1rem;
     .content-select {
         width: 30rem;
+        background-color: #fff;
+        .ant-select-selector {
+            width: 100%!important;
+        }
     } 
 
     .content-top__input {
