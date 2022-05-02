@@ -174,7 +174,7 @@ useEffect(() => {
       </Form.Item>
 
       <Form.Item label={t('ulgurji_foiz')}>
-        <InputNumber prefix="%" className="form__input" placeholder={t('cost_price')} onChange={(e) => {setCategory(prev => ({...category, percents: {...prev.percents, wholesale: e}}))}} value={category.percents.wholesale} />
+        <InputNumber prefix="%" className="form__input" placeholder={t('ulgurji_foiz')} onChange={(e) => {setCategory(prev => ({...category, percents: {...prev.percents, wholesale: e}}))}} value={category.percents.wholesale} />
       </Form.Item>
 
       <Form.Item label={t('minimum_foiz')}>

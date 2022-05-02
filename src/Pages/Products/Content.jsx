@@ -54,7 +54,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
       },
       warehouse: {
         unit_id: 1,
-        count: 250
+        count: null
     }
   })
  
@@ -163,6 +163,43 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
         setRefresh(!refresh)
 
         setOpen(false)
+
+        setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: null}}))
+        setProduct(prev => ({...product, price_max: {...prev.price_max, price: null}}))
+        setProduct(prev => ({...product, price_min: {...prev.price_min, price: null}}))
+        setCurrentWhosale(0)
+        setPriceInUZS(0)
+        setProduct(prev => ({...product, warehouse: {...prev.warehouse, count: null}}))
+
+        setProduct({
+          category_id: null,
+          name: "",
+          brand: "",
+          image: '',
+          cost_price:{
+              currency_id: 1,
+              price: null
+          },
+          price_min:{
+              currency_id: 1,
+              price: null
+          },
+          price_max:{
+              currency_id: 1,
+              price: null
+          },
+          price_wholesale:{
+              currency_id: 1,
+              price: null
+          },
+          warehouse: {
+            unit_id: 1,
+            count: null
+        }
+      })
+
+
+      
       }) 
       .catch(res => {
         swal({
@@ -185,6 +222,8 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   const handleSubmit = (e) => { 
     saveProductFunc()
   }
+
+  console.info(product)
  
 
 
@@ -396,6 +435,8 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
             placeholder={t('count')}
             className={"form__input"}
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+            onChange={e => setProduct(prev => ({...product, warehouse: {...prev.warehouse, count: e}}))}
+            value={product.warehouse.count}
             required
           />
           </div>

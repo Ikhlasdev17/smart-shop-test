@@ -28,17 +28,17 @@ const Main = () => {
   const [to, setTo] = useState(moment(now).format('YYYY-MM-DD')) 
   const [loading, setLoading] = useState(true)
   const {t} = useTranslation()
-  const [category_id, setCategoryId] = useState('')
+  const [category_id, setCategoryId] = useState("")
   const [categories, setCategories] = useState([])
   const [employes, setEmployes] = useState([])
-  const [employeeId, setEmployeeId] = useState('')
+  const [employeeId, setEmployeeId] = useState("")
 
   useEffect(async () => {
     dispatch(fetchingProducts());
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id}&employee_id=${employeeId}`, setToken())
+    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id !== '' && category_id}&employee_id=${employeeId !== "" && employeeId }`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload)
@@ -112,7 +112,7 @@ const Main = () => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               >
-                <Option value={""}>{t('all')}</Option>
+                <Option value={''}>{t('all')}</Option>
                   {
                     categories?.map(item => (
                       <Option value={item.id}>{item.name}</Option>
@@ -131,7 +131,7 @@ const Main = () => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               >
-                <Option value={""}>{t('all')}</Option>
+                <Option value={''}>{t('all')}</Option>
                   {
                     employes?.map(item => (
                       <Option value={item.id}>{item.name}</Option>

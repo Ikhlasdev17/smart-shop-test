@@ -135,7 +135,7 @@
     "about__client":"Klient haqqinda",
     "action": "Ha'reket",
     "search": "Izlew...",
-    "add__client": "Klient qosiw",
+    "add__client": "Paydalaniwshi qosiw",
     "save": "Saqlaw",
     
 
@@ -259,6 +259,7 @@
     "delete": "Mag'luwmatti o'shirmekshisizbe?",
     "deleted": "Mag'luwmat o'shirildi!",
     "yes": "Awa",
-    "no": "Yaq"
+    "no": "Yaq",
+    "update_client": "Paydalaniwshini o'zgertiw"
 
 }

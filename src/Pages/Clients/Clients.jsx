@@ -109,7 +109,7 @@ const Clients = () => {
   return (  
     <div className="section main-page">
       
-      <Drawer title="Update user" placement="right" visible={open} onClose={() => setOpen(false)}>
+      <Drawer title={modalType === 'add' ? t('add__client') : t('update_client')} placement="right" visible={open} onClose={() => setOpen(false)}>
         <Content modalType={modalType} currentClient={currentClient} setOpen={() => setOpen()} />
       </Drawer>
       <h1 className="heading">{t('clients')}</h1>

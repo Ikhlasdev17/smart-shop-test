@@ -113,6 +113,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
             category_id: currentProduct?.category.id,
             name: currentProduct?.name,
             brand: currentProduct?.brand,
+            image: currentProduct?.image,
             cost_price:{
               currency_id: costPriceCode,
               price: currentProduct?.cost_price.price
