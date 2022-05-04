@@ -13,11 +13,13 @@ import { useTranslation } from 'react-i18next';
 import swal from  'sweetalert'
 
 const { Option } = Select;
- 
+
+
 
 const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallary, refresh}) => {
   const dispatch = useDispatch()
-
+  
+  const [time, setTime] = useState(true)
   const [user, setUser] = useState({
     name: "",
     phone: "",
@@ -35,6 +37,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     {value: 'admin', label: t('admin')},
   ]
 
+  const [pinCode, setPinCode] = useState("")
 
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
         salary: "",
         flex: "",
         role: "saller",
-        pincode: null
+        pincode: ""
       })
     }
 
@@ -67,21 +70,45 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
         is_everyone: true
       })
     }
+
+    
   },[modalType, currentSallary])
+
+
+  useEffect(() => {
+    if (modalType === "update_user_data") {
+      setUser({
+        employee_id: currentSallary.id,
+        name: currentSallary.name,
+        phone: currentSallary?.phone,
+        salary: currentSallary.salary,
+        flex: currentSallary.flex,
+        role: currentSallary.role,
+        pincode: pinCode
+      })
+    }
+
+    
+  }, [modalType, currentSallary.name, pinCode])
+
+  console.info(currentSallary)
 
   const generatePincode = () => {
     axios.get(`${URL}/api/pincode/generate`, setToken())
     .then(res => {
-      setUser({...user, pincode: res.data.payload.pincode})
-      console.info(res.data.payload.pincode)
+      if (modalType === "update_user_data"){
+        setPinCode(res.data.payload.pincode)
+      } else {
+        setUser({...user, pincode: res.data.payload.pincode})
+      }
     })
   }
 
   useEffect(() => {
-    if (modalType === 'add') {
+    if (modalType === 'add' | modalType === "update_user_data") {
       generatePincode()
     }
-  }, [open]) 
+  }, [open, modalType, currentSallary]) 
 
   const addSallary = async () => {
     if (user.name !== "" && user.phone !== "" && user.password !== "" && user.flex !== "" && user.salary !== "" && user.role !== ""){
@@ -108,7 +135,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
               password: "",
               salary: "",
               flex: "",
-              role: "saller"
+              role: "saller",
+              pincode: ""
           })
 
           generatePincode()
@@ -149,6 +177,23 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     }
   }
 
+  const updateUserData = async () => {
+    console.info(user)
+    const res = await axios.patch(`${URL}/api/employee/update`, user, setToken())
+
+    if (res.status === 200) {
+      swal({
+        title: t('muaffaqiyatli'),
+        icon: 'success'
+      })
+
+      setRefresh(!refresh)
+
+      setOpen(false)
+    }
+
+  }
+
 
 
   const handleSubmit = async (e) => {
@@ -163,6 +208,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     if (modalType === "change_all_salary") {
       changeAllSalary()
     }
+
+    if (modalType === "update_user_data") {
+      updateUserData()
+    }
   }
 
 
@@ -175,6 +224,11 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
       }, 2000)
     } 
   },[copied])
+
+
+  console.info(user.phone?.slice(4, user.phone.length))
+
+
  
   return (
     <>
@@ -203,7 +257,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
       ) : (
         <>
         <Form layout="vertical" onFinish={(e) => handleSubmit(e)}>
-        <Form.Item label={t('fio')} name="fish" required>
+        <Form.Item label={t('fio')} required>
           <Input 
             placeholder={t('fio')}
             onChange={e => {
@@ -215,15 +269,15 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
           />
         </Form.Item>
 
-        {modalType === 'add' && <Form.Item label={t('lavozim_tanlash')} required>
+        {modalType === 'add' || modalType === "update_user_data" && <Form.Item label={t('lavozim_tanlash')} required>
             <Select className="form__input" value={user.role} onChange={e => setUser({...user, role: e})}required>
               {roles.map(item => (
                 <Select.Option value={item.value}>{item.label}</Select.Option>
               ))}
             </Select>
         </Form.Item> }
-
-        <Form.Item label={t('parol')} name="parol" required>
+            {modalType !== "update_user_data" && (
+        <Form.Item label={t('parol')} required>
           <Input 
             placeholder={t('parol')}
             onChange={e => {
@@ -234,9 +288,9 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
             className="form__input"
           />
         </Form.Item>
+            )}
          
-         
-         <Form.Item label={t('telefon_raqami')} name="mobile" required>
+         <Form.Item label={t('telefon_raqami')} required>
           <NumberFormat
             className="form__input"
             format="+998(##)###-##-##"
@@ -244,20 +298,22 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
             mask={"_"}
             onValueChange={e => {
               setUser({...user, phone: `+998${e.floatValue}`})
+              console.info(`+998${e.floatValue}`)
             }}
 
             placeholder={t('telefon_raqami')}
             required
-            value={user.phone?.slice(3, user.phone.length)}
+            value={user.phone?.slice(4, user.phone.length)}
             
           />
         </Form.Item>
 
-        <Form.Item label={t('ish_haqi')} name="salary" required>
+          {modalType !== "update_user_data" && (<>
+        <Form.Item label={t('ish_haqi')}  required>
           <InputNumber formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
             setUser({...user, salary: e})}} value={user.salary} />
           </Form.Item>
-        <Form.Item label="FLEX" name="flex" required>
+        <Form.Item label="FLEX" required>
           <InputNumber 
             className="form__input"
             required
@@ -267,23 +323,25 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
             prefix="%"
             />
           </Form.Item>
-
-          <Form.Item label={t('pinkod')} name="pincode" required>
-          <div className='form-group'>
-            <div className="form-group__item">
-            <CopyToClipboard text={user.pincode} onCopy={() => setCopied(true)}>
-              <div className={copied ? 'pincode__field copied' : 'pincode__field'}>
-                {!copied ? user.pincode : t('copied')} 
-              </div>
-            </CopyToClipboard>
-            </div>
-            <div className="form-group__min-item">
-            <Button className='btn btn-primary' onClick={e => generatePincode()}>
-              {t('yangilash')}
-            </Button>
-            </div>
-            </div>
-          </Form.Item>
+            
+            </>
+            )}
+              <Form.Item label={t('pinkod')} required>
+              <div className='form-group'>
+                <div className="form-group__item">
+                <CopyToClipboard text={user.pincode} onCopy={() => setCopied(true)}>
+                  <div className={copied ? 'pincode__field copied' : 'pincode__field'}>
+                    {!copied ? user.pincode : t('copied')} 
+                  </div>
+                </CopyToClipboard>
+                </div>
+                <div className="form-group__min-item">
+                <Button className='btn btn-primary' onClick={e => generatePincode()}>
+                  {t('yangilash')}
+                </Button>
+                </div>
+                </div>
+              </Form.Item>
           <br />
           <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>
           </Form> 

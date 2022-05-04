@@ -31,26 +31,34 @@ const Sellers = () => {
     // ati, jumis haqi, FLEX, tariyxi, hareket
 
     sellers?.map(item => {
-        dataSource.push({
-            key: item.id,
-            name: <div className="table-title"> <h2>{item.name}</h2> <p>{item.phone}</p></div>,
-            balance: item.salary !== null ? item.salary.toLocaleString() : 0,
-            flex: item.flex || 0 + ' %',
-            history: <Button className="table-action" onClick={() => {
-                setOpen(!open)
-                setModalType('history')
-                setCurrentID(item.id)
-            }}><i className="bx bx-copy"></i></Button>,
-            action: (
-            <>
-                <Button className="table-action" onClick={() => {
+        if (item.role !== "ceo") {
+            dataSource.push({
+                key: item.id,
+                name: <div className="table-title"> <h2>{item.name}</h2> <p>{item.phone}</p></div>,
+                balance: item.salary !== null ? item.salary.toLocaleString() : 0,
+                flex: item.flex || 0 + ' %',
+                history: <Button className="table-action" onClick={() => {
                     setOpen(!open)
-                    setModalType('update')
-                    setCurrentSeller(item)
-                    }}><i className="bx bx-edit"></i></Button>
-            </>
-        )
-        })
+                    setModalType('history')
+                    setCurrentID(item.id)
+                }}><i className="bx bx-copy"></i></Button>,
+                action: (
+                <div className='table-button__group'>
+                    <Button className="table-action" onClick={() => {
+                        setOpen(!open)
+                        setModalType('update')
+                        setCurrentSeller(item)
+                        }}><i className='bx bx-money-withdraw'></i></Button>
+    
+                    <Button className="table-action" onClick={() => {
+                        setOpen(!open)
+                        setModalType('update_user_data')
+                        setCurrentSeller(item)
+                        }}><i className='bx bx-edit'></i></Button>
+                </div>
+            )
+            })
+        }
     })
  
 
@@ -106,7 +114,7 @@ const Sellers = () => {
     return (
         <div className="section main-page">
         
-        <Drawer title={modalType === 'add' ? t('satiwshi_qosiw') : modalType === 'update' ? t('satiwshini_janalaw') : modalType === 'change_all_salary' ? t('ish_haqini_hisoblash') : '' } placement="right" visible={open} onClose={() => setOpen(false)}>
+        <Drawer title={modalType === 'add' ? t('satiwshi_qosiw') : modalType === 'update' ? t('ish_haqini_hisoblash') : modalType === 'change_all_salary' ? t('ish_haqini_hisoblash') : t('satiwshini_janalaw') } placement="right" visible={open} onClose={() => setOpen(false)}>
             {modalType === 'history' ? <History currId={currentID} /> : <Content open={open} setRefresh={() => setRefresh()} currentSallary={currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
         </Drawer>
         <h1 className="heading">{t('sellers')}</h1>
