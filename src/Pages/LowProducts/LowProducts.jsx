@@ -33,6 +33,8 @@ const LowProducts = () => {
 
   const [currentCategory, setCurrentCategory] = useState("")
 
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0)
+
   const { t } = useTranslation()
   
   let updatedProducts = [];
@@ -88,6 +90,7 @@ const LowProducts = () => {
                 price: type === 'price' ? e : currentItem.product.cost_price.price
             }
         }]
+        setSelectedItemsCount(selectedItemsCount + 1)
     } else {
         if (type === 'price') {
             updatedProducts[index].price.price = e
@@ -101,8 +104,6 @@ const LowProducts = () => {
             }
         }
     }
- 
-    console.info(updatedProducts)
   }
 
 
@@ -202,7 +203,7 @@ const LowProducts = () => {
                 value={[moment(from), moment(to)]}
               />
 
-              <Button onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
+              <Button disabled={selectedItemsCount === 0} onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>
 
 

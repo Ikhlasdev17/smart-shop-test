@@ -8,7 +8,7 @@ import { fetchingProducts, addProduct, updateProduct } from '../../redux/product
 import Dragger from 'antd/lib/upload/Dragger';
 import swal from 'sweetalert';
 import { useTranslation } from 'react-i18next';
-const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date }) => {
+const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency_date }) => {
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
   const [currency, setCurrency] = useState(currency_date)
@@ -138,8 +138,11 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
   // fetching categories
   useEffect(async () => {
     dispatch(fetchingCategories())
-
-    setPriceInUZS(currentProduct?.cost_price.price)
+    if (currentProduct?.cost_price.code === "USD") {
+      setPriceInUZS(currentProduct?.cost_price.price * USD_RATE)
+    } else {
+      setPriceInUZS(currentProduct?.cost_price.price)
+    }
 
     const res = await axios.get(`${URL}/api/categories`, setToken());
 
@@ -153,6 +156,11 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
     
     
   }, [])
+
+
+  useEffect(() => {
+    setUploaded('default')
+  }, [open])
   
   
   
@@ -198,12 +206,10 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
 
   }  
 
+  console.info(priceInUZS)
 
   useEffect(() => {
     const currentCategory = categories.filter(item => item.id === product.category_id)[0] 
-    
-
-
       if (whole_price_code === 2) {
         setProduct(prev => (
           {...product, 
@@ -251,7 +257,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
     .then(res => {
       // dispatch(updateProduct(product))
       swal({
-        title: 'Mahsulot muaffaqiyatli yangilandi',
+        title: t('muaffaqiyatli'),
         icon: 'success'
       })
       setOpen(false)
@@ -268,6 +274,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
 
 
   const photoUploader = (e) => {
+    setUploaded('loading')
     const formData = new FormData()
     formData.append('file', e.file.originFileObj)
     formData.append('upload_preset', "smart-shop")
@@ -275,7 +282,7 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
 
     axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
       setProduct(prev => ({...product, image: res.data.secure_url}))
-      setUploaded(res.data.secure_url)
+      setUploaded('ok')
       setImageUploading(false)
     })
   } 
@@ -283,8 +290,8 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
   return (
     <div >
       <Form layout="vertical" onFinish={handleSubmit}>
-        <Form.Item className="form__item" label="Kategoriyani tanlang" required>
-          <Select value={product.category_id} onChange={e => setProduct({...product, category_id: e})} required className="form__input">
+        <Form.Item className="form__item" label={t('kategoriya_tanlash')} required>
+          <Select value={product.category_id} onChange={e => setProduct({...product, category_id: e})} required className="form__input" placeholder={t('kategoriya_tanlash')}>
             {
               categories?.map(item => (
                 <Select.Option key={item.id} value={item.id}>
@@ -295,9 +302,9 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
           </Select>
         </Form.Item>
 
-        <Form.Item className="form__item" label="Brend nomini kiriting" required>
+        <Form.Item className="form__item" label={t('brend_nomini_tanlang')} required>
           <Input
-            placeholder="Brend nomi"
+            placeholder={t('brend_nomini_tanlang')}
             value={product.brand}
             onChange={e => {
               setProduct({...product, brand: e.target.value})
@@ -306,22 +313,22 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
           />
         </Form.Item>
 
-        <Form.Item className="form__item" label="Mahsulot nomini kiriting" required>
+        <Form.Item className="form__item" label={t('mahsulot_nomini_tanlang')} required>
           <Input 
             required
-            placeholder="Mahsulot nomi"
+            placeholder={t('mahsulot_nomini_tanlang')}
             value={product.name}
             onChange={e => {setProduct({...product, name: e.target.value})}}
             className="form__input"
           />
         </Form.Item>
 
-        <Form.Item className="form__item" label="Tan narxi" required>
-        <Input.Group compact label="Tan narxi" required className='form-group'>
+        <Form.Item className="form__item" label={t('cost_price')} required>
+        <Input.Group compact label={t('cost_price')} required className='form-group'>
           <div className="form-group__item">
           <InputNumber 
             required
-            placeholder="Tan narxi"
+            placeholder={t('cost_price')}
             className="form__input"
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
             onChange={handleCurrency}
@@ -344,12 +351,12 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
         </Input.Group>
         </Form.Item>
 
-        <Form.Item className="form__item" label="Ulgurji narxi" required> 
-        <Input.Group compact label="Tan narxi" required className='form-group'>
+        <Form.Item className="form__item" label={t('whole_price')} required> 
+        <Input.Group compact label={t('whole_price')} required className='form-group'>
           <div className="form-group__item">
           <InputNumber 
             required
-            placeholder="Ulgurji narxi"
+            placeholder={t('whole_price')}
             className="form__input"
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
             onChange={e => {
@@ -390,10 +397,10 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
         </Input.Group>
         </Form.Item>
 
-        <Form.Item className="form__item" label="Minimum narxi" required>
+        <Form.Item className="form__item" label={t('min_price')} required>
         <InputNumber 
           required
-            placeholder="Minimum narxi"
+            placeholder={t('min_price')}
             className="form__input"
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
             onChange={e => {
@@ -404,9 +411,9 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
           />
         </Form.Item>
 
-        <Form.Item className="form__item" label="Maksimum narxi" required>
+        <Form.Item className="form__item" label={t('max_price')} required>
         <InputNumber 
-            placeholder="Maksimum narxi"
+            placeholder={t('max_price')}
             className="form__input"
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
             onChange={e => {
@@ -418,23 +425,28 @@ const UpdateContent = ({ type, currentProduct, setOpen, USD_RATE, currency_date 
           />
         </Form.Item>
 
-        <Dragger className="photo__uploader" onChange={photoUploader} showUploadList={false}>
-            {uploaded === '' ? (
-              <>
-                <i className='bx bx-cloud-upload ant-upload-drag-icon'></i>
-                <h4>Rasm yuklang</h4>
-                <p>Rasmni qurulmangizdan tanlang yoki shu yerga olib kelib tashlang</p>
-              </>
-            ) : (
-              <>
-                <i className='bx bx-check-circle success-icon'></i>
-                <h4>Rasim yuklandi</h4>
-              </>
-            )}
-      </Dragger> 
+      <Dragger className="photo__uploader" onChange={photoUploader} showUploadList={false}>
+                  {uploaded === 'default' ? (
+                    <>
+                      <i className='bx bx-cloud-upload ant-upload-drag-icon'></i>
+                  <h4>{t('rasm_yuklang')}</h4>
+                  <p>{t('rasimni_tanlash_text')}</p>
+                    </>
+                  ) : uploaded === 'ok' ? (
+                    <>
+                      <i className='bx bx-check-circle success-icon'></i>
+                      <h4>{t('muaffaqiyatli')}</h4>
+                    </>
+                  ) : uploaded === 'loading' && (
+                    <>
+                      <i className='bx bx-time-five ant-upload-drag-icon'></i>
+                      <h4>{t('kuting')}</h4>
+                    </>
+                  )}
+            </Dragger>  
       <br />
 
-        <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">Saqlash</Button>
+        <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
         
       </Form>
     </div>

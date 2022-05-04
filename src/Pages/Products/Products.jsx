@@ -247,7 +247,7 @@ const Products = () => {
     <div className="section products-page">
 
       <Drawer title={modalType === 'add' ? t('mahsulot_qoshish') : modalType === 'update' ? t('mahsulotni_tahrirlash') : modalType === 'import' ? t('import_product') : t('product_qr')} visible={open} onClose={() => setOpen(false)}>
-        <Content refresh={refresh} setRefresh={() => setRefresh()} qr_code_link={qrCode} currency_date={currency}  USD_RATE={USD} type={modalType} currentProduct={currentProduct} setOpen={() => setOpen()} />
+        <Content open={open} refresh={refresh} setRefresh={() => setRefresh()} qr_code_link={qrCode} currency_date={currency}  USD_RATE={USD} type={modalType} currentProduct={currentProduct} setOpen={() => setOpen()} />
       </Drawer>
 
       <h1 className="heading">{t('products')}</h1>

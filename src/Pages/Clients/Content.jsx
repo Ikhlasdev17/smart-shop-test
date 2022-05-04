@@ -174,7 +174,7 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
 
         <div className="form__label">
           <span>{t('mijoz_haqida')}</span>
-          <TextArea className="form__input" required placeholder={t('mijoz_haqida')} onChange={e => {setUser({...user, about: e.target.value})}} value={user.about} /></div>
+          <TextArea className="form__input" placeholder={t('mijoz_haqida')} onChange={e => {setUser({...user, about: e.target.value})}} value={user.about} /></div>
         <Button className="btn btn-primary"  style={{width: '100%'}} htmlType="submit">{t('saqlash')}</Button>
       </Form> 
     </>

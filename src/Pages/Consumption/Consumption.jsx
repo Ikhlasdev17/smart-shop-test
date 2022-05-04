@@ -39,6 +39,7 @@ const Consumptions = () => {
   const [lastPage, setLastPage] = useState()
   const [perPage, setPerPage] = useState()
   const [currentPage, setCurrentPage] = useState()
+  const [refresh, setRefresh] = useState(false)
 
 
   useEffect(async () => {
@@ -56,7 +57,7 @@ const Consumptions = () => {
   const dataSource = [];
 
 
-  consumptions.length > 0 && consumptions.map(item => { 
+  consumptions?.length > 0 && consumptions.map(item => { 
       dataSource.push({
           category: <div className="table-title"><h3>{item?.category_name.uz}</h3></div>,
             kimga: item?.whom,
@@ -66,7 +67,7 @@ const Consumptions = () => {
         })
   })
 
- 
+ console.info(consumptions)
 
   
   const columns = [
@@ -109,13 +110,15 @@ const Consumptions = () => {
     const response = await axios.get(`${URL}/api/consumptions?from=${from !== '' ? from : '2020-04-04'}&to=${to !== '' ? to : moment(Date.now()).format('YYYY-MM-DD')}&type=${type.pathname.slice(14, type.pathname.length)}&page=${currentPage}`, setToken())
 
     if (response.status === 200) {
-      dispatch(fetchedConsumptions(response.data.payload.data))
+      dispatch(fetchedConsumptions(response.data.payload.data.items))
       setLoading(false)
       setLastPage(response.data.payload.last_page)
       setPerPage(response.data.payload.per_page)
     }
 
-  } ,[type, from, to, currentPage])
+    console.info(response);
+
+  } ,[type, from, to, currentPage, refresh])
  
 
   return (
@@ -123,7 +126,7 @@ const Consumptions = () => {
     <div className="section products-page">
 
     <Drawer title={type.pathname.slice(14, type.pathname.length) === 'income' ? t('kirim_qoshish') : t('xarajat_qoshish')} visible={open} onClose={() => setOpen(false)}>
-      <Content setOpen={() => setOpen()} categories={categories} type={type.pathname.slice(14, type.pathname.length)} />
+      <Content open={open} setRefresh={setRefresh} refresh={refresh} setOpen={() => setOpen()} categories={categories} type={type.pathname.slice(14, type.pathname.length)} />
     </Drawer>
 
       <h1 className="heading">{type.pathname.slice(14, type.pathname.length) === 'consumption' ? t('consumption') : t('income')}</h1>

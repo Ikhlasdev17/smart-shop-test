@@ -1,6 +1,6 @@
 import { Button, DatePicker, Form, Input, InputNumber, Select } from 'antd'
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import swal from 'sweetalert';
 import { setToken, URL } from '../../assets/api/URL';
@@ -10,7 +10,7 @@ import moment from 'moment';
 
 import { useTranslation } from 'react-i18next';
 
-const Content = ({ type, categories, setOpen }) => {
+const Content = ({ open, type, categories, setOpen, setRefresh, refresh }) => {
 
     const dispatch = useDispatch()
 
@@ -27,6 +27,19 @@ const Content = ({ type, categories, setOpen }) => {
 
     const {t} = useTranslation()
 
+
+    useEffect(() => {
+      setFormData({
+        category_id: categories[0].id,
+        whom: "",
+        price: null,
+        date: moment(Date.now()).format('YYYY-MM-DD'),
+        description: "",
+        type: type,
+        payment_type: "card",
+     })
+    }, [open]);
+
  
 
 
@@ -34,15 +47,8 @@ const Content = ({ type, categories, setOpen }) => {
         dispatch(fetchingConsumption())
         axios.post(`${URL}/api/consumption`, formData, setToken())
         .then(res => {
-            dispatch(addConsumptions({
-                category_name: {
-                    uz: categories.filter(item => item.id === formData.category_id)[0].name.uz
-                },
-                whom: formData.whom,
-                price: formData.price,
-                description: formData.description,
-                date: formData.date
-            }))
+
+            setRefresh(!refresh)
 
             setOpen(false)
 
@@ -105,7 +111,7 @@ const Content = ({ type, categories, setOpen }) => {
       </Form.Item>
       
       <Form.Item label={t('description')}>
-        <Input.TextArea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="form__input" placeholder={t('description')} required></Input.TextArea>
+        <Input.TextArea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="form__input" placeholder={t('description')} ></Input.TextArea>
       </Form.Item>
 
 

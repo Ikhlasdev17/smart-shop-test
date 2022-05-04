@@ -113,8 +113,8 @@ useEffect(() => {
             const res = await axios.patch(`${URL}/api/category`, {
                 category_id: category.category_id,
                 name: category.name,
+                min_product: category.percents.min_product,
                 percents: {
-                    min_product: category.percents.min_product,
                     min: category.percents.min,
                     max: category.percents.max,
                     wholesale: category.percents.wholesale

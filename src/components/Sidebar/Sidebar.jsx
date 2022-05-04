@@ -18,14 +18,14 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
     useEffect(() =>{
         setSelected(pathName.pathname)
       }, [pathName])
-      const sidebarItems = t('sidebar__items', { returnObjects: true } )
+      const sidebarItems = t('sidebar__items', { returnObjects: true } ) || []
  
-
+      console.info(sidebarItems)
       return (  
         <Menu mode="inline" className="sidebar-menu" onClick={() => {
           windowWidth < 1200 ? setCollapsed(!collapsed) : console.log('hello World')
         }}>
-          {sidebarItems && sidebarItems.map((item, index) => {
+          {sidebarItems && sidebarItems !== "sidebar__items" && sidebarItems.map((item, index) => {
               return <>
               {!item.submenu && 
                     <>

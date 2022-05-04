@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 
 import swal from 'sweetalert';
 
-const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE, currency_date, qr_code_link }) => {
+const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE, currency_date, qr_code_link }) => {
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
   const [currency, setCurrency] = useState()
@@ -106,7 +106,6 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
   }
 
 
-  console.info(categories)
 
   
   
@@ -138,16 +137,19 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
             }))
         }
   
-        console.warn(USD);
-  
         setCurrentWhosale((priceInUZS * currentCategory?.whole_percent / 100) + priceInUZS)
         setCurrentRate(currency && currency[product.cost_price.currency_id - 1].rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
       
       }
     }
 
+    setPhotoUploaded("default")
+
   } , [product.cost_price, product.category_id, product.cost_price.currency_id])
 
+  useEffect(() => {
+    setPhotoUploaded("default")
+  }, [open])
 
   const saveProductFunc = () => {
     if (product.brand !== "" && product.category_id !== null && product.name !== null){
@@ -163,6 +165,8 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
         setRefresh(!refresh)
 
         setOpen(false)
+
+        setPhotoUploaded("default")
 
         setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: null}}))
         setProduct(prev => ({...product, price_max: {...prev.price_max, price: null}}))
@@ -228,7 +232,7 @@ const Content = ({ refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE
 
 
   if (type === 'update') {
-    return <UpdateContent USD_RATE={USD_RATE} currency_date={currency_date} type={type} currentProduct={currentProduct} setOpen={() => setOpen()} />
+    return <UpdateContent open={open} USD_RATE={USD_RATE} currency_date={currency_date} type={type} currentProduct={currentProduct} setOpen={() => setOpen()} />
   }
 
 

@@ -18,7 +18,7 @@ const { Option } = Select;
 const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallary, refresh}) => {
   const dispatch = useDispatch()
 
-  const [user, setUser] = useState(modalType === 'add' ? {
+  const [user, setUser] = useState({
     name: "",
     phone: "",
     password: "", 
@@ -26,11 +26,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     flex: "",
     role: "saller",
     pincode: null
-  } : { 
-    salary: currentSallary?.salary,
-    flex: currentSallary?.flex,   
-    employee_id: currentSallary?.id,
-    is_everyone: modalType === 'update' ? false : modalType === 'change_all_salary' && true
   })
   const [copied, setCopied] = useState(false)
   const { t } = useTranslation()
@@ -58,10 +53,18 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
 
     if (modalType === 'update'){
       setUser({
-        salary: currentSallary?.salary,
-        flex: currentSallary?.flex,   
-        employee_id: currentSallary?.id,
+        salary: currentSallary.salary,
+        flex: currentSallary.flex,   
+        employee_id: currentSallary.id,
         is_everyone: false
+      })
+    }
+
+    if (modalType === 'change_all_salary'){
+      setUser({
+        salary: 0,
+        flex: 0,   
+        is_everyone: true
       })
     }
   },[modalType, currentSallary])
@@ -75,7 +78,9 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   }
 
   useEffect(() => {
-    generatePincode()
+    if (modalType === 'add') {
+      generatePincode()
+    }
   }, [open]) 
 
   const addSallary = async () => {
@@ -135,6 +140,15 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     }
   }
 
+  const changeAllSalary = async () => {
+    const res = await axios.post(`${URL}/api/salary`, user, setToken())
+    if (res.status === 200) {
+      message.success(t('muaffaqiyatli'))
+      setRefresh(Math.random() * 10)
+      setOpen(false)
+    }
+  }
+
 
 
   const handleSubmit = async (e) => {
@@ -144,6 +158,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
 
     if (modalType === 'update') {
         updateSallary()
+    }
+
+    if (modalType === "change_all_salary") {
+      changeAllSalary()
     }
   }
 
@@ -166,7 +184,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
         <>
         <div className="form__label">
           <span>{t('ish_haqi')}</span>
-          <InputNumber value={300} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
+          <InputNumber value={user?.salary} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
             setUser({...user, salary: e})}} />
           </div>
           <div className="form__label">
@@ -246,8 +264,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
             placeholder="FLEX" 
             onChange={e => {setUser({...user, flex: e})}} 
             value={user.flex}
-            formatter={value => `${value}%`}
-            parser={value => value.replace('%', '')} />
+            prefix="%"
+            />
           </Form.Item>
 
           <Form.Item label={t('pinkod')} name="pincode" required>
