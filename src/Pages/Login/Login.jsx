@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, InputNumber, Button } from 'antd';
+import { Form, Input, InputNumber, Button, message } from 'antd';
 import './Login.scss';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -7,16 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogged } from '../../redux/userSlice';
 import NumberFormat from 'react-number-format';
 
+import { useTranslation } from 'react-i18next';
+
 
 const URL = 'https://smart-shop.my-project.site'
 
 export function Login() {
     let navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const {t} = useTranslation()
     const [user, setUser] = useState({
         phone: '',
-        password: '',
         pincode: ''
     })
     
@@ -33,6 +34,9 @@ export function Login() {
                 localStorage.setItem('token', res.data.payload.token)
                 dispatch(userLogged(res.data.payload.token))
                 navigate("/", { replace: true });
+            })
+            .catch(err => {
+                message.error(t('parol_yoki_login_xato'))
             })
         }
     }
@@ -60,7 +64,7 @@ export function Login() {
         </Form.Item>
 
         <Form.Item className="form-label" label="Parol"  >
-            <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, password: e.target.value, pincode: e.target.value})}  placeholder="Password" required/>
+            <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, pincode: e.target.value})}  placeholder="Password" required/>
         </Form.Item>
         <br />
         <Button htmlType="submit" className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
