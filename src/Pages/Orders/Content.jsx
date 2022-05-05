@@ -4,32 +4,15 @@ import axios from 'axios'
 import { setToken, URL } from '../../assets/api/URL'
 import { useTranslation } from 'react-i18next'
 
-const Content = ({ setOpen, currentBasketItemId, orders }) => {
+const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
     const [basketItems, setBasketItems] = useState([])
-    const [checkStrictly, setCheckStrictly] = useState(false)
     const [spinning, setSpinning] = useState(false)
-    const [selectedItemsArr, setSelectedItems] = useState([])
     const [tableLoading, setTableLoading] = useState(false)
     const {t} = useTranslation()
-    const dataToBasket = [
-        {
-            "basket_id": currentBasketItemId,
-            "payment_type":[
-                "debt", "cash", "card","paid_debt"
-            ],
-            "orders":[
-                {
-                    "order_id":2,
-                    "count": 2
-                }
-            ]
-        }
-    ]
 
+    const [btnDisabled, setBtnDisabled] = useState(true)
 
     const [newArr, setNewArr] = useState([])
-    const ordersData = [];
-    const selectedItems = []
 
     const [selectedKeys, seSelectedKeys] = useState([])
     const [checkedItems, setCheckedItems] = useState([])
@@ -46,14 +29,23 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
 
  
  
-
+    useEffect(() => {
+        if (selectedKeys.length === 0) {
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
+        }
+    }, [selectedKeys, checkedItems])
      
 
     const handleChangeBasketItem = (value, item) => { 
         const index = newArr.findIndex(i => i.order_id === item.id)  
         if (value > item.count) {
             message.error(t('malumotni_togri_kiriting'))
-            value = item.count
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
+
         }
         const newData = [...newArr]
         newData[index].count = value
@@ -67,9 +59,7 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
             setTableLoading(true)
             axios.post(`${URL}/api/return/orders`, {
                 "basket_id": currentBasketItemId,
-                "payment_type":[
-                    "debt", "cash", "card","paid_debt"
-                ],
+                "payment_type":["debt", "cash", "card","paid_debt"],
                 orders: newArr
             }, setToken())
             .then(res => {
@@ -107,6 +97,13 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
             setCheckedItems(newCheckedItems)
         }
     }
+
+
+    useEffect(() => {
+        setCheckedItems([])
+        setNewArr([])
+        seSelectedKeys([]) 
+    }, [open])
 
 
     const handleCheckedAll = (e) => {
@@ -177,7 +174,7 @@ const Content = ({ setOpen, currentBasketItemId, orders }) => {
       <Table size="small" pagination={false} columns={columns} dataSource={dataSource} />
       </Skeleton>
       <br />
-      <Button onClick={handleClick} className="btn btn-primary" style={{float: 'right'}}>Saqlash</Button>
+      <Button disabled={btnDisabled} onClick={handleClick} className="btn btn-primary" style={{float: 'right'}}>{t('save')}</Button>
 
     </div>
   )

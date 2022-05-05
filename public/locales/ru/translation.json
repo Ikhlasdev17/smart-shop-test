@@ -170,7 +170,7 @@
     "total_income": "Общая сумма",
     "all": "Все",
     "qarz": "Долг",
-    "kirim": "Доход",
+    "kirim": "Приход",
     "qarz_muddati": "Срок долга",
     "total_price": "Общая сумма",
     "description": "Комментария",
@@ -260,7 +260,9 @@
     "yes": "Да",
     "no": "Нет",
     "update_client": "Редактирование клиента",
-    "mahsulotni_tahrirlash": "Редактирование продукта"
+    "mahsulotni_tahrirlash": "Редактирование продукта",
+
+    "kirish": ""
 }
 
 

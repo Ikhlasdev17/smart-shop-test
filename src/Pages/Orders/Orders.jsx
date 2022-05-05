@@ -1,4 +1,4 @@
-import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton } from 'antd'
+import { Select,DatePicker, Table, Button, Input, Drawer, Skeleton, Modal, Pagination } from 'antd'
 import React, { useState, useEffect } from 'react'
 
 import axios from 'axios';
@@ -36,6 +36,11 @@ const Orders = () => {
 
   const [amount, setAmount] = useState({})
 
+  const [descriptionModal, setDescriptionModal] = useState("")
+  const [descrModalOpen, setDescrModalOpen] = useState(false)
+  const [lastPage, setLastPage] = useState()
+  const [perPage, setPerPage] = useState()
+
   useEffect(async () => {
     dispatch(fetchingCategories())
 
@@ -61,7 +66,20 @@ const Orders = () => {
             card: item?.card.toLocaleString(),
             debt: <span><strong>{item?.debt.debt.toLocaleString()}</strong> <br /> {item?.debt.remaining.toLocaleString()}</span>,
             total: <span>{(item?.cash + item?.card + item?.debt.debt).toLocaleString()}</span>,
-            description: <span>{item?.debt.debt > 0 ? t('qarz') : t('kirim')}</span>,
+            description: <>
+                {item?.description !== null ? <>
+                  <span style={{cursor: 'pointer', textTransform: 'capitalize'}} onClick={() => {
+                    setDescriptionModal(item?.description)
+                    setDescrModalOpen(true)
+                  }}> 
+                    {item?.description.slice(0, 20)}
+                  </span>
+                </> : 
+                  <span>{item?.debt.debt > 0 ? t('qarz') : t('kirim')}</span>
+                }
+              
+            </>, 
+            
             completed: <span><strong>{item?.term ? moment(item?.term).format('MMM DD, YYYY') : ''}</strong></span>,
             actions: (<>
                 <Button 
@@ -77,6 +95,9 @@ const Orders = () => {
             )
         })
   })
+
+
+  console.info(orders[0])
 
 
 
@@ -149,14 +170,17 @@ const Orders = () => {
   useEffect(async () => {
     dispatch(fetchingOrders());
 
+    setLoading(true)
+
     const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}`, setToken())
 
     if (response.status === 200) {
       dispatch(fetchedOrders(response.data.payload.data.baskets));
       setAmount(response.data.payload.data.amount)
+      setLoading(false)
+      setPerPage(response.data.payload.per_page)
+      setLastPage(response.data.payload.last_page)
     }
-
-    console.info(response);
 
 
 
@@ -189,8 +213,18 @@ const Orders = () => {
     <div className="section products-page"> 
 
       <Drawer size="large" visible={open} onClose={() => setOpen(false)} title={t('return')}>
-        <Content orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
+        <Content open={open} orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
       </Drawer>
+
+      <Modal visible={descrModalOpen} onOk={e => {
+        setDescrModalOpen(false)
+        setDescriptionModal("")
+      }} onCancel={() => {
+        setDescrModalOpen(false)
+        setDescriptionModal("")
+      }}>
+        {descriptionModal ? descriptionModal : ''}
+      </Modal>
 
       <div className="top__elements">
       <h1 className="heading">{t('offers')}</h1>
@@ -246,7 +280,19 @@ const Orders = () => {
 
           <div className="content-body" >
             <Skeleton loading={loading} active>
-            <Table size="small" rowClassName={"table-row"} className="content-table"  dataSource={dataSource} columns={columns} />
+            <Table pagination={false} size="small" rowClassName={"table-row"} className="content-table"  dataSource={dataSource} columns={columns} />
+
+            {lastPage > 1 && (
+              <div className="pagination__bottom">
+              <Pagination 
+                total={lastPage * perPage} 
+                pageSize={perPage ? perPage : 0}
+                current={page}
+                onChange={c => setPage(c)}
+                showSizeChanger={false}
+              />
+            </div>
+            )}
             </Skeleton>
           </div>
       </div>
