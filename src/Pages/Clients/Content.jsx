@@ -56,6 +56,7 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
   } ,[modalType, currentClient])
 
 
+
   const handleSubmit = async (e) => {
 
     if (user.full_name !== "" && user.phone !== "" && user.type !== "" && user.about !== ""){
@@ -113,6 +114,7 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
     
     
   }
+
  
   return (
     <>
@@ -166,7 +168,7 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
               setUser({...user, phone: `+998${e.floatValue}`})
             }}
             required
-            value={user.phone.slice(4, user.phone.length)}
+            value={user.phone.length !== 9 ? user.phone.slice(4, user.phone.length) : user.phone}
             placeholder={t('telefon_raqami')}
             
           />
