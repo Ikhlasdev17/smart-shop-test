@@ -16,6 +16,7 @@ import moment from 'moment';
 
 import { useTranslation } from 'react-i18next';
 import Content from './Content';
+import { clientsFetchingError, fetchedClients, fetchingClients } from '../../redux/clientsReducer';
 
 
 const { RangePicker } = DatePicker;
@@ -24,6 +25,7 @@ const {Option} = Select;
 const Orders = () => {
   const dispatch = useDispatch()
   const { orders, ordersFetchingStatus } = useSelector(state => state.ordersReducer)
+  const {clients, clientsFetchingStatus} = useSelector(state => state.clientsReducer)
   const [category,setCategory] = useState(['']) 
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState('')
@@ -40,6 +42,9 @@ const Orders = () => {
   const [descrModalOpen, setDescrModalOpen] = useState(false)
   const [lastPage, setLastPage] = useState()
   const [perPage, setPerPage] = useState()
+  const [currentSelectedBasket, setCurrentSelectedBasket] = useState("")
+
+  const [user, setUser] = useState("")
 
   useEffect(async () => {
     dispatch(fetchingCategories())
@@ -87,6 +92,7 @@ const Orders = () => {
                   onClick={e => {
                     setOpen(!open)
                     setCurrentBasketId(item?.id)
+                    setCurrentSelectedBasket(item)
                   }}
                   >
                   <i className="bx bx-copy"></i>
@@ -97,13 +103,20 @@ const Orders = () => {
   })
 
 
-  console.info(orders[0])
 
+  useEffect(async () =>{
+    dispatch(fetchingClients())
 
+    axios.get(`${URL}/api/clients`, setToken())
+    .then(res => {
+      dispatch(fetchedClients(res.data.payload.data.clients)) 
+    })
+    .catch(err => {
+      dispatch(clientsFetchingError())
+    })
+  } ,[])
+ 
 
-
-    console.warn(orders);
-  
   const columns = [
     {
       title: t('clients'),
@@ -172,7 +185,7 @@ const Orders = () => {
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}`, setToken())
+    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}&user_id=${user}`, setToken())
 
     if (response.status === 200) {
       dispatch(fetchedOrders(response.data.payload.data.baskets));
@@ -187,7 +200,7 @@ const Orders = () => {
 
    
     
-  } ,[search, filter, page, category])
+  } ,[search, filter, page, category, user])
 
 
   useEffect(() => {
@@ -212,8 +225,8 @@ const Orders = () => {
     
     <div className="section products-page"> 
 
-      <Drawer size="large" visible={open} onClose={() => setOpen(false)} title={t('return')}>
-        <Content open={open} orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
+      <Drawer className='drawer-big' size="large" visible={open} onClose={() => setOpen(false)} title={t('return')}>
+        <Content basket={currentSelectedBasket} open={open} orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
       </Drawer>
 
       <Modal visible={descrModalOpen} onOk={e => {
@@ -249,7 +262,7 @@ const Orders = () => {
               mode='multiple'
               className="form__input content-select content-top__input"
               showSearch
-              placeholder={t('categories')}
+              placeholder={t('all_payment')}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -258,7 +271,7 @@ const Orders = () => {
               value={category}
               >
 
-                <Option value={''}>{t('all')}</Option>
+                <Option value={''}>{t('all_payment')}</Option>
                   {
                     orderType.map((type) => {
                       return (
@@ -267,14 +280,35 @@ const Orders = () => {
                     })
                   }
               </Select>
-           </div>
+              <Select 
+              className="form__input content-select content-top__input"
+              showSearch
+              placeholder={t('select_client')}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+              onChange={(e, value) => setUser(e, value)}
+              value={user}
+              >
+
+                <Option value={''}>{t('all_client')}</Option>
+                  {
+                    clients.map((type) => {
+                      return (
+                        <Option key={type.id} value={type.id}>{type.full_name}</Option>
+                      )
+                    })
+                  }
+              </Select>
 
        
 
           <DatePicker 
             className="form__input wdith_3"
             placeholder={t('qarz_muddati')}
-          />
+            />
+            </div>
           </div>
 
 

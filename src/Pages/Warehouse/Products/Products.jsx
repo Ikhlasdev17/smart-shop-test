@@ -18,8 +18,7 @@ const { RangePicker } = DatePicker;
 const {Option} = Select;
 
 const Products = () => {
-  const dispatch = useDispatch()
-  const [category,setCategory] = useState('')
+  const dispatch = useDispatch() 
   const [search, setSearch] = useState('')
   const [products, setProducts] = useState([])
   const { categories } = useSelector(state => state.categoriesReducer)
@@ -33,6 +32,8 @@ const Products = () => {
   const [lastPage, setLastPage] = useState()
   const [perPage, setPerPage] = useState()
   const [currentPage, setCurrentPage] = useState()
+
+  const [category_id, setCategory_id] = useState("")
 
 
 
@@ -152,16 +153,28 @@ const Products = () => {
     useEffect(async () => {
       dispatch(fetchingProducts());
       
-      const response = await axios.get(`${URL}/api/warehouse?search=${search}&page=${currentPage}`, setToken())
+      const response = await axios.get(`${URL}/api/warehouse?search=${search}&page=${currentPage}&category_id=${category_id}`, setToken())
       
       if (response.status === 200) {
         setPerPage(response.data.payload.per_page)
         setProducts(response.data.payload.data)
         setLastPage(response.data.payload.last_page)
       }
-    } ,[showTable, search, category, currentPage])
+    } ,[showTable, search, category_id, currentPage])
     
-    console.info(perPage)
+    useEffect(async () => {
+      dispatch(fetchingCategories())
+
+      const res = await axios.get(`${URL}/api/categories`, setToken());
+      setLoading(true)
+      if (res.status === 200) {
+          dispatch(fetchedCategories(res.data.payload))
+          setLoading(false)
+      } else {
+          dispatch(fetchingErrorCategories())
+      }
+      
+  }, [])
  
 
   return (
@@ -186,8 +199,8 @@ const Products = () => {
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
-              onChange={e => setCategory(e)}
-              value={category}
+              onChange={e => setCategory_id(e)}
+              value={category_id}
               >
 
                 <Option value={''}>{t('barcha_mahsulotlar')}</Option>

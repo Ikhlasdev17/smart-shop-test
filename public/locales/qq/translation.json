@@ -162,7 +162,7 @@
     "export": "Eksport ",
     "mahsulot_qoshish": "Ónim qosıw",
     "brend": "Brend",
-    "cost_price": "Ózine túser bahası",
+    "cost_price": "Kótere bahası ",
     "whole_price": "Optom bahası",
     "max_price": "Maksimium bahası",
     "min_price": "Minimum bahasi",
@@ -261,6 +261,14 @@
     "yes": "Awa",
     "no": "Yaq",
     "update_client": "Paydalaniwshini o'zgertiw",
-    "mahsulotni_tahrirlash": "O'nimdi o'zgertiw"
+    "mahsulotni_tahrirlash": "O'nimdi o'zgertiw",
+
+
+    "kirish": "SmartSHOP penen o'z bisnesin'izdi basqarin'",
+    "login": "Kiriw",
+
+    "select_client": "Qariydardi tan'lan'",
+    "all_client": "Ba'rshe qariydarlar",
+    "all_payment": "Ba'rshe tu'rdegi to'lemler"
 
 }

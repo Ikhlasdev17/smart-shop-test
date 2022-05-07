@@ -262,7 +262,12 @@
     "update_client": "Редактирование клиента",
     "mahsulotni_tahrirlash": "Редактирование продукта",
 
-    "kirish": ""
+    "kirish": "Управляйте своим бизнесом с SmartSHOP",
+    "login": "Авторизоваться",
+
+    "select_client": "Выберите клиента",
+    "all_client": "Все клиенты",
+    "all_payment": "Все виды платежей"
 }
 
 

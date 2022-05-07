@@ -261,6 +261,14 @@
     "yes": "Xa",
     "no": "Yo'q",
     "update_client": "Mijozni tahrirlash",
-    "mahsulotni_tahrirlash": "Mahsulotni tahrirlash"
+    "mahsulotni_tahrirlash": "Mahsulotni tahrirlash",
+
+    "kirish": "SmartSHOP bilan o'z bisnesingizni boshqaring",
+    "login": "Kirish",
+
+
+    "select_client": "Mijozni tanlang",
+    "all_client": "Barcha mijozlar",
+    "all_payment": "Barcha turdagi tolovlar"
 
 }

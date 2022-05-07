@@ -1,10 +1,10 @@
-import { Button, InputNumber, message, Skeleton, Table, Checkbox  } from 'antd'
+import { Button, InputNumber, message, Skeleton, Table, Select, Checkbox  } from 'antd'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { setToken, URL } from '../../assets/api/URL'
 import { useTranslation } from 'react-i18next'
 
-const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
+const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
     const [basketItems, setBasketItems] = useState([])
     const [spinning, setSpinning] = useState(false)
     const [tableLoading, setTableLoading] = useState(false)
@@ -16,6 +16,8 @@ const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
 
     const [selectedKeys, seSelectedKeys] = useState([])
     const [checkedItems, setCheckedItems] = useState([])
+
+    const [payment, setPayment] = useState([])
 
     useEffect(() =>{
         setSpinning(true)
@@ -53,25 +55,29 @@ const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
     }
 
     const handleClick = () => {
-        if (newArr.length === 0) {
-            message.error(t('malumotni_togri_kiriting'))
+        if (payment.length > 0) {
+            if (newArr.length === 0) {
+                message.error(t('malumotni_togri_kiriting'))
+            } else {
+                setTableLoading(true)
+                axios.post(`${URL}/api/return/orders`, {
+                    "basket_id": currentBasketItemId,
+                    "payment_type": payment,
+                    orders: newArr
+                }, setToken())
+                .then(res => {
+                    console.info(res)
+                    message.success(t('muaffaqiyatli'))
+                    setTableLoading(false)
+                    setOpen(false)
+                    setNewArr([])
+                })
+                .catch(err => {
+                    message.error(t('xatolik'))
+                })
+            }
         } else {
-            setTableLoading(true)
-            axios.post(`${URL}/api/return/orders`, {
-                "basket_id": currentBasketItemId,
-                "payment_type":["debt", "cash", "card","paid_debt"],
-                orders: newArr
-            }, setToken())
-            .then(res => {
-                console.info(res)
-                message.success(t('muaffaqiyatli'))
-                setTableLoading(false)
-                setOpen(false)
-                setNewArr([])
-            })
-            .catch(err => {
-                message.error(t('xatolik'))
-            })
+            message.error(t('malumotni_togri_kiriting'))
         }
     }
 
@@ -104,6 +110,25 @@ const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
         setNewArr([])
         seSelectedKeys([]) 
     }, [open])
+
+    const paymentOptions = [
+        {
+            value: "debt", 
+            label: t('qarz')
+        },
+        {
+            value: "card", 
+            label: t('card')
+        },
+        {
+            value: "cash", 
+            label: t('cash')
+        },
+        {
+            value: "paid_debt", 
+            label: t('paid_debt')
+        }
+    ]
 
 
     const handleCheckedAll = (e) => {
@@ -139,6 +164,16 @@ const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
         })
 
 
+    useEffect(() => {
+        setPayment([])
+        if (payment.length === 0) {
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
+        }
+    }, [open])
+
+
     const columns = [
         {
             title: <Checkbox onChange={e => handleCheckedAll(e)}/>,
@@ -170,12 +205,39 @@ const Content = ({ open, setOpen, currentBasketItemId, orders }) => {
 
   return (
     <div>
+        <Select
+        mode='multiple' 
+        style={{width: '100%'}}
+        showSearch
+        placeholder={t('tolov_turi')}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+        onChange={(e, value) => setPayment(e)}
+        value={payment}
+        > 
+                {
+                    paymentOptions.map((item) => {
+                        return (
+                    <Select.Option key={item.value} value={item.value}>{item.label}</Select.Option>
+                )
+                })
+                }
+        </Select> 
+        <br />
+        <br />
       <Skeleton loading={spinning} paragraph={1} active>
-      <Table size="small" pagination={false} columns={columns} dataSource={dataSource} />
+      <Table className='drawer-table' size="small" pagination={false} columns={columns} dataSource={dataSource} />
       </Skeleton>
       <br />
       <Button disabled={btnDisabled} onClick={handleClick} className="btn btn-primary" style={{float: 'right'}}>{t('save')}</Button>
+                <br /><br />
+        <div>
+        <iframe  width="280" height="280" className="qr_code_frame" src={basket.qr_link} title="Bu yerda mahsulotning qr kodi bolishi kerak edi!">
 
+        </iframe>
+        </div>
     </div>
   )
 }

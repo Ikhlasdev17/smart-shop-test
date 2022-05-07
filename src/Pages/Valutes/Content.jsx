@@ -17,7 +17,7 @@ const Content = ({ currentValute, setOpen, setChanged, changed }) => {
         .then(res => {
             setChanged(!changed)
             setOpen(false)
-            message.success('Valyuta muaffaqiyatli ozgartirildi')
+            message.success(t('muaffaqiyatli'))
         })
     }
 

@@ -166,7 +166,7 @@ const Main = () => {
 
 
           <div className="content-body" >
-          <Skeleton loading={loading} active> 
+          <Skeleton loading={loading} active>  
           <Table  className="content-table" dataSource={dataSource} columns={columns} />
           </Skeleton>
           </div>

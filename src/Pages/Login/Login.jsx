@@ -44,11 +44,11 @@ export function Login() {
   return (
     <div className="container">
         <div className="login-content">
-            <h1>Kirish</h1> 
-            <p>SmartSHOP bilan o'z biznesingizni boshqaring</p>
+            <h1>{t('login')}</h1> 
+            <p>{t('kirish')}</p>
         <Form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
 
-        <Form.Item  className="form-label" label="Telefon raqami" name="mobile">
+        <Form.Item  className="form-label" label={t('telefon_raqami')} name="mobile">
           <NumberFormat
             format="+998(##)###-##-##"
             mask={"_"}
@@ -56,19 +56,19 @@ export function Login() {
               setUser({...user, phone: `+998${e.floatValue}`})
             }}
             className="input__input"
-            placeholder="Telefon raqami"
+            placeholder={t('telefon_raqami')} 
             required
             value={user.phone.slice(3, user.phone.length)}
             
           />
         </Form.Item>
 
-        <Form.Item className="form-label" label="Parol"  >
+        <Form.Item className="form-label" label={t('parol')}  >
             <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, pincode: e.target.value})}  placeholder="Password" required/>
         </Form.Item>
         <br />
         <Button htmlType="submit" className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
-            Kirish
+            {t('login')}
         </Button>
         </Form>
         </div>

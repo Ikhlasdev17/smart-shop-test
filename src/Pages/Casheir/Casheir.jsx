@@ -127,8 +127,7 @@ const Casheir = () => {
                 </div>
 
 
-                <Input className="content__range-picker content-top__input form__input wdith_3" />
-
+             
           </div>
 
           
