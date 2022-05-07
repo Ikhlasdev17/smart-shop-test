@@ -4,6 +4,7 @@ import { Button, Input, InputNumber, message, Select, Skeleton, Table } from 'an
 import { URL, setToken } from '../../assets/api/URL'
 import Zoom from 'react-medium-image-zoom';
 import { useTranslation } from 'react-i18next';
+import { DebounceInput } from 'react-debounce-input';
 
 const ReturnOrder = () => {
     const [orders, setOrders] = useState([])
@@ -108,7 +109,7 @@ const ReturnOrder = () => {
 
       <div className="content">
           <div className="content-top">
-              <Input placeholder={t('search')} className="form__input wdith_3" onChange={(e) => setSearch(e.target.value)} />
+              <DebounceInput minLength={2} debounceTimeout={800} placeholder={t('search')} className="form__input wdith_3" onChange={(e) => setSearch(e.target.value)} />
 
               <Button onClick={() =>sendToReturn()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>

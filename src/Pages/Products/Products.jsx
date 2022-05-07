@@ -15,6 +15,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+import { DebounceInput } from 'react-debounce-input';
 
 const { RangePicker } = DatePicker;
 const {Option} = Select;
@@ -276,7 +277,9 @@ const Products = () => {
                   }
               </Select>
 
-              <Input 
+              <DebounceInput
+                debounceTimeout={800}
+                minLength={2}
                 placeholder={t('search')}
                 onChange={e => setSearch(e.target.value)}
                 className="form__input"

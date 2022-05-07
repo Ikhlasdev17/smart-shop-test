@@ -272,6 +272,7 @@
 
     "select_client": "Qariydardi tan'lan'",
     "all_client": "Ba'rshe qariydarlar",
-    "all_payment": "Ba'rshe tu'rdegi to'lemler"
+    "all_payment": "Ba'rshe tu'rdegi to'lemler",
+    "all_categories": "Ba'rshe kategoriyalar"
 
 }

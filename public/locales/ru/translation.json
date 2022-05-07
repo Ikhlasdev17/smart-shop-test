@@ -270,7 +270,10 @@
 
     "select_client": "Выберите клиента",
     "all_client": "Все клиенты",
-    "all_payment": "Все виды платежей"
+    "all_payment": "Все виды платежей",
+
+
+    "all_categories": "Все категории"
 }
 
 

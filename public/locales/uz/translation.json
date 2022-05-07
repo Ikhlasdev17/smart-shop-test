@@ -272,6 +272,8 @@
 
     "select_client": "Mijozni tanlang",
     "all_client": "Barcha mijozlar",
-    "all_payment": "Barcha turdagi tolovlar"
+    "all_payment": "Barcha turdagi tolovlar",
+
+    "all_categories": "Barcha kategoriyalar"
 
 }

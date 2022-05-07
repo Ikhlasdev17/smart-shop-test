@@ -17,6 +17,7 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import Content from './Content';
 import { clientsFetchingError, fetchedClients, fetchingClients } from '../../redux/clientsReducer';
+import { DebounceInput } from 'react-debounce-input';
 
 
 const { RangePicker } = DatePicker;
@@ -253,7 +254,9 @@ const Orders = () => {
           <div className="content-top">
 
            <div className="select-group">
-                  <Input 
+                  <DebounceInput
+                  debounceTimeout={800}
+                  minLength={2}
                 placeholder={t('search')}
                 onChange={e => setSearch(e.target.value)}
                 className="form__input"

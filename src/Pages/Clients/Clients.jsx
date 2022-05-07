@@ -11,6 +11,7 @@ import axios from 'axios';
 import {setToken, URL} from '../../assets/api/URL';
 
 import { useTranslation } from 'react-i18next';
+import { DebounceInput } from 'react-debounce-input';
 
 const {Option} = Select;
 
@@ -116,7 +117,9 @@ const Clients = () => {
 
       <div className="content">
           <div className="content-top">
-              <Input 
+              <DebounceInput
+                debounceTimeout={800}
+                minLength={2} 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="form__input wdith_3"

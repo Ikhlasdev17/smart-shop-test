@@ -171,7 +171,7 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
         } else {
             setBtnDisabled(false)
         }
-    }, [open])
+    }, [open, payment])
 
 
     const columns = [

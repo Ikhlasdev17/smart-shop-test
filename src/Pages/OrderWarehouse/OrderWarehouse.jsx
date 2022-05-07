@@ -14,6 +14,8 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import { DebounceInput } from 'react-debounce-input';
+import { fetchedCategories, fetchingCategories, fetchingErrorCategories } from '../../redux/categoriesSlice';
 
 const { RangePicker } = DatePicker;
 const {Option} = Select;
@@ -22,6 +24,8 @@ const OrderWarehouse = () => {
   const dispatch = useDispatch()
   const { products } = useSelector(state => state.productsReducer) 
   const [ statisticProducts, setStatisticProducts ] = useState([])
+  const {categories, categoriesFetchingStatus} = useSelector(state => state.categoriesReducer)
+
   const now = Date.now()
   const [from, setFrom] = useState('2020-12-10')
   const [to, setTo] = useState(moment(now).format('YYYY-MM-DD')) 
@@ -32,6 +36,9 @@ const OrderWarehouse = () => {
   const [sendOrder, setSendOrder] = useState(false)
 
   const { t } = useTranslation()
+
+  const [search, setSearch] = useState("")
+  const [category, setCategory] = useState('')
   
   let updatedProducts = [];
 
@@ -40,7 +47,7 @@ const OrderWarehouse = () => {
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/warehouse`, setToken())
+    const response = await axios.get(`${URL}/api/warehouse?search=${search}`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload.data)
@@ -48,12 +55,29 @@ const OrderWarehouse = () => {
     }
 
 
-  } ,[from, to, sendOrder])
+  } ,[from, to, sendOrder, search])
 
   useEffect(() =>{
       axios.get(`${URL}/api/currency` , setToken())
       .then(res => setCurrency(res.data.payload))
   } ,[])
+
+
+  useEffect(async () => {
+    dispatch(fetchingCategories())
+
+    const res = await axios.get(`${URL}/api/categories?search=${search}&category_id=${category}`, setToken());
+    setLoading(true)
+    if (res.status === 200) {
+        dispatch(fetchedCategories(res.data.payload))
+        setLoading(false)
+    } else {
+        dispatch(fetchingErrorCategories())
+    }
+    
+}, [search, category])
+
+
 
 
   // ZAKAZ BERISH 
@@ -181,9 +205,29 @@ const OrderWarehouse = () => {
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
+              onChange={e => setCategory(e)}
+              value={category}
               >
-                  <Option>Hello</Option>
+                <Option value="">{t('all_categories')}</Option>
+                {
+                  categories?.map(item => (
+                    <Option value={item.id}>{item.name}</Option>
+                  ))
+                }
               </Select>
+
+
+              <DebounceInput
+                onChange={(e) => setSearch(e.target.value)}
+                className="form__input"
+                minLength={2}
+                debounceTimeout={800}
+                value={search}
+                placeholder={t('search')}
+              />
+              </div> 
+              <div className='flex'>
+
               <div className="content-top__group">
 
               <DatePicker
@@ -205,9 +249,10 @@ const OrderWarehouse = () => {
                 value={moment(to)}
                 />
                 
-              </div></div> 
+              </div>
 
               <Button onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
+                </div>
           </div>
 
 

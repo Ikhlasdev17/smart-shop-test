@@ -12,6 +12,9 @@ import swal from 'sweetalert';
 
 import Swal from 'sweetalert2';
 
+
+import {DebounceInput} from 'react-debounce-input';
+
 const {Option} = Select;
 const Categories = () => {
     const [open, setOpen] = useState()
@@ -143,10 +146,12 @@ const Categories = () => {
 
       <div className="content">
           <div className="content-top">
-             <Input 
+             <DebounceInput 
               placeholder={t('kategoriya_nomi')}
               onChange={(e) => setSearch(e.target.value)}
               className="form__input wdith_3"
+              minLength={2}
+              debounceTimeout={800}
               style={{width: '30rem'}}
                />
               <Button className="btn btn-primary btn-md" onClick={() => {

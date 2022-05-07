@@ -131,7 +131,9 @@ img {
     height: 35px;
     display: flex;
     align-items: center; 
+    font-size: 1rem!important;
     overflow: hidden;
+    padding-left: .5rem;
 
     * {
         border: none!important;
