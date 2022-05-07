@@ -72,17 +72,20 @@
                     "id": "subitem4",
                     "label": "Xarajatlar",
                     "path": "/consumptions/consumption",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem5",
                     "label": "Kirimlar",
                     "path": "/consumptions/income",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem6",
                     "label": "Sof foyda",
                     "path": "/casheir",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem15",
                     "label": "Valyuta",

@@ -72,17 +72,20 @@
                     "id": "subitem4",
                     "label": "Ǵárejetler",
                     "path": "/consumptions/consumption",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem5",
                     "label": "Tabıslar",
                     "path": "/consumptions/income",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem6",
                     "label": "Sap payda",
                     "path": "/casheir",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem15",
                     "label": "Финанс",

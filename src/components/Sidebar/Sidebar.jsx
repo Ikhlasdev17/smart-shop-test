@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, Skeleton } from 'antd';
 
-import {menuItems} from '../../assets/JsonData/SidebarItems.json'
-
 import './Sidebar.scss';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -40,18 +38,26 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
                       </>
                       
                       } 
+                      
                   {item.submenu && 
                   <Menu.SubMenu key={item.id} icon={<i className={`bx ${item.icon}`}></i>} title={item.label} className={`menu-item`}>
                       {item.submenu.map((subitem) => (
+                        subitem.role ? subitem.role === localStorage.getItem('role') && (
                           <Menu.Item  key={subitem.id} className={`menu-item ${subitem.path === selected ? 'active' : ''}`}>
-                                <Link to={subitem.path}>
-                                  {subitem.label}
-                                </Link>
-                            </Menu.Item>
+                              <Link to={subitem.path}>
+                                {subitem.label}
+                              </Link>
+                          </Menu.Item>
+
+                        ) : <Menu.Item  key={subitem.id} className={`menu-item ${subitem.path === selected ? 'active' : ''}`}>
+                        <Link to={subitem.path}>
+                          {subitem.label}
+                        </Link>
+                    </Menu.Item>
                       ))}
                   </Menu.SubMenu>
                   
-                  } 
+                  }
             </>
               })}
         </Menu>

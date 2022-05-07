@@ -72,17 +72,20 @@
                     "id": "subitem4",
                     "label": "Расход",
                     "path": "/consumptions/consumption",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem5",
                     "label": "Даход",
                     "path": "/consumptions/income",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem6",
                     "label": "Чистая прибыль",
                     "path": "/casheir",
-                    "icon": "bx bx-cart-alt"
+                    "icon": "bx bx-cart-alt",
+                    "role": "ceo"
                 },{
                     "id": "subitem15",
                     "label": "Валюта",

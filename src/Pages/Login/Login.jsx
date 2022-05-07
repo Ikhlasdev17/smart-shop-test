@@ -32,6 +32,7 @@ export function Login() {
         if (user.phone !== "" && user.password !== '' && user.pincode !== ''){
             axios.post(`${URL}/api/login`, user).then(res => {
                 localStorage.setItem('token', res.data.payload.token)
+                localStorage.setItem('role', res.data.payload.role)
                 dispatch(userLogged(res.data.payload.token))
                 navigate("/", { replace: true });
             })

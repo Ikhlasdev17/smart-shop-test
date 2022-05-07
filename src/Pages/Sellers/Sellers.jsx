@@ -60,15 +60,19 @@ const Sellers = () => {
             })
         }
     })
- 
 
-    const columns = [
-        {
-          title: t('seller'),
+
+    let columns;
+ 
+    if (localStorage.getItem('role') === 'ceo'){
+
+        columns = [
+            {
+          title: t('sellers'),
           dataIndex: 'name',
           key: 'key',
         },
-    
+        
         {
           title: t('ish_haqi'),
           dataIndex: 'balance',
@@ -92,8 +96,17 @@ const Sellers = () => {
           dataIndex: 'action',
           key: 'key'
         }
-      ];
-
+    ];
+    } else {
+        columns = [
+            {
+          title: t('sellers'),
+          dataIndex: 'name',
+          key: 'key',
+        }
+        ]
+    }
+    
 
     //   fetching sellers from api 
     useEffect(async() => {
@@ -121,12 +134,16 @@ const Sellers = () => {
 
         <div className="content">
             <div className="content-top">
-                <Button className="btn btn-primary btn-md"
+                {
+                    localStorage.getItem('role') === 'ceo' && (
+                        <Button className="btn btn-primary btn-md"
                     onClick={e => {
                         setModalType('change_all_salary')
                         setOpen(true)
                     }}
                 ><i className="bx bx-edit"></i> {t('ish_haqini_hisoblash')}</Button>
+                    )
+                }
                 <Button className="btn btn-primary btn-md" onClick={() => {
                     setModalType('add')
                     setOpen(true);
