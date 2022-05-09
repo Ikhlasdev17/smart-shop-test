@@ -274,6 +274,7 @@
     "select_client": "Qariydardi tan'lan'",
     "all_client": "Ba'rshe qariydarlar",
     "all_payment": "Ba'rshe tu'rdegi to'lemler",
-    "all_categories": "Ba'rshe kategoriyalar"
+    "all_categories": "Ba'rshe kategoriyalar",
+    "paid_debt": "To'lengen qariz"
 
 }

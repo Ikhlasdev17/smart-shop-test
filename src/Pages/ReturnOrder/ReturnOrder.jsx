@@ -13,8 +13,7 @@ const ReturnOrder = () => {
     const {t} = useTranslation()
     const [search, setSearch] = useState('')
     const [btnDisabled, setBtnDisabled] = useState(true)
-    const dataForReturn = []
-
+    const [dataForReturn, setData] = useState([])
     useEffect(() =>{
         setLoading(true)
         axios.get(`${URL}/api/warehouse?search=${search} `, setToken())
@@ -30,25 +29,44 @@ const ReturnOrder = () => {
 
 
     const onChange =  (value, item) => {
-        if (value > item.count){
+        if (value > item.count ){
             message.warning('Mahsulot soni yetarli emas!')
             setBtnDisabled(true)
         } else {
             setBtnDisabled(false)
         }
 
+
+        if (value === null){
+            const newItem = dataForReturn.filter(x => x.product_id !== item.product.id)
+            setData(newItem)
+        } else {
+
         const index = dataForReturn.findIndex(x => x.product_id === item.product.id)
 
         if (index === -1) {
-            dataForReturn.push({
-                product_id: item.product.id,
-                count: value
-            })
+          setData([...dataForReturn, {
+            product_id: item.product.id,
+            count: value
+          }])
         } else {
-            dataForReturn[index].count = value
+          const newItems = [...dataForReturn]
+          newItems[index].count = value
+          setData(newItems)
+
         }
+      } 
 
     }
+
+
+    useEffect(() => {
+        if (dataForReturn.length > 0) {
+            setBtnDisabled(false)
+        } else {
+            setBtnDisabled(true)
+        } 
+    }, [dataForReturn])
 
 
 
@@ -59,6 +77,8 @@ const ReturnOrder = () => {
             setFetching(!fetching)
         })
     }
+
+
 
 
   orders?.map(item => {
