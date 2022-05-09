@@ -41,7 +41,7 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
 
   const { t } = useTranslation()
 
-  const avatar = JSON.parse(localStorage.getItem('user')).avatar
+  const avatar = JSON.parse(localStorage.getItem('user'))?.avatar
  
   const brandMenu = (
     <Menu>
