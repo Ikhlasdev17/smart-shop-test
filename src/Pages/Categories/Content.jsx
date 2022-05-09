@@ -42,7 +42,6 @@ const Content = ({ type, currentCategory, setOpen }) => {
 }, [currentCategory])
 
 
-console.info(currentCategory)
 
 useEffect(() => {
         if (type === 'add') {
@@ -104,7 +103,6 @@ useEffect(() => {
         }
 
 
-        console.info(category)
 
     }
 

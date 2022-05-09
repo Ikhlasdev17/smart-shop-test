@@ -157,7 +157,6 @@ const Products = () => {
 
     link.parentNode.removeChild(link);
 
-    console.info(blob)
   });
 
   }

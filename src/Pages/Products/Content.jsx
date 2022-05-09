@@ -112,8 +112,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   useEffect(() => {
     if (product.category_id !== null) {
       const currentCategory = categories?.filter(item => item.id === product.category_id)[0] 
-    
-    console.info(currentCategory)
+     
       if (categories && categories.length > 0){
         if (product.price_wholesale.currency_id === 2) {
           setProduct(prev => (
@@ -149,10 +148,38 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
 
   useEffect(() => {
     setPhotoUploaded("default")
+    setPriceInUZS(0)
+
+    setProduct({
+      category_id: null,
+      name: "",
+      brand: "",
+      image: '',
+      cost_price:{
+          currency_id: 1,
+          price: null
+      },
+      price_min:{
+          currency_id: 1,
+          price: null
+      },
+      price_max:{
+          currency_id: 1,
+          price: null
+      },
+      price_wholesale:{
+          currency_id: 1,
+          price: null
+      },
+      warehouse: {
+        unit_id: 1,
+        count: null
+    }
+  })
   }, [open])
 
   const saveProductFunc = () => {
-    if (product.brand !== "" && product.category_id !== null && product.name !== null){
+    if (product.category_id !== null && product.name !== null){
       dispatch(fetchingProducts())
 
       axios.post(`${URL}/api/product`, product , setToken())
@@ -227,7 +254,6 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
     saveProductFunc()
   }
 
-  console.info(product)
  
 
 
@@ -362,7 +388,15 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
           />
           </div>
           <div className="form-group__min-item">
-          <Select className="form__input form__select"  value={product.cost_price.currency_id} onChange={e => setProduct(prev => ({...product, cost_price: {...prev.cost_price, currency_id: e}}))} required>
+          <Select className="form__input form__select"  value={product.cost_price.currency_id} 
+          onChange={e => {
+            setProduct(prev => ({...product, cost_price: {...prev.cost_price, currency_id: e}}))
+            if (e === 2) {
+              setProduct(prev => ({...product, cost_price: {...prev.cost_price, price: (priceInUZS / USD).toFixed(2)}}))
+            } else {
+              setProduct(prev => ({...product, cost_price: {...prev.cost_price, price: priceInUZS}}))
+            }
+            }} required>
             {
               currency?.map(item => (
                 <Select.Option value={item.id}>{item.code}</Select.Option>

@@ -26,7 +26,7 @@ const Clients = () => {
   const { t } = useTranslation()
   const [lastPage, setLastPage] = useState()
   const [perPage, setPerPage] = useState()
-  const [currentPage, setCurrentPage] = useState()
+  const [currentPage, setCurrentPage] = useState(1)
 
 
 
@@ -36,7 +36,7 @@ const Clients = () => {
     clients?.map(item => { 
       dataSource.push({
         key: item.id,
-        name: <div className="table-title"> <h2>{item.full_name}</h2> <p>{item.phone}</p></div>,
+        name: <div className="table-title"> <h2>{item.full_name}</h2> <p>{item.phone.length > 9 ?  item.phone : `+998${item.phone}` }</p></div>,
         balance: item.balance,
         stir: item.tin ? item.tin.toLocaleString() : 'Jismoniy Shaxs',
         excerpt: item.about,
@@ -93,9 +93,9 @@ const Clients = () => {
     axios.get(`${URL}/api/clients?search=${search}&page=${currentPage}`, setToken())
     .then(res => {
       dispatch(fetchedClients(res.data.payload.data.clients)) 
-      setLoading(false)
       setLastPage(res.data.payload.last_page)
       setPerPage(res.data.payload.per_page)
+      setLoading(false)
     })
     .catch(err => {
       setLoading(false)
@@ -105,7 +105,10 @@ const Clients = () => {
  
 
 
- 
+
+ if(clientsFetchingStatus === 'error'){
+    return <div>Error</div>
+  }
 
   return (  
     <div className="section main-page">
@@ -146,7 +149,7 @@ const Clients = () => {
               <div className="pagination__bottom">
               <Pagination 
                 total={lastPage * perPage} 
-                pageSize={perPage}
+                pageSize={perPage || 60}
                 defaultCurrent={currentPage}
                 onChange={c => setCurrentPage(c)}
                 showSizeChanger={false}

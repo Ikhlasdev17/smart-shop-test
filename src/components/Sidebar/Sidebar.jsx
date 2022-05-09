@@ -18,7 +18,6 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
       }, [pathName])
       const sidebarItems = t('sidebar__items', { returnObjects: true } ) || []
  
-      console.info(sidebarItems)
       return (  
         <Menu mode="inline" className="sidebar-menu" onClick={() => {
           windowWidth < 1200 ? setCollapsed(!collapsed) : console.log('hello World')

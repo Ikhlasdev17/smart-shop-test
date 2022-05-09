@@ -212,7 +212,6 @@ const Orders = () => {
   
 
   const handleCategorySelect = (e, value) => {
-    console.info(value)
     if (e[e.length - 1] === '') {
       setCategory([''])
     } else {

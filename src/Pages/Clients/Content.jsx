@@ -165,10 +165,10 @@ const   Content = ({ setOpen, currentClient, modalType }) => {
             mask={"_"}
             style={{padding: '5px'}}
             onValueChange={e => {
-              setUser({...user, phone: `+998${e.floatValue}`})
+              setUser({...user, phone: e.floatValue})
             }}
             required
-            value={user.phone.length !== 9 ? user.phone.slice(4, user.phone.length) : user.phone}
+            value={user.phone}
             placeholder={t('telefon_raqami')}
             
           />

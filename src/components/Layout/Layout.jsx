@@ -28,6 +28,7 @@ import Valutes from "../../Pages/Valutes/Valutes";
 import ReturnOrder from "../../Pages/ReturnOrder/ReturnOrder";
 import Casheir from "../../Pages/Casheir/Casheir";
 import logo from '../../assets/images/LOGOTEXNOPOS.png'
+import Profile from "../../Pages/Profile/Profile";
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -115,6 +116,7 @@ const Wrapper = () => {
               <Route path={"/finans/valutes"} element={<Valutes />} />  
               <Route path={"/operations/return"} element={<ReturnOrder />} />  
               <Route path="/casheir" element={<Casheir />} />
+              <Route path={"/profile"} element={<Profile />} />
               
             </Routes>
           </Content>

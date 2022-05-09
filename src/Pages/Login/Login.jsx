@@ -17,8 +17,8 @@ export function Login() {
     const dispatch = useDispatch();
     const {t} = useTranslation()
     const [user, setUser] = useState({
-        phone: '',
-        pincode: ''
+        password: '',
+        phone: ""
     })
     
     useEffect(() => {
@@ -33,6 +33,9 @@ export function Login() {
             axios.post(`${URL}/api/login`, user).then(res => {
                 localStorage.setItem('token', res.data.payload.token)
                 localStorage.setItem('role', res.data.payload.role)
+                localStorage.setItem('user', JSON.stringify(res.data.payload))
+                localStorage.setItem('password', user.password)
+                localStorage.setItem('pincode', user.pincode)
                 dispatch(userLogged(res.data.payload.token))
                 navigate("/", { replace: true });
             })
@@ -65,7 +68,7 @@ export function Login() {
         </Form.Item>
 
         <Form.Item className="form-label" label={t('parol')}  >
-            <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, pincode: e.target.value})}  placeholder="Password" required/>
+            <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, password: e.target.value})}  placeholder="Password" required/>
         </Form.Item>
         <br />
         <Button htmlType="submit" className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>

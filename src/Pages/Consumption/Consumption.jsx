@@ -67,7 +67,6 @@ const Consumptions = () => {
         })
   })
 
- console.info(consumptions)
 
   
   const columns = [
@@ -116,7 +115,6 @@ const Consumptions = () => {
       setPerPage(response.data.payload.per_page)
     }
 
-    console.info(response);
 
   } ,[type, from, to, currentPage, refresh])
  

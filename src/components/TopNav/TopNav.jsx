@@ -10,6 +10,10 @@ import { useDispatch } from 'react-redux'
 import './TopNav.scss'
 import { userLogout } from '../../redux/userSlice';
 import i18next from 'i18next';
+
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 const { Header } = Layout;
 
 
@@ -21,19 +25,7 @@ const languages = [
 
 
 
-const brandMenu = (
-  <Menu>
-    <Menu.Item>
-        Statistika
-    </Menu.Item>
-    <Menu.Item>
-        Malumot
-    </Menu.Item>
-    <Menu.Item>
-        Ko'rish
-    </Menu.Item>
-  </Menu>
-);
+
  
 
 const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
@@ -46,6 +38,24 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
     setCurrentLang(lang)
     setCurrentLabel(label)
   }
+
+  const { t } = useTranslation()
+
+  const avatar = JSON.parse(localStorage.getItem('user')).avatar
+ 
+  const brandMenu = (
+    <Menu>
+      <Menu.Item>
+          {t('statistika')}
+      </Menu.Item>
+      <Menu.Item>
+          {t('malumot')}
+      </Menu.Item>
+      <Menu.Item>
+          {t('korish')}
+      </Menu.Item>
+    </Menu>
+  );
   
   
   const languageMenu = (
@@ -62,21 +72,36 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
       ))} 
     </Menu>
   );
+
+
   
 
   const profileMenu = (
     <Menu>
       <Menu.Item>
-          Profil
-      </Menu.Item>
-      <Menu.Item>
-          Sozlamalar
-      </Menu.Item>
+          <Link to={'/profile'}>
+          <div className="profile__user-item">
+              <div className="profile__user-item__image">
+                  {
+                      avatar !== null ?(
+                          <img style={{borderRadius: '50%', objectFit: 'cover'}} src={avatar} alt="Product Photo" />
+                      ) : (
+                          <img style={{borderRadius: '50%'}} src={avatarLogo} alt="Product Photo" />
+                      )
+                  }
+              </div>
+              <div className="profile__user-item__name">
+                  <h3>{JSON.parse(localStorage.getItem('user')).name}</h3>
+                  <h4>{JSON.parse(localStorage.getItem("user")).role === "ceo" ? "CEO" : JSON.parse(localStorage.getItem("user")).role === "admin" && t('admin') }</h4>
+              </div>
+          </div>
+          </Link>
+      </Menu.Item> 
       <Menu.Item onClick={() => {
         localStorage.removeItem('token')
         setLogged('logout')
         }} >
-          Chiqish
+          {t('chiqish')}
       </Menu.Item>
     </Menu>
   );
@@ -107,7 +132,7 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
             </span>
         </Dropdown>
         <Dropdown overlay={profileMenu} placement="bottomLeft" >
-          <Avatar width="40" src={avatarLogo} style={{cursor: 'pointer'}}/>
+          <Avatar width="40" src={avatar !== null ? avatar : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png'} style={{cursor: 'pointer'}}/>
         </Dropdown>
       </div>
     </header>

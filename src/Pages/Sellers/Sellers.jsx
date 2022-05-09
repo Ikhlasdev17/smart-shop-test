@@ -10,6 +10,8 @@ import Content from './Content';
 import History from './History';
 
 import { useTranslation } from 'react-i18next';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const { Option } = Select 
 
@@ -34,7 +36,20 @@ const Sellers = () => {
         if (item.role !== "ceo") {
             dataSource.push({
                 key: item.id,
-                name: <div className="table-title"> <h2>{item.name}</h2> <p>{item.phone}</p></div>,
+                name: <div className="product__table-product">
+                <div className="product__table-product__image">
+                    {
+                        item?.avatar !== null ?(
+                            <img style={{borderRadius: '50%', objectFit: 'cover'}} src={item?.avatar} alt="Product Photo" /> 
+                        ) : (
+                            <img style={{borderRadius: '50%'}} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png'} alt="Product Photo" /> 
+                        )
+                    } 
+                </div>
+                <div className="product__tabel-product_name">
+                    <h3>{item?.name}</h3>
+                </div>
+            </div>,
                 balance: item.salary !== null ? item.salary.toLocaleString() : 0,
                 flex: item.flex || 0 + ' %',
                 history: <Button className="table-action" onClick={() => {
@@ -128,7 +143,7 @@ const Sellers = () => {
         <div className="section main-page">
         
         <Drawer title={modalType === 'add' ? t('satiwshi_qosiw') : modalType === 'update' ? t('ish_haqini_hisoblash') : modalType === 'change_all_salary' ? t('ish_haqini_hisoblash') : t('satiwshini_janalaw') } placement="right" visible={open} onClose={() => setOpen(false)}>
-            {modalType === 'history' ? <History currId={currentID} /> : <Content open={open} setRefresh={() => setRefresh()} currentSallary={currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
+            {modalType === 'history' ? <History currId={currentID} /> : <Content open={open} setRefresh={() => setRefresh()} currentSallary={modalType !== "add" && currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
         </Drawer>
         <h1 className="heading">{t('sellers')}</h1>
 
@@ -145,6 +160,7 @@ const Sellers = () => {
                     )
                 }
                 <Button className="btn btn-primary btn-md" onClick={() => {
+                    setCurrentSeller("")
                     setModalType('add')
                     setOpen(true);
                 }}><i className="bx bx-plus"></i>{t('satiwshi_qosiw')}</Button>

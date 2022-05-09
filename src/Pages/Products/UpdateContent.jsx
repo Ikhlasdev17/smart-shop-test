@@ -148,10 +148,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
-    } else {
-        // dispatch(fetchingErrorCategories())
-        console.info('err')
-    }
+    } 
 
     
     
@@ -206,7 +203,6 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
   }  
 
-  console.info(priceInUZS)
 
   useEffect(() => {
     const currentCategory = categories.filter(item => item.id === product.category_id)[0] 
@@ -340,6 +336,13 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
           onChange={e => {
             setProduct(prev => ({...product, cost_price: {...prev.cost_price, currency_id: e}}))
             setCostPriceCode(e)
+
+
+            if (e === 2) {
+              setProduct(prev => ({...product, cost_price: {...prev.cost_price, price: (priceInUZS / USD).toFixed(2)}}))
+            } else {
+              setProduct(prev => ({...product, cost_price: {...prev.cost_price, price: priceInUZS}}))
+            }
           }} required  >
             {
               currency?.map(item => (
@@ -381,7 +384,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
               if (whole_price_code === 1) {
                 setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: currentWhole}}))
               } else {
-                setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: currentWhole * USD}}))
+                setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: (currentWhole * USD)}}))
               }
               setWholePrice(currentWhole)
             }

@@ -66,7 +66,6 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
                     orders: newArr
                 }, setToken())
                 .then(res => {
-                    console.info(res)
                     message.success(t('muaffaqiyatli'))
                     setTableLoading(false)
                     setOpen(false)

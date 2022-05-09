@@ -122,7 +122,6 @@ const OrderWarehouse = () => {
         }
     }
  
-    console.info(updatedProducts)
   }
 
 
@@ -131,7 +130,6 @@ const OrderWarehouse = () => {
 
   statisticProducts.length > 0 && statisticProducts?.map(item => {
     const currentCurrency = currency?.filter(x => x.id == item?.product?.cost_price.currency_id)[0]
-    console.info()
     dataSource.push({
       key: item?.product.id,
       product: <div className="product__table-product">

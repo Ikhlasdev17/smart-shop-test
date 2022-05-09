@@ -5,21 +5,18 @@ import NumberFormat from "react-number-format";
 import axios from 'axios';
 import { setToken, URL } from '../../assets/api/URL';
 import { useDispatch, useSelector } from 'react-redux'
-import { addClient, fetchingClients } from '../../redux/clientsReducer';
 import { addSeller, fetchingSellers } from '../../redux/sellersSlice';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 
 import swal from  'sweetalert'
-
-const { Option } = Select;
+import Dragger from 'antd/lib/upload/Dragger';
+ 
 
 
 
 const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallary, refresh}) => {
   const dispatch = useDispatch()
-  
-  const [time, setTime] = useState(true)
   const [user, setUser] = useState({
     name: "",
     phone: "",
@@ -27,7 +24,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     salary: "",
     flex: "",
     role: "saller",
-    pincode: null
+    pincode: null,
+    avatar: null
   })
   const [copied, setCopied] = useState(false)
   const { t } = useTranslation()
@@ -38,76 +36,73 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   ]
 
   const [pinCode, setPinCode] = useState("")
+  const [photoUploaded, setPhotoUploaded] = useState("default") 
 
 
-  useEffect(() => {
-    if (modalType === 'add'){
-      setUser({
-        name: "",
-        phone: "",
-        password: "", 
-        salary: "",
-        flex: "",
-        role: "saller",
-        pincode: ""
-      })
+  useEffect(() => { 
+
+    switch (modalType) {
+      case 'add':
+        setUser({
+          name: "",
+          phone: "",
+          password: "", 
+          salary: "",
+          flex: "",
+          role: "saller",
+          pincode: pinCode,
+          avatar: null
+        })
+        break;
+      case 'update':
+        setUser({
+          salary: currentSallary.salary,
+          flex: currentSallary.flex,   
+          employee_id: currentSallary.id,
+          is_everyone: false
+        })
+        break;
+      case 'update_user_data':
+        setUser({
+          employee_id: currentSallary.id,
+          name: currentSallary.name,
+          phone: currentSallary.phone,
+          password: "1111",
+          role: currentSallary.role,
+          pincode: pinCode,
+          avatar: currentSallary.avatar
+        })
+        break;
+      case 'change_all_salary':
+        setUser({
+          salary: 0,
+          flex: 0,
+          is_everyone: true
+        }) 
+        break;
     }
 
 
-    if (modalType === 'update'){
-      setUser({
-        salary: currentSallary.salary,
-        flex: currentSallary.flex,   
-        employee_id: currentSallary.id,
-        is_everyone: false
-      })
-    }
-
-    if (modalType === 'change_all_salary'){
-      setUser({
-        salary: 0,
-        flex: 0,   
-        is_everyone: true
-      })
-    }
+    setPhotoUploaded("default")
 
     
-  },[modalType, currentSallary])
+  },[modalType, currentSallary, open, pinCode])
 
 
-  useEffect(() => {
-    if (modalType === "update_user_data") {
-      setUser({
-        employee_id: currentSallary.id,
-        name: currentSallary.name,
-        phone: currentSallary?.phone,
-        salary: currentSallary.salary,
-        flex: currentSallary.flex,
-        role: currentSallary.role,
-        pincode: pinCode
-      })
-    }
-
-    
-  }, [modalType, currentSallary.name, pinCode])
-
-  console.info(currentSallary)
+ 
 
   const generatePincode = () => {
+    setPinCode("XXXXX")
     axios.get(`${URL}/api/pincode/generate`, setToken())
-    .then(res => {
-      if (modalType === "update_user_data"){
-        setPinCode(res.data.payload.pincode)
-      } else {
-        setUser({...user, pincode: res.data.payload.pincode})
-      }
+    .then(res => { 
+        setPinCode(res.data.payload.pincode) 
     })
   }
 
   useEffect(() => {
-    if (modalType === 'add' | modalType === "update_user_data") {
+    if (modalType === "add" || modalType === "update_user_data") {
       generatePincode()
-    }
+    } 
   }, [open, modalType, currentSallary]) 
 
   const addSallary = async () => {
@@ -136,7 +131,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
               salary: "",
               flex: "",
               role: "saller",
-              pincode: ""
+              pincode: "",
+              avatar: null
           })
 
           generatePincode()
@@ -158,6 +154,21 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
       }
   }
 
+  const photoUploader = (e) => {
+    setPhotoUploaded('loading')
+    
+    const formData = new FormData()
+    formData.append('file', e.file.originFileObj)
+    formData.append('upload_preset', "smart-shop")
+
+
+    axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
+      setUser(prev => ({...user, avatar: res.data.secure_url}))
+      setPhotoUploaded('ok')
+    })
+  } 
+
+
 
   const updateSallary = async () => {
     const res = await axios.post(`${URL}/api/salary`, user, setToken())
@@ -178,9 +189,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   }
 
   const updateUserData = async () => {
-    console.info(user)
     const res = await axios.patch(`${URL}/api/employee/update`, user, setToken())
-
+    
     if (res.status === 200) {
       swal({
         title: t('muaffaqiyatli'),
@@ -191,12 +201,16 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
 
       setOpen(false)
     }
+    
 
+
+    
   }
-
-
-
+  
+  
+  
   const handleSubmit = async (e) => {
+    console.info(user)
     if (modalType === 'add') {
         addSallary()
     }
@@ -226,7 +240,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   },[copied])
 
 
-  console.info(user.phone?.slice(4, user.phone.length))
 
 
  
@@ -276,6 +289,14 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
               ))}
             </Select>
         </Form.Item> }
+
+        {modalType === 'add' && <Form.Item label={t('lavozim_tanlash')} required>
+            <Select className="form__input" value={user.role} onChange={e => setUser({...user, role: e})}required>
+              {roles.map(item => (
+                <Select.Option value={item.value}>{item.label}</Select.Option>
+              ))}
+            </Select>
+        </Form.Item> }
             {modalType !== "update_user_data" && (
         <Form.Item label={t('parol')} required>
           <Input 
@@ -298,7 +319,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
             mask={"_"}
             onValueChange={e => {
               setUser({...user, phone: `+998${e.floatValue}`})
-              console.info(`+998${e.floatValue}`)
             }}
 
             placeholder={t('telefon_raqami')}
@@ -342,6 +362,26 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
                 </div>
                 </div>
               </Form.Item>
+
+              <Dragger className="photo__uploader" onChange={photoUploader} showUploadList={false}>
+                  {photoUploaded === 'default' ? (
+                    <>
+                      <i className='bx bx-cloud-upload ant-upload-drag-icon'></i>
+                  <h4>{t('rasm_yuklang')}</h4>
+                  <p>{t('rasimni_tanlash_text')}</p>
+                    </>
+                  ) : photoUploaded === 'ok' ? (
+                    <>
+                      <i className='bx bx-check-circle success-icon'></i>
+                      <h4>{t('muaffaqiyatli')}</h4>
+                    </>
+                  ) : photoUploaded === 'loading' && (
+                    <>
+                      <i className='bx bx-time-five ant-upload-drag-icon'></i>
+                      <h4>{t('kuting')}</h4>
+                    </>
+                  )}
+            </Dragger> 
           <br />
           <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>
           </Form> 

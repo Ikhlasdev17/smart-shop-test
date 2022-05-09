@@ -12,6 +12,7 @@ const ReturnOrder = () => {
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
     const [search, setSearch] = useState('')
+    const [btnDisabled, setBtnDisabled] = useState(true)
     const dataForReturn = []
 
     useEffect(() =>{
@@ -29,10 +30,11 @@ const ReturnOrder = () => {
 
 
     const onChange =  (value, item) => {
-
         if (value > item.count){
             message.warning('Mahsulot soni yetarli emas!')
-            value = item.count
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
         }
 
         const index = dataForReturn.findIndex(x => x.product_id === item.product.id)
@@ -46,7 +48,6 @@ const ReturnOrder = () => {
             dataForReturn[index].count = value
         }
 
-        console.info(index)
     }
 
 
@@ -61,7 +62,6 @@ const ReturnOrder = () => {
 
 
   orders?.map(item => {
-    console.info()
     dataSource.push({
       key: item?.product.id,
       product: <div className="product__table-product">
@@ -76,7 +76,7 @@ const ReturnOrder = () => {
       </div>,
       count: item?.count,
       addCount: <div className="form-group">
-        <InputNumber size="small" className="form__input form-group__item table_input" placeholder={item.count} onChange={(e) => {
+        <InputNumber size="small" className="form__input form-group__item table_input" onChange={(e) => {
         onChange(e, item)
       }} /> 
       </div>
@@ -111,7 +111,7 @@ const ReturnOrder = () => {
           <div className="content-top">
               <DebounceInput minLength={2} debounceTimeout={800} placeholder={t('search')} className="form__input wdith_3" onChange={(e) => setSearch(e.target.value)} />
 
-              <Button onClick={() =>sendToReturn()}className="btn btn-primary">{t('saqlash')}</Button>
+              <Button disabled={btnDisabled} onClick={() =>sendToReturn()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>
 
 
