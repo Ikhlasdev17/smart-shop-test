@@ -108,6 +108,7 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
         setCheckedItems([])
         setNewArr([])
         seSelectedKeys([]) 
+        setPayment([])
     }, [open])
 
     const paymentOptions = [
@@ -145,6 +146,8 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
             seSelectedKeys([]) 
         }
     }
+
+    console.info(newArr)
  
 
     const dataSource = [];
@@ -157,14 +160,13 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
                 count: item?.count,
                 price: item?.price,
                 minus: <>
-                   <InputNumber  onChange={(e) => handleChangeBasketItem(e, item)} disabled={selectedKeys?.indexOf(item?.id) === -1} />
+                   <InputNumber value={newArr[item?.id - 1]?.count} onChange={(e) => handleChangeBasketItem(e, item)} disabled={selectedKeys?.indexOf(item?.id) === -1} />
                 </>
             })
         })
 
 
     useEffect(() => {
-        setPayment([])
         if (payment.length === 0) {
             setBtnDisabled(true)
         } else {

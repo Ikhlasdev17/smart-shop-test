@@ -252,7 +252,7 @@ const Orders = () => {
       <div className="content">
           <div className="content-top">
 
-           <div className="select-group">
+           <div className="flex">
                   <DebounceInput
                   debounceTimeout={800}
                   minLength={2}
