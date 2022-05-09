@@ -91,8 +91,8 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
                   }
               </div>
               <div className="profile__user-item__name">
-                  <h3>{JSON.parse(localStorage.getItem('user')).name}</h3>
-                  <h4>{JSON.parse(localStorage.getItem("user")).role === "ceo" ? "CEO" : JSON.parse(localStorage.getItem("user")).role === "admin" && t('admin') }</h4>
+                  <h3>{JSON.parse(localStorage.getItem('user'))?.name}</h3>
+                  <h4>{JSON.parse(localStorage.getItem("user"))?.role === "ceo" ? "CEO" : JSON.parse(localStorage.getItem("user"))?.role === "admin" && t('admin') }</h4>
               </div>
           </div>
           </Link>
