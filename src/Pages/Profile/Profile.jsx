@@ -177,7 +177,19 @@ const Profile = () => {
                   )
                 )}
               </Dragger>
-
+              <br />
+              <Button
+                style={{ width: "100%" }}
+                className="btn btn-primary"
+                onClick={(e) => {
+                  setUser({...newUser, avatar: null}) 
+                  message.success(t("muaffaqiyatli"))
+                  setPhotoUploaded("default")
+                }}
+                disabled={newUser.avatar === null}
+              >
+                {t("remove__image")}
+              </Button>
               <br />
 
               <Button

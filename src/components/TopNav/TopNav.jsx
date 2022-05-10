@@ -86,7 +86,7 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
                       avatar !== null ?(
                           <img style={{borderRadius: '50%', objectFit: 'cover'}} src={avatar} alt="Product Photo" />
                       ) : (
-                          <img style={{borderRadius: '50%'}} src={avatarLogo} alt="Product Photo" />
+                          <img style={{borderRadius: '50%'}} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png'} alt="Product Photo" />
                       )
                   }
               </div>
