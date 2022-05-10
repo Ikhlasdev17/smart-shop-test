@@ -77,6 +77,18 @@
     .profile__user-item__name {
         font-size: .875rem;
         font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        padding-top: 5px;
+        h3 {
+            margin-bottom: -5px;
+        }
+
+        h4 {
+            color: $gray-txt-color;
+        }
     }
 
     .profile__user-item__image {

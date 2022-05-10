@@ -73,6 +73,7 @@ const Profile = () => {
           title: t("muaffaqiyatli"),
           icon: "success",
         });
+        setPhotoUploaded("default");
       }
     } else {
       message.warn(t("malumotni_toliq_kiriting"))

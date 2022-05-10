@@ -392,8 +392,14 @@ img {
     }
 }
 
-.drawer-table {
-    min-width: 400px;
-    overflow: auto;
+    .drawer-table {
+        min-width: 400px;
+        overflow: auto;
+    }
+
+
+    .lg-table {
+        display: none;   
+    }
 }
-}
+

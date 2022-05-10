@@ -50,7 +50,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
           salary: "",
           flex: "",
           role: "saller",
-          pincode: pinCode,
+          pincode: null,
           avatar: null
         })
         break;
@@ -95,15 +95,9 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     setPinCode("XXXXX")
     axios.get(`${URL}/api/pincode/generate`, setToken())
     .then(res => { 
-        setPinCode(res.data.payload.pincode) 
+        setUser((prev) => ({ ...prev, pincode: res.data.payload.pincode })) 
     })
   }
-
-  useEffect(() => {
-    if (modalType === "add" || modalType === "update_user_data") {
-      generatePincode()
-    } 
-  }, [open, modalType, currentSallary]) 
 
   const addSallary = async () => {
     if (user.name !== "" && user.phone !== "" && user.password !== "" && user.flex !== "" && user.salary !== "" && user.role !== ""){
@@ -131,7 +125,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
               salary: "",
               flex: "",
               role: "saller",
-              pincode: "",
+              pincode: null,
               avatar: null
           })
 
@@ -167,6 +161,14 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
       setPhotoUploaded('ok')
     })
   } 
+
+
+
+  useEffect(() => {
+    if (modalType === 'add') {
+      generatePincode()
+    } 
+  }, [modalType])
 
 
 
@@ -262,8 +264,8 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
                 placeholder="FLEX" 
                 onChange={e => {setUser({...user, flex: e})}} 
                 value={user?.flex}
-                formatter={value => `${value}%`}
-                parser={value => value.replace('%', '')} />
+                prefix="%"
+                />
             </div>
             <Button onClick={updateSallary} className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center', borderRadius: '2px'}} htmlType="submit" >{t('save')}</Button>
               </>
@@ -329,29 +331,29 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
         </Form.Item>
 
           {modalType !== "update_user_data" && (<>
-        <Form.Item label={t('ish_haqi')}  required>
-          <InputNumber formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
-            setUser({...user, salary: e})}} value={user.salary} />
-          </Form.Item>
-        <Form.Item label="FLEX" required>
-          <InputNumber 
-            className="form__input"
-            required
-            placeholder="FLEX" 
-            onChange={e => {setUser({...user, flex: e})}} 
-            value={user.flex}
-            prefix="%"
-            />
-          </Form.Item>
+          <Form.Item label={t('ish_haqi')}  required>
+            <InputNumber formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} className="form__input" required placeholder={t('ish_haqi')} onChange={e => {
+              setUser({...user, salary: e})}} value={user.salary} />
+            </Form.Item>
+          <Form.Item label="FLEX" required>
+            <InputNumber 
+              className="form__input"
+              required
+              placeholder="FLEX" 
+              onChange={e => {setUser({...user, flex: e})}} 
+              value={user.flex}
+              prefix="%"
+              />
+            </Form.Item>
             
             </>
             )}
               <Form.Item label={t('pinkod')} required>
               <div className='form-group'>
                 <div className="form-group__item">
-                <CopyToClipboard text={user.pincode} onCopy={() => setCopied(true)}>
+                <CopyToClipboard text={user.pincode !== null ? user.pincode : "XXXXX"} onCopy={() => setCopied(true)}>
                   <div className={copied ? 'pincode__field copied' : 'pincode__field'}>
-                    {!copied ? user.pincode : t('copied')} 
+                    {user.pincode !== null ? (!copied ? user.pincode : t('copied')) : "XXXXX"} 
                   </div>
                 </CopyToClipboard>
                 </div>

@@ -196,12 +196,8 @@ const Orders = () => {
       setLastPage(response.data.payload.last_page)
     }
 
-
-
-
-   
     
-  } ,[search, filter, page, category, user])
+  } ,[search, filter, page, category, user, open])
 
 
   useEffect(() => {

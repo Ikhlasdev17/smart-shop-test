@@ -37,6 +37,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
   const {t} = useTranslation()
 
+
   const [product, setProduct] = useState({
     product_id: currentProduct?.id,
     category_id: currentProduct?.category.id,

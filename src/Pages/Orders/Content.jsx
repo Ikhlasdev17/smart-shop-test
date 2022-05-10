@@ -54,13 +54,13 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
         setNewArr(newData) 
     }
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (payment.length > 0) {
             if (newArr.length === 0) {
                 message.error(t('malumotni_togri_kiriting'))
             } else {
                 setTableLoading(true)
-                axios.post(`${URL}/api/return/orders`, {
+                const res = await axios.post(`${URL}/api/return/orders`, {
                     "basket_id": currentBasketItemId,
                     "payment_type": payment,
                     orders: newArr
@@ -71,9 +71,11 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
                     setOpen(false)
                     setNewArr([])
                 })
-                .catch(err => {
-                    message.error(t('xatolik'))
+                .catch(res => {
+                    message.error(t('money_mistaken'))
                 })
+                
+
             }
         } else {
             message.error(t('malumotni_togri_kiriting'))

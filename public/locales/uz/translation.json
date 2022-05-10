@@ -275,6 +275,8 @@
     "all_payment": "Barcha turdagi tolovlar",
 
     "all_categories": "Barcha kategoriyalar",
-    "paid_debt": "To'langan qarz"
+    "paid_debt": "To'langan qarz",
+
+    "money_mistaken": "Mablag' yetarli emas! Tolov turini o'zgaritiring!"
 
 }
