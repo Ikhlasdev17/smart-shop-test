@@ -47,6 +47,13 @@ const Orders = () => {
 
   const [user, setUser] = useState("")
 
+
+  const [refresh, setRefresh] = useState(false)
+
+
+  const [productDetailsIsOpen, setProductDetailsIsOpen] = useState(false);
+  const [productDetails, setProductDetails] = useState({});
+
   useEffect(async () => {
     dispatch(fetchingCategories())
 
@@ -66,11 +73,11 @@ const Orders = () => {
       dataSource.push({
           client: <div className="table-title"
           ><h3>{item?.user.name}</h3>
-            <p>{item?.user.phone}</p>
+            <p>+998{item?.user.phone}</p>
           </div>,
             cash: item?.cash.toLocaleString(),
             card: item?.card.toLocaleString(),
-            debt: <span><strong>{item?.debt.debt.toLocaleString()}</strong> <br /> {item?.debt.remaining.toLocaleString()}</span>,
+            debt: <span><strong>{item?.debt.debt.toLocaleString()}</strong> <br /> <span style={{color: '#eb6767'}}>{item?.debt.remaining.toLocaleString()}</span></span>,
             total: <span>{(item?.cash + item?.card + item?.debt.debt).toLocaleString()}</span>,
             description: <>
                 {item?.description !== null ? <>
@@ -197,7 +204,7 @@ const Orders = () => {
     }
 
     
-  } ,[search, filter, page, category, user, open])
+  } ,[search, filter, page, category, user, refresh])
 
 
   useEffect(() => {
@@ -222,8 +229,91 @@ const Orders = () => {
     <div className="section products-page"> 
 
       <Drawer className='drawer-big' size="large" visible={open} onClose={() => setOpen(false)} title={t('return')}>
-        <Content basket={currentSelectedBasket} open={open} orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
+        <Content refresh={refresh} setRefresh={() => setRefresh(!refresh)} basket={currentSelectedBasket} open={open} orders={orders} setOpen={() => setOpen()} currentBasketItemId={currentBasketId} />
       </Drawer>
+
+      {!open && productDetailsIsOpen ? (
+        <Modal
+          footer={null}
+          visible={productDetailsIsOpen}
+          onCancel={() => {
+            setProductDetailsIsOpen(false);
+            setProductDetails({});
+          }}
+        >
+          <h2>{productDetails?.name}</h2>
+          <table className="product__details-table">
+            <tbody className="product__details-table__body">
+              <tr>
+                <td>{t("client")}</td>
+                <td>
+                  {productDetails?.user.name}
+                </td>
+              </tr>
+
+              <tr>
+                <td>{t("telefon_raqami")}</td>
+                <td>
+                  +998{productDetails?.user.phone}
+                </td>
+              </tr>
+
+              <tr>
+                <td>{t("cash")}</td>
+                <td>
+                  {productDetails?.cash.toLocaleString()} 
+                </td>
+              </tr>
+              <tr>
+                <td>{t("card")}</td>
+                <td>
+                  {productDetails?.card.toLocaleString()}
+                </td>
+              </tr>
+              <tr>
+                <td>{t("tolangan_qarz")}</td>
+                <td>
+                <span><strong>{productDetails?.debt.debt.toLocaleString()}</strong> <br /> </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{t("qarz")}</td>
+                <td>
+                 <span style={{color: '#eb6767'}}>{productDetails?.debt.remaining.toLocaleString()}</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{t("total_income")}</td>
+                <td>
+                <span>{(productDetails?.cash + productDetails?.card + productDetails?.debt.debt).toLocaleString()}</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{t("qarzni_tolash_sanasi")}</td>
+                <td>
+                <span><span><strong>{productDetails?.term ? moment(productDetails?.term).format('MMM DD, YYYY') : ''}</strong></span></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <blockquote className='description'>
+            <strong>{t('description')}: </strong>
+            {productDetails?.description !== null ? <>
+                  <span style={{cursor: 'pointer', textTransform: 'capitalize'}} onClick={() => {
+                    setDescriptionModal(productDetails?.description)
+                    setDescrModalOpen(true)
+                  }}> 
+                    {productDetails?.description.slice(0, 20)}
+                  </span>
+                </> : 
+                  <span>{productDetails?.debt.debt > 0 ? t('qarz') : t('kirim')}</span>}
+          </blockquote> 
+        </Modal>
+      ) : null}
 
       <Modal visible={descrModalOpen} onOk={e => {
         setDescrModalOpen(false)
@@ -312,7 +402,49 @@ const Orders = () => {
 
           <div className="content-body" >
             <Skeleton loading={loading} active>
-            <Table pagination={false} size="small" rowClassName={"table-row"} className="content-table"  dataSource={dataSource} columns={columns} />
+            <Table pagination={false} size="small" rowClassName={"table-row"} className="content-table lg-table"  dataSource={dataSource} columns={columns} />
+              
+
+            <div className="responsive__table">
+              {orders &&
+                orders.length > 0 &&
+                orders.map((item, index) => {
+                  return (
+                    <div
+                      className="responsive__table-item"
+                      key={index}
+                      onClick={(e) => {
+                        !(e.target.classList.value.includes("bx")) && 
+                          setProductDetailsIsOpen(true); 
+                          setProductDetails(item);
+                      }}
+                    >
+                      <div className="responsive__table-item__details-name">
+                        <h3>{item?.user.name}</h3>
+                        <h4>+998 {item?.user.phone}</h4> 
+                      </div> 
+                      <div> 
+
+                        <div className="responsive__table-item__details-actions">
+                          <div className="table-button__group">
+                          <Button 
+                            className="table-action"
+                            onClick={e => {
+                              setOpen(!open)
+                              setCurrentBasketId(item?.id)
+                              setCurrentSelectedBasket(item)
+                            }}
+                            >
+                            <i className="bx bx-copy"></i>
+                          </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
 
             {lastPage > 1 && (
               <div className="pagination__bottom">

@@ -278,6 +278,10 @@
     "paid_debt": "To'langan qarz",
 
     "money_mistaken": "Mablag' yetarli emas! Tolov turini o'zgaritiring!",
-    "remove__image": "Rasmni o'chirish"
+    "remove__image": "Rasmni o'chirish",
+
+    "tolangan_qarz": "To'langan qarz" ,
+
+    "client": "Mijoz"
 
 }

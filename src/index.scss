@@ -403,3 +403,103 @@ img {
     }
 }
 
+
+
+
+// responsive table 
+
+.responsive__table {
+    display: flex;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    .responsive__table-item {
+        width: 100%;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 0 15px rgba(0,0,0,.08);
+        display: flex;
+        align-items: center; 
+        justify-content: space-between;
+    }
+
+    .responsive__table-item__details {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+
+    }
+
+    .responsive__table-item__details-name {
+        width: 150px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        h3 {
+            color: #000;
+            font-size: .900rem;
+            margin-bottom: -3px;
+        }
+        
+        h4 {
+            color: $gray-txt-color;
+            font-size: .800rem;
+            margin: 0;
+        }
+    }
+
+    .responsive__table-item__details-count {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        h3 {
+            font-weight: medium;
+            color: $primary-color; 
+            margin-top: .4rem;
+            font-size: 1rem;
+            margin-right: .3rem;
+        }
+
+        h4 {
+            font-size: .875rem;
+            font-weight: bold;
+            color: $gray-txt-color;
+        }
+    }
+    
+
+    
+}
+
+
+.product__details-table {
+    width: 100%;
+
+    .product__details-table__body {
+        width: 100%;
+        tr {
+            padding: .5rem;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            td:first-child {
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+ 
+@media screen and (max-width: 768px) {
+    .responsive__table {
+        display: flex;
+    }
+}
+.description {
+    padding: .5rem;
+    background-color: $bg-second;
+    margin: 1rem 0;
+    border-radius: .5rem;
+}

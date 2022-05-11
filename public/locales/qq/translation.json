@@ -277,6 +277,10 @@
     "all_categories": "Ba'rshe kategoriyalar",
     "paid_debt": "To'lengen qariz",
     "money_mistaken": "Pul jeterli emes! To'lem tu'rin o'zgertin'!",
-    "remove__image": "Su'wretti o'shiriw"
+    "remove__image": "Su'wretti o'shiriw",
+
+    "tolangan_qarz": "To'lengen qariz",
+
+    "client": "Aliwshi"
 
 }

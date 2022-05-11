@@ -4,7 +4,7 @@ import axios from 'axios'
 import { setToken, URL } from '../../assets/api/URL'
 import { useTranslation } from 'react-i18next'
 
-const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
+const Content = ({ open, setOpen, currentBasketItemId, orders, basket, setRefresh, refresh    }) => {
     const [basketItems, setBasketItems] = useState([])
     const [spinning, setSpinning] = useState(false)
     const [tableLoading, setTableLoading] = useState(false)
@@ -70,6 +70,7 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
                     setTableLoading(false)
                     setOpen(false)
                     setNewArr([])
+                    setRefresh(!refresh)
                 })
                 .catch(res => {
                     message.error(t('money_mistaken'))
@@ -147,9 +148,7 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
             setCheckedItems([])
             seSelectedKeys([]) 
         }
-    }
-
-    console.info(newArr)
+    } 
  
 
     const dataSource = [];
@@ -162,7 +161,7 @@ const Content = ({ open, setOpen, currentBasketItemId, orders, basket    }) => {
                 count: item?.count,
                 price: item?.price,
                 minus: <>
-                   <InputNumber value={newArr[item?.id - 1]?.count} onChange={(e) => handleChangeBasketItem(e, item)} disabled={selectedKeys?.indexOf(item?.id) === -1} />
+                   <InputNumber value={newArr.filter(x => x.order_id === item?.id).count} onChange={(e) => handleChangeBasketItem(e, item)} disabled={selectedKeys?.indexOf(item?.id) === -1} />
                 </>
             })
         })
