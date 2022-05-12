@@ -391,6 +391,8 @@ const Products = () => {
             </tbody>
           </table>
 
+          <br />
+
           <div className="product__detail-image">
             {productDetails?.image !== null && (
               <img src={productDetails?.image} alt="product" />

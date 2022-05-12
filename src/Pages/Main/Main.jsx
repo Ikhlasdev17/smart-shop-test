@@ -91,6 +91,10 @@ const Main = () => {
       key: 'key',
     }
   ];
+
+
+
+  console.info(statisticProducts)
  
 
   return (
@@ -167,7 +171,30 @@ const Main = () => {
 
           <div className="content-body" >
           <Skeleton loading={loading} active>  
-          <Table  className="content-table" dataSource={dataSource} columns={columns} />
+          <Table  className="content-table lg-table" dataSource={dataSource} columns={columns} />
+          
+          <div className="responsive__table">
+              {statisticProducts &&
+                statisticProducts.length > 0 ?
+                statisticProducts.map((item, index) => {
+                  return (
+                    <div
+                      className="responsive__table-item"
+                      key={index} 
+                    >
+                      <div className="responsive__table-item__details-name">
+                        <h3>{item?.product_name}</h3>
+                      </div>
+                      <div className="responsive__table-item__details-name">
+                        <h3>{item?.count}</h3>
+                      </div>
+                      
+                        
+                    </div>
+                  );
+                }) : null}
+            </div>
+          
           </Skeleton>
           </div>
       </div>

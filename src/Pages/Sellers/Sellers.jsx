@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Sellers.scss';
-import { Drawer, Select, Button, Table, Space, Skeleton } from 'antd';
+import { Drawer, Select, Button, Table, Space, Skeleton, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchedSellers, fetchingSellers, fetchingErrorSellers } from '../../redux/sellersSlice';
 import { setToken, URL } from '../../assets/api/URL';
@@ -25,10 +25,15 @@ const Sellers = () => {
     const [currentSeller, setCurrentSeller] = useState({})
     const { t } = useTranslation()
     
-  const [refresh, setRefresh] = useState(1)
+    const [refresh, setRefresh] = useState(1)
 
 
     const dataSource = [];
+
+
+    const [sellerDetailsIsOpen, setSellerDetailsIsOpen] = useState(false);
+    const [sellerDetails, setSellerDetails] = useState({});
+
 
     // ati, jumis haqi, FLEX, tariyxi, hareket
 
@@ -145,6 +150,42 @@ const Sellers = () => {
         <Drawer title={modalType === 'add' ? t('satiwshi_qosiw') : modalType === 'update' ? t('ish_haqini_hisoblash') : modalType === 'change_all_salary' ? t('ish_haqini_hisoblash') : t('satiwshini_janalaw') } placement="right" visible={open} onClose={() => setOpen(false)}>
             {modalType === 'history' ? <History currId={currentID} /> : <Content open={open} setRefresh={() => setRefresh()} currentSallary={modalType !== "add" && currentSeller} modalType={modalType} setOpen={setOpen} type={modalType} refresh={refresh}/>}
         </Drawer>
+
+        {localStorage.getItem('role') === 'ceo' && !open && sellerDetailsIsOpen ? (
+        <Modal
+          footer={null}
+          visible={sellerDetailsIsOpen}
+          onCancel={() => {
+            setSellerDetailsIsOpen(false);
+            setSellerDetails({});
+          }}
+        >
+          <h2>{sellerDetails?.name}</h2>
+          <table className="product__details-table">
+            <tbody className="product__details-table__body">
+              <tr>
+                <td>{t("ish_haqi")}</td>
+                <td>
+                  {sellerDetails.salary !== null ? sellerDetails.salary.toLocaleString() : 0}
+                </td>
+              </tr>
+              <tr>
+                <td>{t("FLEX")}</td>
+                <td>
+                  {sellerDetails.flex || 0 + ' %'} 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="product__detail-image">
+            {sellerDetails?.avatar !== null && (
+              <img src={sellerDetails?.avatar} alt="product" />
+            )}
+          </div>
+        </Modal>
+      ) : null}
+
         <h1 className="heading">{t('sellers')}</h1>
 
         <div className="content">
@@ -171,10 +212,59 @@ const Sellers = () => {
                 <Skeleton loading={loading} active>
             <Table
                 size="small"
-                className="content-table"
+                className="content-table lg-table"
                 dataSource={dataSource}
                 columns={columns}
                 />
+
+            
+
+            <div className="responsive__table">
+              {sellers &&
+                sellers.length > 0 &&
+                sellers.map((item, index) => {
+                  return (
+                    <div
+                      className="responsive__table-item"
+                      key={index}
+                      onClick={(e) => {
+                        !(e.target.classList.value.includes("bx")) && 
+                          setSellerDetailsIsOpen(true); 
+                          setSellerDetails(item);
+                      }}
+                    >
+                      <div className="responsive__table-item__details-name">
+                        <h3>{item?.name}</h3>
+                        <h4>{item.salary !== null ? item.salary.toLocaleString() : 0}</h4>
+                         
+                      </div>
+                      
+                      <div>
+
+                        <div className="responsive__table-item__details-actions">
+                          <div className="table-button__group">
+                          <>
+                          <Button className="table-action" onClick={() => {
+                                setOpen(!open)
+                                setModalType('update')
+                                setCurrentSeller(item)
+                                }}><i className='bx bx-money-withdraw'></i></Button>
+            
+                            <Button className="table-action" onClick={() => {
+                                setOpen(!open)
+                                setModalType('update_user_data')
+                                setCurrentSeller(item)
+                                }}><i className='bx bx-edit'></i></Button>
+                          </>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+
             </Skeleton>
             </div>
         </div>

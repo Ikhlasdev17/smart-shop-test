@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Wrapper from './components/Layout/Layout';
 import { Login } from './Pages/Login/Login'; 
-import loadingLogo from '../src/assets/images/LOGOTEXNOPOS.png'
+import loadingLogo from '../src/assets/images/SmartShop2.png'
 import axios from 'axios';
 import { setToken, URL } from './assets/api/URL';
 import { userLogout } from './redux/userSlice';

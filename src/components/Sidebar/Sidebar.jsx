@@ -13,6 +13,19 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
     const [opened, setOpened] = useState(false)
     const { t } = useTranslation();
     const [loading, setLoading]  = useState(false)
+
+
+    window.addEventListener('click' , (e) => {
+      if (e.target.className === "content") {
+        if(!collapsed){
+          setCollapsed(true)
+        }
+      }
+
+
+    })
+
+
     useEffect(() =>{
         setSelected(pathName.pathname)
       }, [pathName])

@@ -9,8 +9,8 @@ import NumberFormat from 'react-number-format';
 
 import { useTranslation } from 'react-i18next';
 
+import { URL } from '../../assets/api/URL';
 
-const URL = 'https://smart-shop.my-project.site'
 
 export function Login() {
     let navigate = useNavigate();

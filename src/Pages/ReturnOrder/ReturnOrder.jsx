@@ -30,8 +30,8 @@ const ReturnOrder = () => {
 
     const onChange =  (value, item) => {
         if (value > item.count ){
-            message.warning('Mahsulot soni yetarli emas!')
             setBtnDisabled(true)
+            message.warning('Mahsulot soni yetarli emas!')
         } else {
             setBtnDisabled(false)
         }
@@ -75,6 +75,7 @@ const ReturnOrder = () => {
         .then(res => {
             message.success(t('muaffaqiyatli'))
             setFetching(!fetching)
+            setData([])
         })
     }
 
@@ -124,7 +125,7 @@ const ReturnOrder = () => {
 
     return ( 
         <div className="section main-page">
-      <h1 className="heading">{t('order')}</h1>
+      <h1 className="heading">{t('return')}</h1>
       
 
       <div className="content">
