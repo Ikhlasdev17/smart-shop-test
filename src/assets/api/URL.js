@@ -1,4 +1,5 @@
-export const URL = 'https://smart-shop.my-project.site'
+export const URL = process.env.REACT_APP_BASE_URL
+
 
 export const setToken = () => ({
     headers: {
