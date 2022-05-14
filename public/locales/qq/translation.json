@@ -88,7 +88,7 @@
                     "role": "ceo"
                 },{
                     "id": "subitem15",
-                    "label": "Финанс",
+                    "label": "Valyutalar",
                     "path": "/finans/valutes",
                     "icon": "bx bx-cart-alt"
                 }

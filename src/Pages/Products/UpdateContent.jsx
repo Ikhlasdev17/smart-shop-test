@@ -35,6 +35,9 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
   const [imageUploading, setImageUploading] = useState(false)
 
+  const [updatedCostPrice, setUpdatedCostPrice] = useState(0)
+  const [updatedCategoryId, setUpdatedCategoryId] = useState(0)
+
   const {t} = useTranslation()
 
 
@@ -89,20 +92,31 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
             })
 
 
-        setMaxPrice(currentProduct.max_price.price)
-        setMaxPrice_code(currency?.filter(item => item.code === currentProduct?.max_price.code)[0].id || 1)
-
-        setMinPrice(currentProduct.min_price.price)
-        setMinPrice_code(currency?.filter(item => item.code === currentProduct?.min_price.code)[0].id || 1)
-
-        setWholePrice(currentProduct.whole_price.price)
-        setCurrentWhole(currentProduct.whole_price.price)
-        setWholePrice_code(currency?.filter(item => item.code === currentProduct?.whole_price.code)[0].id || 1)
-
         setCostPriceCode(currency?.filter(item => item.code === currentProduct?.cost_price.code)[0].id )
 
 
     } ,[currency, currentProduct, currentProduct.max_price.price, currentProduct.max_price.code ])
+
+    useEffect(() => {
+      setMaxPrice(currentProduct.max_price.price)
+      setMaxPrice_code(currency?.filter(item => item.code === currentProduct?.max_price.code)[0].id || 1)
+    }, [currentProduct.max_price.price, currentProduct.max_price.code])
+
+    useEffect(() => {
+      setWholePrice(currentProduct.whole_price.price)
+      setCurrentWhole(currentProduct.whole_price.price)
+      setWholePrice_code(currency?.filter(item => item.code === currentProduct?.whole_price.code)[0].id || 1)
+    }, [currentProduct.whole_price.price, currentProduct.whole_price.code])
+
+    useEffect(() => {
+      setMinPrice(currentProduct.min_price.price)
+      setMinPrice_code(currency?.filter(item => item.code === currentProduct?.min_price.code)[0].id || 1)
+    }, [currentProduct.min_price.price, currentProduct.min_price.code])
+
+
+    console.info(product)
+
+
 
 
 
@@ -206,7 +220,8 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
 
   useEffect(() => {
-    const currentCategory = categories.filter(item => item.id === product.category_id)[0] 
+    const currentCategory = categories.filter(item => item.id === product.category_id)[0]  
+
       if (whole_price_code === 2) {
         setProduct(prev => (
           {...product, 
@@ -236,7 +251,25 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
       setCurrentRate(currency && currency[product.cost_price.currency_id - 1]?.rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
 
-      } , [product.cost_price, product.category_id])
+      } , [updatedCostPrice, updatedCategoryId])
+
+
+
+
+
+      useEffect(() => {
+        setProduct(prev => ({...product, price_wholesale: {...prev.price_wholesale, price: whole_price}}))
+      },[whole_price, product.cost_price.price])
+
+      useEffect(() => {
+        setProduct(prev => ({...product, price_max: {...prev.price_max, price: max_price}}))
+      },[max_price, product.cost_price.price])
+
+      useEffect(() => {
+        setProduct(prev => ({...product, price_min: {...prev.price_min, price: min_price}}))
+      },[min_price])
+
+
 
  
 
@@ -250,7 +283,16 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
   const handleSubmit = (e) => {
     dispatch(fetchingProducts())
 
-    axios.put(`${URL}/api/product`, product, setToken())
+    axios.put(`${URL}/api/product`, {
+      ...product,
+      price_wholesale: {
+        ...product.price_wholesale, 
+        price: whole_price},
+      price_max: {...product.price_max, 
+        price: max_price},
+      price_min: {...product.price_min,
+        price: min_price},
+    }, setToken())
     .then(res => {
       // dispatch(updateProduct(product))
       swal({
@@ -288,7 +330,10 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
     <div >
       <Form layout="vertical" onFinish={handleSubmit}>
         <Form.Item className="form__item" label={t('kategoriya_tanlash')} required>
-          <Select value={product.category_id} onChange={e => setProduct({...product, category_id: e})} required className="form__input" placeholder={t('kategoriya_tanlash')}>
+          <Select value={product.category_id} onChange={e => {
+            setProduct({...product, category_id: e})
+            setUpdatedCategoryId(e)
+            }} required className="form__input" placeholder={t('kategoriya_tanlash')}>
             {
               categories?.map(item => (
                 <Select.Option key={item.id} value={item.id}>
@@ -337,6 +382,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
           onChange={e => {
             setProduct(prev => ({...product, cost_price: {...prev.cost_price, currency_id: e}}))
             setCostPriceCode(e)
+            setUpdatedCostPrice(e)
 
 
             if (e === 2) {

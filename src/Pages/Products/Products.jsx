@@ -108,6 +108,7 @@ const Products = () => {
     });
   };
 
+
   const dataSource = [];
   products.length > 0 &&
     products?.map((item) => {
@@ -147,7 +148,7 @@ const Products = () => {
         ),
         whole_price: (
           <span>
-            <strong>{item?.whole_price.price.toLocaleString()}</strong>{" "}
+            <strong>{item?.whole_price.price}</strong>{" "}
             {item?.whole_price.code}
           </span>
         ),
@@ -306,6 +307,7 @@ const Products = () => {
     if (open) {
       setProductDetailsIsOpen(false);
     }
+
   }, [open]);
 
   return (

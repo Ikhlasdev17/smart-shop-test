@@ -93,10 +93,6 @@ const OrderWarehouse = () => {
   const handleChange = (e, currentItem, type) => {
     const index = updatedProducts.findIndex(item => item.product_id === currentItem.product.id) 
 
-    if (type === 'count' && e > currentItem.count) {
-      message.warn(t('malumotni_togri_kiriting'))
-      e = currentItem.count
-    }
 
     if (index === -1) {
         updatedProducts = [...updatedProducts,  {
