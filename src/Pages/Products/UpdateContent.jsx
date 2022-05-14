@@ -211,11 +211,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
       setMinPrice((e * currentCategory.min_percent / 100) + e)
       setMaxPrice((e * currentCategory.max_percent / 100) + e)
-      
-      
-     
     }
-
   }  
 
 

@@ -36,6 +36,7 @@ function App() {
     <img src={loadingLogo} alt="" />
   </div>
   }
+ 
   
   return (
     <div className="App">

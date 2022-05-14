@@ -40,13 +40,7 @@ i18n
     },
     react: { useSuspense: false }
   });
-
-
-  
-
  
-
-
 ReactDOM.render(
     <Provider store={store}> 
         <App /> 
