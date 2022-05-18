@@ -38,6 +38,8 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
   const [updatedCostPrice, setUpdatedCostPrice] = useState(0)
   const [updatedCategoryId, setUpdatedCategoryId] = useState(0)
 
+  const [productSended, setProductSended] = useState(false)
+
   const {t} = useTranslation()
 
 
@@ -278,6 +280,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
   const handleSubmit = (e) => {
     dispatch(fetchingProducts())
+    setProductSended(true)
 
     axios.put(`${URL}/api/product`, {
       ...product,
@@ -296,11 +299,13 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
         icon: 'success'
       })
       setOpen(false)
+      setProductSended(false)
     })
     .catch(ress => {
       swal({
         title: t('xatolik')
       })
+      setProductSended(false)
     })
 
 
@@ -492,7 +497,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
             </Dragger>  
       <br />
 
-        <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
+        <Button loading={productSended} className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
         
       </Form>
     </div>

@@ -104,8 +104,7 @@
                     "id": "subitem7",
                     "label": "Ónimler",
                     "path": "/warehouse/products",
-                    "icon": "bx bx-cart-alt"
-                },{
+                    "icon": "bx bx-cart-alt"         },{
                     "id": "subitem8",
                     "label": "Kem qalǵan ónimler",
                     "path": "/warehouse/lowProducts",
