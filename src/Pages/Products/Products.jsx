@@ -120,6 +120,8 @@ const Products = () => {
         categories[
           categories?.findIndex((cate) => cate?.id === item?.category.id)
         ];
+
+      
       dataSource.push({
         product: (
           <div className="product__table-product">
@@ -168,11 +170,11 @@ const Products = () => {
         ),
         warehouse: (
           <span className="table-text-group">
-            <strong>{item?.warehouse?.count || 0} </strong>{" "}
+            <strong>{item?.warehouse !== null ? item?.warehouse?.count : 0} </strong>{" "}
             <p>
-              {unit_id_options?.filter(
+              {item?.warehouse !== null ? unit_id_options?.filter(
                 (x) => x.id === item?.warehouse?.unit?.id
-              )[0]?.label || ""}
+              )[0]?.label || "" : '0'}
             </p>
           </span>
         ),
