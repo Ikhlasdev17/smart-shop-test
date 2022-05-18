@@ -144,26 +144,26 @@ const Products = () => {
         brand: item?.brand,
         cost_price: (
           <span>
-            <strong>{item?.cost_price.price.toLocaleString()}</strong>{" "}
-            {item?.cost_price.code}
+            <strong>{item?.cost_price?.price.toLocaleString()}</strong>{" "}
+            {item?.cost_price?.code}
           </span>
         ),
         whole_price: (
           <span>
-            <strong>{item?.whole_price.price}</strong>{" "}
-            {item?.whole_price.code}
+            <strong>{item?.whole_price?.price}</strong>{" "}
+            {item?.whole_price?.code}
           </span>
         ),
         max_price: (
           <span>
-            <strong>{item?.max_price.price.toLocaleString()}</strong>{" "}
-            {item?.max_price.code}
+            <strong>{item?.max_price?.price.toLocaleString()}</strong>{" "}
+            {item?.max_price?.code}
           </span>
         ),
         min_price: (
           <span>
-            <strong>{item?.min_price.price.toLocaleString()}</strong>{" "}
-            {item?.min_price.code}
+            <strong>{item?.min_price?.price?.toLocaleString()}</strong>{" "}
+            {item?.min_price?.code}
           </span>
         ),
         warehouse: (
