@@ -28,6 +28,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   const [fileUploaded, setFileUploaded] = useState(false)
   const componentRef = useRef();
   const {t} = useTranslation()
+  const [productSended, setProductSended] = useState(false)
 
   const [photoUploaded, setPhotoUploaded] = useState('default')
 
@@ -183,6 +184,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   const saveProductFunc = () => {
     if (product.category_id !== null && product.name !== null){
       dispatch(fetchingProducts())
+      setProductSended(true)
 
       axios.post(`${URL}/api/product`, product , setToken())
       .then(res => {
@@ -190,6 +192,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
           title: t('muaffaqiyatli'),
           icon: 'success'
         })
+        setProductSended(false)
 
         setRefresh(!refresh)
 
@@ -239,6 +242,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
           title: t('xatolik'),
           icon: 'error'
         })
+        setProductSended(false)
 
       })
  
@@ -516,7 +520,10 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
             </Dragger> 
         <br />
 
-        <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
+        <Button 
+          className="btn btn-primary" 
+          loading={productSended}
+          style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
         
       </Form>
     </div> 
