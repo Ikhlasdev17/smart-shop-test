@@ -117,7 +117,6 @@ const Wrapper = () => {
               <Route path={"/operations/return"} element={<ReturnOrder />} />  
               <Route path="/casheir" element={<Casheir />} />
               <Route path={"/profile"} element={<Profile />} />
-              
             </Routes>
           </Content>
           <Footer 

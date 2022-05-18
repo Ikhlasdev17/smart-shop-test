@@ -133,7 +133,15 @@ img {
     align-items: center; 
     font-size: 1rem!important;
     overflow: hidden;
-    padding-left: .5rem;
+    padding-left: 0;
+
+    &[type="text"] {
+        padding-left: .5rem;
+    }
+
+    &[type="number"] {
+        padding-left: .5rem;
+    }
 
     * {
         border: none!important;

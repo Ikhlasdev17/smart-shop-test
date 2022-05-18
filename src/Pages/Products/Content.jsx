@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import { setToken, URL } from '../../assets/api/URL'
-import { Button, Col, Form, Input, InputNumber, message, Row, Select } from 'antd';
+import { Button, Col, Form, Input, InputNumber, message, Row, Select, Spin } from 'antd';
 import { fetchedCategories, fetchingCategories } from '../../redux/categoriesSlice';
 import { fetchingProducts, addProduct, updateProduct } from '../../redux/productsSlice';
 import Dragger from 'antd/lib/upload/Dragger';
@@ -30,6 +30,8 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   const {t} = useTranslation()
 
   const [photoUploaded, setPhotoUploaded] = useState('default')
+
+  const [uploadingServer, setUploadingServer] = useState(false)
 
     const [product, setProduct] = useState({
       category_id: null,
@@ -307,9 +309,11 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
 
 
   const sendImportFile = () => { 
+    setUploadingServer(true)
       axios.post(`${URL}/api/products/import`, formData, setToken())
     .then(res => {
       setOpen(false)
+      setUploadingServer(false)
       swal({
         title: t('muaffaqiyatli'),
         icon: 'success'
@@ -319,7 +323,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
 
   if (type === 'import'){
     return (
-      <>
+      <Spin spinning={uploadingServer}>
         <Dragger className="photo__uploader" onChange={importFile} showUploadList={false}>
                   {!fileUploaded ? (
                     <>
@@ -335,7 +339,7 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
                   )}
             </Dragger>
             <Button disabled={!fileUploaded} onClick={sendImportFile} className='btn btn-primary' style={{width: '100%', margin: '1rem 0'}}>{t('import')}</Button>
-      </> 
+      </Spin> 
     )
   }
 
@@ -515,7 +519,8 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
         <Button className="btn btn-primary" style={{width: '100%', display: 'flex', justifyContent: 'center'}} htmlType="submit">{t('save')}</Button>
         
       </Form>
-    </div>
+    </div> 
+
   )
 }
 

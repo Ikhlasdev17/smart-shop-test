@@ -38,7 +38,12 @@ const Main = () => {
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/statistica/product?from=${from}&to=${to}&category_id=${category_id !== '' && category_id}&employee_id=${employeeId !== "" && employeeId }`, setToken())
+    const response = await 
+      axios.get(`
+        ${URL}/api/statistica/product?
+        from=${from}&to=${to}
+        ${`&${category_id !== '' ? 'category_id='+category_id : ''}`}
+        ${employeeId !== "" ? '&employee_id='+employeeId : '' }`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload)
@@ -115,6 +120,7 @@ const Main = () => {
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
+              style={{outline: 'none'}}
               >
                 <Option value={''}>{t('all')}</Option>
                   {

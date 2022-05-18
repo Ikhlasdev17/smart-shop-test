@@ -66,6 +66,8 @@ const Products = () => {
   const [productDetailsIsOpen, setProductDetailsIsOpen] = useState(false);
   const [productDetails, setProductDetails] = useState({});
 
+  const [exporting, setExporting] = useState(false);
+
   useEffect(async () => {
     dispatch(fetchingCategories());
     setLoading(true);
@@ -206,6 +208,7 @@ const Products = () => {
 
 
   const exportData = () => {
+    setExporting(true);
     fetch(`${URL}/api/products/export`, {
       method: "POST",
       headers: {
@@ -217,6 +220,7 @@ const Products = () => {
     })
       .then((response) => response.blob())
       .then((blob) => {
+        setExporting(false);
         const url = window.URL.createObjectURL(new Blob([blob]));
         const link = document.createElement("a");
         link.href = url;
@@ -445,11 +449,13 @@ const Products = () => {
           >
             <i className="bx bx-download"></i> {t("import")}
           </Button>
+
           <Button
             className="btn btn-primary btn-md"
             onClick={() => {
               exportData();
             }}
+            loading={exporting}
           >
             <i className="bx bx-upload"></i> {t("export")}
           </Button>

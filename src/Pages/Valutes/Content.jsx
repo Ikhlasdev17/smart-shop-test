@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, message } from 'antd'
+import { Button, Form, Input, InputNumber, message, Spin } from 'antd'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { URL, setToken } from '../../assets/api/URL'
@@ -11,10 +11,14 @@ const Content = ({ currentValute, setOpen, setChanged, changed }) => {
     })
     const {t} = useTranslation()
 
+    const [loading, setLoading] = useState(false)
+
 
     const handleSave = () => {
+        setLoading(true)
         axios.post(`${URL}/api/currency`, valute, setToken())
         .then(res => {
+            setLoading(false)
             setChanged(!changed)
             setOpen(false)
             message.success(t('muaffaqiyatli'))
@@ -23,12 +27,14 @@ const Content = ({ currentValute, setOpen, setChanged, changed }) => {
 
   return (
     <div>
+        <Spin spinning={loading}>
         <Form layout={"vertical"}>
             <Form.Item label={t('kurs')} required>
                 <InputNumber placeholder={t('kurs')} value={valute.rate} onChange={(e) => setValute({...valute, rate: e})} className="form__input" required />
             </Form.Item>
             <Button className="btn btn-primary" onClick={handleSave}>{t('save')}</Button>
         </Form>
+        </Spin>
     </div>
   )
 }
