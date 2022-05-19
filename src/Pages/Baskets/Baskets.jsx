@@ -100,7 +100,7 @@ const Baskets = () => {
           <div className="content-top__group">
 
             <DatePicker
-              className="content__range-picker content-top__input form__input "
+              className="content__range-picker content-top__input form__input pl-1"
               placeholder={t('from')}
               onChange={(value, string) => {
                 setFrom(string)
@@ -110,7 +110,7 @@ const Baskets = () => {
 
 
             <DatePicker
-              className="content__range-picker content-top__input form__input  "
+              className="content__range-picker content-top__input form__input  pl-1"
               placeholder={t('from')}
               onChange={(value, string) => {
                 setTo(string)

@@ -143,6 +143,18 @@ img {
         padding-left: .5rem;
     }
 
+    &[type="email"] {
+        padding-left: .5rem;
+    }
+
+    &[type="password"] {
+        padding-left: .5rem;
+    }
+
+    &[type="date"] {
+        padding-left: .5rem;
+    }
+
     * {
         border: none!important;
         outline: none !important;
@@ -182,6 +194,10 @@ img {
     }
 }
 
+
+.pl-1 {
+    padding-left: .5rem!important;
+}
 
 
 
@@ -319,7 +335,6 @@ img {
 
 
 .content-top__group {
-    width: 300px;
     display: flex;
     gap: 20px;
     input{
@@ -512,4 +527,8 @@ img {
     background-color: $bg-second;
     margin: 1rem 0;
     border-radius: .5rem;
+}
+
+.justify-between {
+    justify-content: space-between;
 }

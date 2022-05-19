@@ -111,6 +111,9 @@ const Products = () => {
   };
 
 
+  console.info(products)
+
+
   const dataSource = [];
   products.length > 0 &&
     products?.map((item) => {
@@ -120,8 +123,6 @@ const Products = () => {
         categories[
           categories?.findIndex((cate) => cate?.id === item?.category.id)
         ];
-
-      
       dataSource.push({
         product: (
           <div className="product__table-product">

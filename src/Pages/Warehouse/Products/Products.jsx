@@ -21,8 +21,10 @@ const {Option} = Select;
 const Products = () => {
   const dispatch = useDispatch() 
   const [search, setSearch] = useState('')
-  const [products, setProducts] = useState([])
   const { categories } = useSelector(state => state.categoriesReducer)
+  const { products, productsFetchingStatus } = useSelector(
+    (state) => state.productsReducer
+  );
   const [loading, setLoading] = useState(true)
   const { t } = useTranslation()
   let defectProducts = []
@@ -32,7 +34,7 @@ const Products = () => {
 
   const [lastPage, setLastPage] = useState()
   const [perPage, setPerPage] = useState()
-  const [currentPage, setCurrentPage] = useState()
+  const [currentPage, setCurrentPage] = useState(1)
 
   const [category_id, setCategory_id] = useState("")
 
@@ -103,28 +105,34 @@ const Products = () => {
     const dataSource = [];
 
 
+    console.info(products)
+
+
     
     products.length > 0 && products?.map(item => {
+      const currentCategory = categories.find(category => category.id === item.category.id)
       dataSource.push({
-        key: item?.product.id,
+        key: item?.id,
         product: <div className="product__table-product">
             <div className="product__table-product__image"> 
                 <Zoom>
-                  <img src={item?.product.image && item?.product.image !== null ? item?.product.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
+                  <img src={item?.image && item?.image !== null ? item?.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
                 </Zoom>
             </div>
             <div className="product__tabel-product_name">
-                <h3>{item?.product.name}</h3>
+                <h3>{item?.name}</h3>
             </div>
         </div>,
-        category: item?.category.name,
-        count: item?.count,
+        category: currentCategory?.name,
+        count: item?.warehouse.count,
         defect: <><InputNumber ref={count} onChange={(e) => {
-          handleChange(e, item?.product.id, item?.count)
+          handleChange(e, item?.id, item?.warehouse.count)
         }} /></>  
       })
     })
     
+    console.info(categories)
+
     const columns = [
       {
         title: t('products'),
@@ -149,19 +157,31 @@ const Products = () => {
     ];
   
 
-    
-    
+   
+
+
+
     useEffect(async () => {
       dispatch(fetchingProducts());
-      
-      const response = await axios.get(`${URL}/api/warehouse?search=${search}&page=${currentPage}&category_id=${category_id}`, setToken())
-      
+  
+      const response = await axios.get(
+        `${URL}/api/products?search=${search}&page=${currentPage}&category_id=${category_id}`,
+        setToken()
+      );
+      setLoading(true);
+  
       if (response.status === 200) {
-        setPerPage(response.data.payload.per_page)
-        setProducts(response.data.payload.data)
-        setLastPage(response.data.payload.last_page)
+        dispatch(fetchedProducts(response.data.payload.data));
+        setLoading(false);
+        setLastPage(response.data.payload.last_page);
+        setPerPage(response.data.payload.per_page);
       }
-    } ,[showTable, search, category_id, currentPage])
+    }, [showTable, search, currentPage, category_id]);
+
+
+    console.info(products)
+
+
     
     useEffect(async () => {
       dispatch(fetchingCategories())
@@ -192,6 +212,7 @@ const Products = () => {
 
       <div className="content">
           <div className="content-top">
+            <div className="content-top__group">
               <Select
               className="form__input content-select content-top__input wdith_3"
               showSearch
@@ -221,6 +242,7 @@ const Products = () => {
                 onChange={e => setSearch(e.target.value)}
                 className="form__input wdith_3"
               />
+            </div>
 
               <Button className="btn btn-primary" onClick={sendToDefect}>{t('save')}</Button>
               
@@ -243,9 +265,13 @@ const Products = () => {
                 defaultCurrent={currentPage}
                 onChange={c => setCurrentPage(c)}
                 showSizeChanger={false}
+                current={currentPage}
+                currentPage={currentPage}
               />
             </div>
           )}
+
+          <br />
       </div>
     </div>
   )

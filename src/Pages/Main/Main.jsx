@@ -154,7 +154,7 @@ const Main = () => {
               <div className="content-top__group">
 
               <DatePicker
-                className="content__range-picker content-top__input form__input "
+                className="content__range-picker content-top__input form__input pl-1 "
                 placeholder={t('from')}
                 onChange={(value, string) => {
                   setFrom(string)
@@ -164,7 +164,7 @@ const Main = () => {
 
 
               <DatePicker
-                className="content__range-picker content-top__input form__input  "
+                className="content__range-picker content-top__input form__input  pl-1"
                 placeholder={t('from')}
                 onChange={(value, string) => {
                   setTo(string)
@@ -185,13 +185,14 @@ const Main = () => {
                 statisticProducts.map((item, index) => {
                   return (
                     <div
-                      className="responsive__table-item"
+                      className="responsive__table-item justify-between"
                       key={index} 
                     >
                       <div className="responsive__table-item__details-name">
                         <h3>{item?.product_name}</h3>
                       </div>
-                      <div className="responsive__table-item__details-name">
+
+                      <div className="responsive__table-item__details-count">
                         <h3>{item?.count}</h3>
                       </div>
                       

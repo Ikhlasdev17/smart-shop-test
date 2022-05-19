@@ -97,7 +97,7 @@ const Content = ({ open, type, categories, setOpen, setRefresh, refresh }) => {
       </Form.Item>
       
       <Form.Item label={t('date')}>
-        <DatePicker defaultValue={moment(formData.date, 'YYYY-MM-DD')} className="form__input"  onChange={(e, string) => {
+        <DatePicker defaultValue={moment(formData.date, 'YYYY-MM-DD')} className="form__input pl-1"  onChange={(e, string) => {
           setFormData({...formData, date: string})
         }} required/>
       </Form.Item>
