@@ -41,7 +41,7 @@ const Clients = () => {
       dataSource.push({
         key: item.id,
         name: <div className="table-title"> <h2>{item.full_name}</h2> <p>{item.phone.length > 9 ?  item.phone : `+998${item.phone}` }</p></div>,
-        balance: item.balance.toLocaleString(),
+        balance: item.balance !== null && item.balance.toLocaleString(),
         stir: item.tin ? item.tin.toLocaleString() : 'Jismoniy Shaxs',
         excerpt: item.about,
         type: item.type,
@@ -143,7 +143,7 @@ const Clients = () => {
               <tr>
                 <td>{t("balance")}</td>
                 <td>
-                  {<span style={clientDetails.balance < 0 ? {color: '#eb6767'} : {color: '#6767eb'}}>{clientDetails.balance.toLocaleString()}</span>} 
+                  {<span style={clientDetails.balance < 0 ? {color: '#eb6767'} : {color: '#6767eb'}}>{clientDetails.balance !== null && clientDetails.balance.toLocaleString()}</span>} 
                 </td>
               </tr>
               <tr>

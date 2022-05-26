@@ -75,10 +75,10 @@ const Orders = () => {
           ><h3>{item?.user.name}</h3>
             <p>+998{item?.user.phone}</p>
           </div>,
-            cash: item?.cash.toLocaleString(),
-            card: item?.card.toLocaleString(),
-            debt: <span><strong>{item?.debt.debt.toLocaleString()}</strong> <br /> <span style={{color: '#eb6767'}}>{item?.debt.remaining.toLocaleString()}</span></span>,
-            total: <span>{(item?.cash + item?.card + item?.debt.debt).toLocaleString()}</span>,
+            cash: item?.cash !== null && item?.cash.toLocaleString(),
+            card: item?.card !== null && item?.card.toLocaleString(),
+            debt: <span><strong>{item?.debt.debt !== null && item?.debt.debt.toLocaleString()}</strong> <br /> <span style={{color: '#eb6767'}}>{item?.debt.remaining.toLocaleString()}</span></span>,
+            total: <span>{item?.cash !== null && item?.card !== null &&  item?.debt.debt !== null && (item?.cash + item?.card + item?.debt.debt).toLocaleString()}</span>,
             description: <>
                 {item?.description !== null ? <>
                   <span style={{cursor: 'pointer', textTransform: 'capitalize'}} onClick={() => {
@@ -261,33 +261,33 @@ const Orders = () => {
               <tr>
                 <td>{t("cash")}</td>
                 <td>
-                  {productDetails?.cash.toLocaleString()} 
+                  {productDetails?.cash !== null && productDetails?.cash.toLocaleString()} 
                 </td>
               </tr>
               <tr>
                 <td>{t("card")}</td>
                 <td>
-                  {productDetails?.card.toLocaleString()}
+                  {productDetails?.card !== null && productDetails?.card.toLocaleString()}
                 </td>
               </tr>
               <tr>
                 <td>{t("tolangan_qarz")}</td>
                 <td>
-                <span><strong>{productDetails?.debt.debt.toLocaleString()}</strong> <br /> </span>
+                <span><strong>{productDetails?.debt.debt !== null && productDetails?.debt.debt.toLocaleString()}</strong> <br /> </span>
                 </td>
               </tr>
 
               <tr>
                 <td>{t("qarz")}</td>
                 <td>
-                 <span style={{color: '#eb6767'}}>{productDetails?.debt.remaining.toLocaleString()}</span>
+                 <span style={{color: '#eb6767'}}>{productDetails?.debt.remaining !== null && productDetails?.debt.remaining.toLocaleString()}</span>
                 </td>
               </tr>
 
               <tr>
                 <td>{t("total_income")}</td>
                 <td>
-                <span>{(productDetails?.cash + productDetails?.card + productDetails?.debt.debt).toLocaleString()}</span>
+                <span>{productDetails?.cash !== null && productDetails?.card !== null && productDetails?.debt.debt !== null && (productDetails?.cash + productDetails?.card + productDetails?.debt.debt).toLocaleString()}</span>
                 </td>
               </tr>
 
@@ -310,7 +310,7 @@ const Orders = () => {
                     {productDetails?.description.slice(0, 20)}
                   </span>
                 </> : 
-                  <span>{productDetails?.debt.debt > 0 ? t('qarz') : t('kirim')}</span>}
+                  <span>{productDetails?.debt.debt !== null && productDetails?.debt.debt > 0 ? t('qarz') : t('kirim')}</span>}
           </blockquote> 
         </Modal>
       ) : null}
@@ -329,9 +329,9 @@ const Orders = () => {
       <h1 className="heading">{t('offers')}</h1>
 
       <div className="top__elements-right">
-        <span><strong>{t('cash')}:</strong> {amount?.cash?.toLocaleString()}</span>
+        <span><strong>{t('cash')}:</strong> {amount?.cash !== null && amount?.cash?.toLocaleString()}</span>
         <span><strong>{t('card')}:</strong>: {amount?.card?.toLocaleString()}</span>
-        <span><strong>{t('total_income')}:</strong> {(amount?.cash  + amount?.card)?.toLocaleString()}</span>
+        <span><strong>{t('total_income')}:</strong> {( amount?.cash !== null && amount?.cash  + amount?.card !== null && amount?.card)?.toLocaleString()}</span>
       </div>
       </div>
 

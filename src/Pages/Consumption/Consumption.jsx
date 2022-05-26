@@ -61,7 +61,7 @@ const Consumptions = () => {
       dataSource.push({
           category: <div className="table-title"><h3>{item?.category_name.uz}</h3></div>,
             kimga: item?.whom,
-            price: item?.price.toLocaleString(),
+            price: item?.price !== null && item?.price.toLocaleString(),
             description: <span><strong>{item?.description}</strong></span>,
             date: <span>{item?.date}</span>
         })

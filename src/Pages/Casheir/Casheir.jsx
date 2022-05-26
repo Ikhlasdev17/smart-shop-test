@@ -66,9 +66,9 @@ const Casheir = () => {
         <h2>{months.filter(m => m.id === item?.month)[0].name}</h2>  
         <p>{item.year}</p>
         </div>,
-      card: item.card?.toLocaleString(),
-      cash: item.cash?.toLocaleString(),
-      sof_foyda: item.profit?.toLocaleString()
+      card: item.card !== null && item.card?.toLocaleString(),
+      cash: item.cash !== null && item.cash?.toLocaleString(),
+      sof_foyda: item.profit !== null && item.profit?.toLocaleString()
     })
   })
   

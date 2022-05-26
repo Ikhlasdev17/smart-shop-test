@@ -147,7 +147,7 @@ const Products = () => {
         brand: item?.brand,
         cost_price: (
           <span>
-            <strong>{item?.cost_price?.price.toLocaleString()}</strong>{" "}
+            <strong>{item?.cost_price?.price !== null && item?.cost_price?.price.toLocaleString()}</strong>{" "}
             {item?.cost_price?.code}
           </span>
         ),
@@ -159,13 +159,13 @@ const Products = () => {
         ),
         max_price: (
           <span>
-            <strong>{item?.max_price?.price.toLocaleString()}</strong>{" "}
+            <strong>{item?.max_price?.price !== null && item?.max_price?.price.toLocaleString()}</strong>{" "}
             {item?.max_price?.code}
           </span>
         ),
         min_price: (
           <span>
-            <strong>{item?.min_price?.price?.toLocaleString()}</strong>{" "}
+            <strong>{item?.min_price?.price !== null && item?.min_price?.price.toLocaleString()}</strong>{" "}
             {item?.min_price?.code}
           </span>
         ),
@@ -371,21 +371,21 @@ const Products = () => {
               <tr>
                 <td>{t("cost_price")}</td>
                 <td>
-                  {productDetails?.cost_price.price.toLocaleString()}{" "}
+                  {productDetails?.cost_price.price !== null && productDetails?.cost_price.price.toLocaleString()}{" "}
                   {productDetails?.cost_price.code}
                 </td>
               </tr>
               <tr>
                 <td>{t("whole_price")}</td>
                 <td>
-                  {productDetails?.whole_price.price.toLocaleString()}{" "}
+                  {productDetails?.whole_price.price !== null && productDetails?.whole_price.price.toLocaleString()}{" "}
                   {productDetails?.whole_price.code}
                 </td>
               </tr>
               <tr>
                 <td>{t("min_price")}</td>
                 <td>
-                  {productDetails?.min_price.price.toLocaleString()}{" "}
+                  {productDetails?.min_price.price !== null && productDetails?.min_price.price.toLocaleString()}{" "}
                   {productDetails?.min_price.code}
                 </td>
               </tr>
@@ -393,7 +393,7 @@ const Products = () => {
               <tr>
                 <td>{t("max_price")}</td>
                 <td>
-                  {productDetails?.max_price.price.toLocaleString()}{" "}
+                  {productDetails?.max_price.price !== null && productDetails?.max_price.price.toLocaleString()}{" "}
                   {productDetails?.max_price.code}
                 </td>
               </tr>
