@@ -105,7 +105,6 @@ const Products = () => {
     const dataSource = [];
 
 
-    console.info(products)
 
 
     
@@ -131,7 +130,6 @@ const Products = () => {
       })
     })
     
-    console.info(categories)
 
     const columns = [
       {
@@ -179,7 +177,6 @@ const Products = () => {
     }, [showTable, search, currentPage, category_id]);
 
 
-    console.info(products)
 
 
     

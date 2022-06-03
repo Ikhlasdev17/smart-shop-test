@@ -59,7 +59,6 @@ const Defect = () => {
     })
   })
 
-  console.error(defectProducts)
   
   const columns = [
     {

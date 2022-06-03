@@ -99,7 +99,6 @@ const Main = () => {
 
 
 
-  console.info(statisticProducts)
  
 
   return (

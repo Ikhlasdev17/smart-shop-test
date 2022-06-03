@@ -92,33 +92,37 @@ const OrderWarehouse = () => {
 
   const handleChange = (e, currentItem, type) => {
     const index = updatedProducts.findIndex(item => item.product_id === currentItem.product.id) 
-
-
     if (index === -1) {
         updatedProducts = [...updatedProducts,  {
             product_id: currentItem.product.id,
             count: type === 'count' ? e : currentItem.count,
             unit_id: currentItem.unit.id,
             price: {
-                currency_id: currentItem.product.cost_price.currency_id,
+                currency_id: type === 'currency' ? e : currentItem.product.cost_price.currency_id,
                 price: type === 'price' ? e : currentItem.product.cost_price.price
             }
         }]
     } else {
         if (type === 'price') {
-            updatedProducts[index].price.price = e
-            if (e === null){
-              updatedProducts[index].price.price = currentItem?.product.cost_price.price
-            }
+          if (e === null){
+            updatedProducts[index].price.price = currentItem?.product.cost_price.price
+          }
+          updatedProducts[index].price.price = e
           } else if (type === 'count') {
-            updatedProducts[index].count = e 
             if (e === null){
               updatedProducts[index].price.price = currentItem?.count
             }
+            updatedProducts[index].count = e 
+        } else if (type === 'currency') {
+          if (e === null){
+            updatedProducts[index].price.currency_id = currentItem?.cost_price.currency_id
+          }
+          updatedProducts[index].price.currency_id = e
         }
     }
  
   }
+
 
 
   const dataSource = [];
@@ -144,7 +148,15 @@ const OrderWarehouse = () => {
         handleChange(e, item, 'price')
       }} />
 
-      <Select placeholder={currentCurrency?.code} size="small" className="table_inptop__grouput form__input-small form-group__min-item" style={{width: '80px'}}>
+      <Select 
+        placeholder={currentCurrency?.code} 
+        size="small" 
+        className="table_inptop__grouput form__input-small form-group__min-item" 
+        style={{width: '80px'}}
+        onChange={(e) => {
+          handleChange(e, item, 'currency')
+        }}
+      >
           {currency?.map(item => (
               <Select.Option value={item.id}>{item.code}</Select.Option>
           ))}

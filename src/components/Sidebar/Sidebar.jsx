@@ -33,7 +33,7 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
  
       return (  
         <Menu mode="inline" className="sidebar-menu" onClick={() => {
-          windowWidth < 1200 ? setCollapsed(!collapsed) : console.log('hello World')
+          windowWidth < 1200 ? setCollapsed(!collapsed) : console.log('')
         }}>
           {sidebarItems && sidebarItems !== "sidebar__items" && sidebarItems.map((item, index) => {
               return <>

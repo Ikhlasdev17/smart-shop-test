@@ -137,7 +137,6 @@ const Sellers = () => {
         if (res.status === 200) {
             dispatch(fetchedSellers(res.data.payload))
             setLoading(false)
-            console.warn(res.data.payload)
         } else {
             setLoading(false)
             dispatch(fetchingErrorSellers())

@@ -102,21 +102,20 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
     useEffect(() => {
       setMaxPrice(currentProduct.max_price.price)
       setMaxPrice_code(currency?.filter(item => item.code === currentProduct?.max_price.code)[0].id || 1)
-    }, [currentProduct.max_price.price, currentProduct.max_price.code])
+    }, [currentProduct.max_price.price, currentProduct.max_price.code, open])
 
     useEffect(() => {
       setWholePrice(currentProduct.whole_price.price)
       setCurrentWhole(currentProduct.whole_price.price)
       setWholePrice_code(currency?.filter(item => item.code === currentProduct?.whole_price.code)[0].id || 1)
-    }, [currentProduct.whole_price.price, currentProduct.whole_price.code])
+    }, [currentProduct.whole_price.price, currentProduct.whole_price.code, open])
 
     useEffect(() => {
       setMinPrice(currentProduct.min_price.price)
       setMinPrice_code(currency?.filter(item => item.code === currentProduct?.min_price.code)[0].id || 1)
-    }, [currentProduct.min_price.price, currentProduct.min_price.code])
+    }, [currentProduct.min_price.price, currentProduct.min_price.code, open])
 
 
-    console.info(product)
 
 
 
@@ -166,8 +165,6 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
     } 
-
-    
     
   }, [])
 
@@ -250,6 +247,7 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
       setCurrentRate(currency && currency[product.cost_price.currency_id - 1]?.rate.length ? currency[product.cost_price.currency_id - 1].rate[0].rate : 0)
 
       } , [updatedCostPrice, updatedCategoryId])
+
 
 
 

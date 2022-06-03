@@ -111,7 +111,6 @@ const Products = () => {
   };
 
 
-  console.info(products)
 
 
   const dataSource = [];
@@ -288,7 +287,7 @@ const Products = () => {
     dispatch(fetchingProducts());
 
     const response = await axios.get(
-      `${URL}/api/products?search=${search}&page=${page}&category_id=${category}`,
+      `${URL}/api/products?search=${search}${ search === "" && category === "" ? `&page=${page}` : '' }&category_id=${category}`,
       setToken()
     );
     setLoading(true);

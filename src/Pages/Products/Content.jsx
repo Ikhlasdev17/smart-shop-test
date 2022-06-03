@@ -266,16 +266,11 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   if (type === 'update') {
     return <UpdateContent open={open} USD_RATE={USD_RATE} currency_date={currency_date} type={type} currentProduct={currentProduct} setOpen={() => setOpen()} />
   }
-
-
   if (type === 'print') {
     return (
       <>
         <iframe  ref={componentRef} width="280" height="280" className="qr_code_frame" src={qr_code_link} title="Bu yerda mahsulotning qr kodi bolishi kerak edi!">
-
         </iframe>
-
-
         <div className="product__qr__code__content">
           <Input.Group compact>
           <ReactToPrint
@@ -283,13 +278,10 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
             content={() => componentRef.current}
           />
           </Input.Group>
-
         </div>
       </>
     )
   }
-  console.warn(qr_code_link)
-
   const photoUploader = (e) => {
     setPhotoUploaded('loading')
     

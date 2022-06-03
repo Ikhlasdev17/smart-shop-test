@@ -75,7 +75,6 @@ const Wrapper = () => {
     })
   } ,[location.pathname])
  
-  console.log = function() {return 'Salom'}
   return (
 
     <Layout className="wrapper">

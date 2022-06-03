@@ -53,18 +53,20 @@ export function Login() {
         <Form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
 
         <Form.Item  className="form-label" label={t('telefon_raqami')} name="mobile">
-          <NumberFormat
-            format="+998(##)###-##-##"
-            mask={"_"}
-            onValueChange={e => {
-              setUser({...user, phone: `+998${e.floatValue}`})
-            }}
+
+          <input
+
+            type="text"
+            name="mobile"
             className="input__input"
-            placeholder={t('telefon_raqami')} 
+            placeholder={t('telefon_raqami')}
+            value={user.phone}
+            onBlur={e => {
+                setUser({...user, phone: e.target.value})
+            }}
             required
-            value={user.phone.slice(3, user.phone.length)}
-            
-          />
+            />
+
         </Form.Item>
 
         <Form.Item className="form-label" label={t('parol')}  >

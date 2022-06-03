@@ -35,8 +35,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     {value: 'admin', label: t('admin')},
   ]
 
-  const [pinCode, setPinCode] = useState("")
+  const [pinCode, setPinCode] = useState(null)
   const [photoUploaded, setPhotoUploaded] = useState("default") 
+
+  const [generating, setGenerating] = useState(false)
 
 
   useEffect(() => { 
@@ -86,22 +88,29 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     setPhotoUploaded("default")
 
     
-  },[modalType, currentSallary, open, pinCode])
+  },[modalType, currentSallary, open])
 
 
  
 
   const generatePincode = () => {
     setPinCode("XXXXX")
+    setGenerating(true)
     axios.get(`${URL}/api/pincode/generate`, setToken())
     .then(res => { 
-        setUser((prev) => ({ ...prev, pincode: res.data.payload.pincode })) 
+        // setUser({ ...user, pincode: res.data.payload.pincode })
+        setPinCode(res.data.payload.pincode)
+        console.log(res.data.payload.pincode)
+        setGenerating(false)
     })
   }
 
   const addSallary = async () => {
     if (user.name !== "" && user.phone !== "" && user.password !== "" && user.flex !== "" && user.salary !== "" && user.role !== ""){
-        const res = await axios.post(`${URL}/api/register/admin`, user,  setToken())
+        const res = await axios.post(`${URL}/api/register/admin`, {
+          ...user,
+          pincode: pinCode
+        },  setToken())
         .catch(res => {
           swal({
             title: t('xatolik'),
@@ -173,7 +182,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
 
 
   const updateSallary = async () => {
-    const res = await axios.post(`${URL}/api/salary`, user, setToken())
+    const res = await axios.post(`${URL}/api/salary`, {
+      ...user
+    }, setToken())
+    console.info(pinCode)
     if (res.status === 200) {
       message.success(t('muaffaqiyatli'))
       setRefresh(Math.random() * 10)
@@ -191,7 +203,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   }
 
   const updateUserData = async () => {
-    const res = await axios.patch(`${URL}/api/employee/update`, user, setToken())
+    const res = await axios.patch(`${URL}/api/employee/update`, {
+      ...user,
+      pincode: pinCode
+    }, setToken())
     
     if (res.status === 200) {
       swal({
@@ -212,7 +227,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   
   
   const handleSubmit = async (e) => {
-    console.info(user)
     if (modalType === 'add') {
         addSallary()
     }
@@ -240,6 +254,10 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
       }, 2000)
     } 
   },[copied])
+
+  useEffect(() => {
+    setPinCode(null)
+  },[open])
 
 
 
@@ -351,14 +369,14 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
               <Form.Item label={t('pinkod')} required>
               <div className='form-group'>
                 <div className="form-group__item">
-                <CopyToClipboard text={user.pincode !== null ? user.pincode : "XXXXX"} onCopy={() => setCopied(true)}>
+                <CopyToClipboard text={pinCode !== null ? pinCode : "XXXXX"} onCopy={() => setCopied(true)}>
                   <div className={copied ? 'pincode__field copied' : 'pincode__field'}>
-                    {user.pincode !== null ? (!copied ? user.pincode : t('copied')) : "XXXXX"} 
+                    {pinCode !== null ? (!copied ? pinCode : t('copied')) : "XXXXX"} 
                   </div>
                 </CopyToClipboard>
                 </div>
                 <div className="form-group__min-item">
-                <Button className='btn btn-primary' onClick={e => generatePincode()}>
+                <Button loading={generating} className='btn btn-primary' onClick={e => generatePincode()}>
                   {t('yangilash')}
                 </Button>
                 </div>
