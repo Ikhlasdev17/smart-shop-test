@@ -12,7 +12,6 @@ const categoriesSlice = createSlice({
     reducers: {
         fetchingCategories: state => {
             state.categoriesFetchingStatus = 'loading'
-            console.log(state.categories);
         },
         fetchedCategories: (state, action) => {
             state.categories = action.payload
@@ -28,7 +27,6 @@ const categoriesSlice = createSlice({
         updatingCategory: (state, action) => {
             const index = state.categories.findIndex(item => item.id === action.payload.id)
             state.categories[index] = action.payload
-            console.log(action.payload);
             state.categoriesFetchingStatus = 'default'
         },
         deleteCategory: (state, action) => {

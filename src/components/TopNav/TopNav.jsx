@@ -120,7 +120,7 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
           <span >
             <img src={brandIcon} alt="" />
             <span className='dropdown__text'>
-            Brand Nomi
+            {t('brend')}
             </span>
           </span>
         </Dropdown>

@@ -1,4 +1,4 @@
-import { Select,DatePicker, Table, Skeleton, Input, InputNumber, Button, message } from 'antd'
+import { Select,DatePicker, Table, Skeleton, Input, InputNumber, Button, message, Pagination } from 'antd'
 import React, { useState, useEffect } from 'react'
 import ModalAction from '../../components/ModalAction/ModalAction';
 
@@ -39,6 +39,9 @@ const OrderWarehouse = () => {
 
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState('')
+  const [lastPage, setLastPage] = useState();
+  const [perPage, setPerPage] = useState();
+  const [page, setPage] = useState(1);
   
   let updatedProducts = [];
 
@@ -47,15 +50,20 @@ const OrderWarehouse = () => {
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/warehouse?search=${search}`, setToken())
+    const response = await axios.get(`${URL}/api/warehouse?search=${search}&page=${page}`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload.data)
       setLoading(false)
+      setLastPage(response.data.payload.last_page)
+      setPerPage(response.data.payload.per_page)
+      setPage(response.data.payload.current_page)
     }
+    
 
 
-  } ,[from, to, sendOrder, search])
+  } ,[from, to, sendOrder, search, page])
+
 
   useEffect(() =>{
       axios.get(`${URL}/api/currency` , setToken())
@@ -264,8 +272,25 @@ const OrderWarehouse = () => {
 
           <div className="content-body" >
           <Skeleton loading={loading} active> 
-          <Table  className="content-table" dataSource={dataSource} columns={columns} />
+          <Table  
+            className="content-table" 
+            dataSource={dataSource} 
+            columns={columns} 
+            pagination={false}
+          />
           </Skeleton>
+
+          {lastPage > 1 && (
+            <div className="pagination__bottom">
+              <Pagination
+                total={lastPage * perPage}
+                pageSize={perPage ? perPage : 0}
+                current={page}
+                onChange={(c) => setPage(c)}
+                showSizeChanger={false}
+              />
+            </div>
+          )}
           </div>
       </div>
     </div>

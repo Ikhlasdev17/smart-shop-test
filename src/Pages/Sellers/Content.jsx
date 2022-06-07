@@ -100,7 +100,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     .then(res => { 
         // setUser({ ...user, pincode: res.data.payload.pincode })
         setPinCode(res.data.payload.pincode)
-        console.log(res.data.payload.pincode)
         setGenerating(false)
     })
   }
@@ -185,7 +184,6 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     const res = await axios.post(`${URL}/api/salary`, {
       ...user
     }, setToken())
-    console.info(pinCode)
     if (res.status === 200) {
       message.success(t('muaffaqiyatli'))
       setRefresh(Math.random() * 10)

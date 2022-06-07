@@ -8,6 +8,7 @@ import { fetchingProducts, addProduct, updateProduct } from '../../redux/product
 import Dragger from 'antd/lib/upload/Dragger';
 import swal from 'sweetalert';
 import { useTranslation } from 'react-i18next';
+import imageCompression from 'browser-image-compression';
 const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency_date }) => {
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
@@ -313,16 +314,26 @@ const UpdateContent = ({ open, type, currentProduct, setOpen, USD_RATE, currency
 
   const photoUploader = (e) => {
     setUploaded('loading')
-    const formData = new FormData()
-    formData.append('file', e.file.originFileObj)
-    formData.append('upload_preset', "smart-shop")
-    setImageUploading(true)
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    }
 
-    axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
-      setProduct(prev => ({...product, image: res.data.secure_url}))
-      setUploaded('ok')
-      setImageUploading(false)
-    })
+    const compressedImage = imageCompression(e.file.originFileObj, options)
+
+    compressedImage.then(function (result) {
+      const formData = new FormData()
+      formData.append('file', result)
+      formData.append('upload_preset', "smart-shop")
+      setImageUploading(true)
+
+      axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
+        setProduct(prev => ({...product, image: res.data.secure_url}))
+        setUploaded('ok')
+        setImageUploading(false)
+      })
+  })
   } 
 
   return (

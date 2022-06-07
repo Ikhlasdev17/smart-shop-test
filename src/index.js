@@ -1,12 +1,9 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'
 import rootReducer from './reducer/rootReducer'
 import { configureStore } from '@reduxjs/toolkit'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Login } from './Pages/Login/Login';
-import Wrapper from './components/Layout/Layout';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import i18n from "i18next";
@@ -14,11 +11,11 @@ import { useTranslation, initReactI18next } from "react-i18next";
 
 import 'flag-icons/css/flag-icons.css'
 
-// if (process.env.NODE_ENV === 'production') {
-//   console.error = () => {}
-//   console.debug = () => {}
-//   console.warn = () => {}
-// }
+  console.error = () => {}
+  console.debug = () => {}
+  console.warn = () => {}
+  console.log = () => {}
+
 
 
 

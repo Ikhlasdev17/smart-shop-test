@@ -17,6 +17,9 @@ import { useTranslation } from 'react-i18next';
 
 import swal from 'sweetalert';
 
+import imageCompression from 'browser-image-compression';
+
+
 const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, USD_RATE, currency_date, qr_code_link }) => {
   const { categories } = useSelector(state => state.categoriesReducer)
   const dispatch = useDispatch()
@@ -284,16 +287,29 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
   }
   const photoUploader = (e) => {
     setPhotoUploaded('loading')
-    
-    const formData = new FormData()
-    formData.append('file', e.file.originFileObj)
-    formData.append('upload_preset', "smart-shop")
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    }
+
+    const compressedImage = imageCompression(e.file.originFileObj, options)
+
+    compressedImage.then(function (result) {
+      const formData = new FormData()
+      formData.append('file', result)
+      formData.append('upload_preset', "smart-shop")
 
 
-    axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
-      setProduct(prev => ({...product, image: res.data.secure_url}))
-      setPhotoUploaded('ok')
+      axios.post("https://api.cloudinary.com/v1_1/http-electro-life-texnopos-site/image/upload", formData).then(res => {
+        setProduct(prev => ({...product, image: res.data.secure_url}))
+        setPhotoUploaded('ok')
+      })
     })
+
+    
+    
   } 
 
   const formData = new FormData()

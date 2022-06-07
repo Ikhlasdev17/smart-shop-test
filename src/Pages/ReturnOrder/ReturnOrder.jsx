@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Button, Input, InputNumber, message, Select, Skeleton, Table } from 'antd'
+import { Button, Input, InputNumber, message, Pagination, Select, Skeleton, Table } from 'antd'
 import { URL, setToken } from '../../assets/api/URL'
 import Zoom from 'react-medium-image-zoom';
 import { useTranslation } from 'react-i18next';
@@ -14,14 +14,20 @@ const ReturnOrder = () => {
     const [search, setSearch] = useState('')
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [dataForReturn, setData] = useState([])
+    const [lastPage, setLastPage] = useState();
+    const [perPage, setPerPage] = useState();
+    const [page, setPage] = useState(1);
     useEffect(() =>{
         setLoading(true)
-        axios.get(`${URL}/api/warehouse?search=${search} `, setToken())
+        axios.get(`${URL}/api/warehouse?search=${search}&page=${page} `, setToken())
         .then(res => {
             setOrders(res.data.payload.data)
             setLoading(false)
+            setLastPage(res.data.payload.last_page)
+            setPerPage(res.data.payload.per_page)
+            setPage(res.data.payload.current_page)
         })
-    }, [fetching, search])
+    }, [fetching, search, page])
 
 
     const dataSource = [];
@@ -138,8 +144,19 @@ const ReturnOrder = () => {
 
           <div className="content-body" >
           <Skeleton loading={loading} active> 
-          <Table  className="content-table" dataSource={dataSource} columns={columns} />
+          <Table  className="content-table" dataSource={dataSource} columns={columns} pagination={false} />
           </Skeleton>
+          {lastPage > 1 && (
+            <div className="pagination__bottom">
+              <Pagination
+                total={lastPage * perPage}
+                pageSize={perPage ? perPage : 0}
+                current={page}
+                onChange={(c) => setPage(c)}
+                showSizeChanger={false}
+              />
+            </div>
+          )}
           </div>
       </div>
     </div>
