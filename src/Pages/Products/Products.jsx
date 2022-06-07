@@ -285,9 +285,10 @@ const Products = () => {
 
   useEffect(async () => {
     dispatch(fetchingProducts());
+    setLoading(true);
 
     const response = await axios.get(
-      `${URL}/api/products?search=${search}${ search === "" && category === "" ? `&page=${page}` : '' }&category_id=${category}`,
+      `${URL}/api/products?page=${page}&search=${search}&category_id=${category}`,
       setToken()
     );
     setLoading(true);
@@ -298,7 +299,12 @@ const Products = () => {
       setLastPage(response.data.payload.last_page);
       setPerPage(response.data.payload.per_page);
     }
-  }, [open, search, page, category, refresh]);
+  }, [open, page, category, refresh, search]);
+
+
+
+
+
 
   useEffect(async () => {
     const res2 = await axios.get(`${URL}/api/currency`, setToken());
@@ -436,9 +442,11 @@ const Products = () => {
 
           <DebounceInput
             debounceTimeout={800}
-            minLength={2}
             placeholder={t("search")}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setPage(1)
+              setSearch(e.target.value)
+            }}
             className="form__input"
           />
 
@@ -566,7 +574,10 @@ const Products = () => {
                 total={lastPage * perPage}
                 pageSize={perPage ? perPage : 0}
                 current={page}
-                onChange={(c) => setPage(c)}
+                onChange={(c) => {
+                  setPage(c)
+                  console.info(c)
+                }}
                 showSizeChanger={false}
               />
             </div>

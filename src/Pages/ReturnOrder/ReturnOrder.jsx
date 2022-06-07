@@ -17,15 +17,15 @@ const ReturnOrder = () => {
     const [lastPage, setLastPage] = useState();
     const [perPage, setPerPage] = useState();
     const [page, setPage] = useState(1);
+    
     useEffect(() =>{
         setLoading(true)
-        axios.get(`${URL}/api/warehouse?search=${search}&page=${page} `, setToken())
+        axios.get(`${URL}/api/warehouse?page=${page}&search=${search} `, setToken())
         .then(res => {
             setOrders(res.data.payload.data)
             setLoading(false)
             setLastPage(res.data.payload.last_page)
             setPerPage(res.data.payload.per_page)
-            setPage(res.data.payload.current_page)
         })
     }, [fetching, search, page])
 
@@ -136,7 +136,12 @@ const ReturnOrder = () => {
 
       <div className="content">
           <div className="content-top">
-              <DebounceInput minLength={2} debounceTimeout={800} placeholder={t('search')} className="form__input wdith_3" onChange={(e) => setSearch(e.target.value)} />
+              <DebounceInput 
+                minLength={2}
+                debounceTimeout={800} placeholder={t('search')} className="form__input wdith_3" 
+                onChange={(e) => {
+                  setPage(1)
+                  setSearch(e.target.value)}} />
 
               <Button disabled={btnDisabled} onClick={() =>sendToReturn()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>
@@ -152,7 +157,9 @@ const ReturnOrder = () => {
                 total={lastPage * perPage}
                 pageSize={perPage ? perPage : 0}
                 current={page}
-                onChange={(c) => setPage(c)}
+                onChange={(c) => {
+                  setPage(c)
+                }}
                 showSizeChanger={false}
               />
             </div>

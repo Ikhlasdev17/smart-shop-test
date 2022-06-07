@@ -45,24 +45,29 @@ const OrderWarehouse = () => {
   
   let updatedProducts = [];
 
+  
+
   useEffect(async () => {
     dispatch(fetchingProducts());
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/warehouse?search=${search}&page=${page}`, setToken())
+    
+
+    const response = await axios.get(`${URL}/api/warehouse?page=${page}&search=${search}`, setToken())
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload.data)
       setLoading(false)
       setLastPage(response.data.payload.last_page)
-      setPerPage(response.data.payload.per_page)
-      setPage(response.data.payload.current_page)
+      setPerPage(response.data.payload.per_page) 
     }
     
 
 
-  } ,[from, to, sendOrder, search, page])
+  } ,[from, to, sendOrder, search, page, category])
+
+  
 
 
   useEffect(() =>{
@@ -74,7 +79,7 @@ const OrderWarehouse = () => {
   useEffect(async () => {
     dispatch(fetchingCategories())
 
-    const res = await axios.get(`${URL}/api/categories?search=${search}&category_id=${category}`, setToken());
+    const res = await axios.get(`${URL}/api/categories}`, setToken());
     setLoading(true)
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
@@ -83,7 +88,7 @@ const OrderWarehouse = () => {
         dispatch(fetchingErrorCategories())
     }
     
-}, [search, category])
+}, [])
 
 
 
@@ -232,12 +237,16 @@ const OrderWarehouse = () => {
 
 
               <DebounceInput
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setPage(1)
+                  setSearch(e.target.value)
+                }}
                 className="form__input"
                 minLength={2}
                 debounceTimeout={800}
                 value={search}
                 placeholder={t('search')}
+
               />
               </div> 
               <div className='flex'>
