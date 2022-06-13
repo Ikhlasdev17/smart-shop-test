@@ -10,7 +10,12 @@
     outline: none;
     text-decoration: none;
     scrollbar-color: transparent;
-    scrollbar-width: 5px!important; 
+    scrollbar-width: 5px!important;  
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
