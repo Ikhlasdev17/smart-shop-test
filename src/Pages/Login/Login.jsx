@@ -11,6 +11,10 @@ import { useTranslation } from 'react-i18next';
 
 import { URL } from '../../assets/api/URL';
 import { useRef } from 'react';
+import InputMask from 'react-input-mask';
+
+import photo from '../../assets/images/LOGOTEXNOPOS.png'
+
 
 
 export function Login() {
@@ -27,7 +31,6 @@ export function Login() {
             navigate("/", { replace: true });
         }
 
-        name.current.focus();
         
     }, [])
 
@@ -36,10 +39,7 @@ export function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            axios.post(`${URL}/api/login`, {
-                phone: name.current.value,
-                password: password.current.value
-            }).then(res => {
+            axios.post(`${URL}/api/login`, user).then(res => {
                 localStorage.setItem('token', res.data.payload.token)
                 localStorage.setItem('role', res.data.payload.role)
                 localStorage.setItem('user', JSON.stringify(res.data.payload))
@@ -59,31 +59,68 @@ export function Login() {
     }
 
   return (
-    <div className="container">
-        <div className="login-content">
-            <h1>{t('login')}</h1> 
-            <p>{t('kirish')}</p>
-        <form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
+    <div className='flex w-full h-screen'>
+        {/* FLEX COLUMNS FOR LOGIN SECTION AND IMAGE SECTION */}
+        <div className='flex flex-col items-center justify-start h-screen w-50% sm:w-full sm:justify-center'>
+            {/*  LOGIN SECTION  */}
+            <div className='flex w-2/3 h-screen items-center justify-center sm:w-full sm:px-4'>
+                <div>
+                  {/* LOGO */}
+                {/* <img style={{marginLeft: '-38px'}}  src={logo} alt="VIVIAN" /> */}
+                <h1 style={{fontSize: '48px'}} className="font-medium text-md">Login</h1>
+                <p className='text-gray-txt-color mb-8 -mt-6'>С возвращением! Пожалуйста, введите свои данные.</p>
+                
+                {/* FORM */}
+                <form 
+                  className='flex flex-col w-full justify-start'
+                  onSubmit={handleSubmit}
+                >
+                    <label >
+                      <span className='block mb-2'>
+                        Телефон номер
+                      </span>
+                      <InputMask 
+                        mask="+\9\9\8(99)999-99-99" 
+                        value={user.phone} 
+                        onChange={e => {
+                          setUser({...user, phone: e.target.value})
+                        }}
+                        required
+                        className='p-3 w-80 bg-white border border-input-border rounded sm:w-full'
+                        
+                        >
+                        {(inputProps) => <input 
+                          placeholder='Телефон номер' 
+                          type="tel"
+                          {...inputProps}
+                      />}
+                      </InputMask>
+                    </label>
 
-        <div  className="form-label" label={t('telefon_raqami')} name="mobile">
-        <input
-            style={{padding: '5px'}}
-            className="input__input"
-            placeholder={'Telefon raqami'}
-            ref={name}
-            required
-          />
+                    <label className='mt-4'>
+                      <span className='block mb-2'>
+                        Пароль
+                      </span>
+                      <input 
+                        placeholder='Пароль' 
+                        type="password"   
+                        className='p-3 w-80 bg-white border border-input-border rounded sm:w-full'
+                        value={user.password}
+                        onChange={(e) => setUser({...user, password: e.target.value})}
+                      />
+                    </label>
 
+                    <button type='submit' className='mt-12 p-3 w-80 sm:w-full bg-blue-500 bg-blue text-white font-bold py-2 px-4 rounded'>
+                        Войти
+                    </button>
+                </form>
+                </div>
+            </div>
         </div>
 
-        <div className="form-label" label={t('parol')}>
-            <input className="input__input"  placeholder="Password" ref={password} required/>
-        </div>
-        <br />
-        <button type='submit' className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
-            {t('login')}
-        </button>
-        </form>
+        <div className='flex flex-col items-center justify-center h-screen w-50% bg-blue px-2 sm:hidden'>
+            {/*  IMAGE SECRION  */}
+            <img src={photo} alt="" />
         </div>
     </div>
   )
