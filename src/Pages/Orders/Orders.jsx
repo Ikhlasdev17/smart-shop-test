@@ -396,6 +396,7 @@ const Orders = () => {
           <DatePicker 
             className="form__input wdith_3"
             placeholder={t('qarz_muddati')}
+            clearIcon={false}
             />
             </div>
           </div>

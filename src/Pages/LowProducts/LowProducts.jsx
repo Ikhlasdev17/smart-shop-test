@@ -175,6 +175,7 @@ const LowProducts = () => {
 
       <div className="content">
           <div className="content-top">
+            <div className="flex">
               <Select
               className="form__input content-select content-top__input wdith_3"
               showSearch
@@ -191,16 +192,29 @@ const LowProducts = () => {
               </Select>
 
 
-              <RangePicker
-                className="content__range-picker content-top__input form__input wdith_3"
-                placeholder={['Vaqtdan...','Vaqtgacha...']}
-                onChange={(value, strings) => {
-                  setFrom(strings[0])
-                  setTo(strings[1])
+              <div className="flex">
+              <DatePicker
+                className="content__range-picker content-top__input form__input pl-1"
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setFrom(string)
                 } }
+                value={moment(from)}
+                clearIcon={false}
+                />
 
-                value={[moment(from), moment(to)]}
-              />
+
+              <DatePicker
+                clearIcon={false}
+                className="content__range-picker content-top__input form__input  pl-1"
+                placeholder={t('from')}
+                onChange={(value, string) => {
+                  setTo(string)
+                } }
+                value={moment(to)}
+                />
+              </div>
+                </div>
 
               <Button disabled={selectedItemsCount === 0} onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
           </div>

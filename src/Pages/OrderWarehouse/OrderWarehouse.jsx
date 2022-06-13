@@ -260,6 +260,7 @@ const OrderWarehouse = () => {
                   setFrom(string)
                 } }
                 value={moment(from)}
+                clearIcon={false}
                 />
 
 
@@ -270,6 +271,7 @@ const OrderWarehouse = () => {
                   setTo(string)
                 } }
                 value={moment(to)}
+                clearIcon={false}
                 />
                 
               </div>

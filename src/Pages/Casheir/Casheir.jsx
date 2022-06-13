@@ -107,6 +107,7 @@ const Casheir = () => {
             <div className="content-top__group">
 
               <DatePicker
+              clearIcon={false}
                 className="content__range-picker content-top__input form__input pl-1"
                 placeholder={t('from')}
                 onChange={(value, string) => {
@@ -117,6 +118,7 @@ const Casheir = () => {
 
 
               <DatePicker
+              clearIcon={false}
                 className="content__range-picker content-top__input form__input  pl-1"
                 placeholder={t('from')}
                 onChange={(value, string) => {
