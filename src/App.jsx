@@ -15,6 +15,7 @@ function App() {
 
   const [loading, setLoading] = useState(true)
   const [setLogged, log] = useState(true)
+  const [name, setName] = useState('');
 
   const dispatch = useDispatch()
   
@@ -41,12 +42,14 @@ function App() {
   return (
     <div className="App">
       
-     <Router>
+     {/* <Router>
             <Routes>
                   <Route path="/*" element={<Wrapper />} />
                   <Route path="/login" element={<Login />} />
             </Routes>
-    </Router>
+    </Router> */}
+
+    <input value={name} onChange={e => setName(e.target.value) } placeholder="Enter your name..." />
     </div>
   )
 }
