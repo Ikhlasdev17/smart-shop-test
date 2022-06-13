@@ -47,7 +47,7 @@ export function Login() {
 
   return (
     <div className="container">
-        <div className="login-content">
+        {/* <div className="login-content">
             <h1>{t('login')}</h1> 
             <p>{t('kirish')}</p>
         <Form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
@@ -79,7 +79,17 @@ export function Login() {
             {t('login')}
         </Button>
         </Form>
-        </div>
+        </div> */}
+
+        <input
+            type="text"
+            className="input__input"
+            placeholder={t('telefon_raqami')}
+            onChange={(e) => setUser({...user, phone: e.target.value})}
+            defaultValue={user.phone}
+            required
+        />
+
     </div>
   )
 } 
