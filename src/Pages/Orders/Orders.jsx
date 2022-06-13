@@ -73,7 +73,7 @@ const Orders = () => {
       dataSource.push({
           client: <div className="table-title"
           ><h3>{item?.user.name}</h3>
-            <p>+998{item?.user.phone}</p>
+            <p>{item?.user.phone}</p>
           </div>,
             cash: item?.cash !== null && item?.cash.toLocaleString(),
             card: item?.card !== null && item?.card.toLocaleString(),
@@ -93,7 +93,7 @@ const Orders = () => {
               
             </>, 
             
-            completed: <span><strong>{item?.term ? moment(item?.term).format('MMM DD, YYYY') : ''}</strong></span>,
+            completed: <span><strong>{item?.term ? moment(item?.term).format('MMM DD, YYYY') : moment(item?.created_at).format('MMM DD, YYYY')}</strong></span>,
             actions: (<>
                 <Button 
                   className="table-action"
@@ -124,7 +124,7 @@ const Orders = () => {
     })
   } ,[])
  
-
+  // SALOM
   const columns = [
     {
       title: t('clients'),
@@ -160,6 +160,7 @@ const Orders = () => {
       title: t('qarzni_tolash_sanasi'),
       dataIndex: 'completed',
       key: 'key',
+      width: '150px'
     },
     {
       title: t('action'),
@@ -254,7 +255,7 @@ const Orders = () => {
               <tr>
                 <td>{t("telefon_raqami")}</td>
                 <td>
-                  +998{productDetails?.user.phone}
+                  {productDetails?.user.phone}
                 </td>
               </tr>
 
@@ -421,7 +422,7 @@ const Orders = () => {
                     >
                       <div className="responsive__table-item__details-name">
                         <h3>{item?.user.name}</h3>
-                        <h4>+998 {item?.user.phone}</h4> 
+                        <h4>{item?.user.phone}</h4> 
                       </div> 
                       <div> 
 

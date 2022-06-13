@@ -131,7 +131,7 @@ const Consumptions = () => {
 
       <div className="content">
           <div className="content-top">
-             <div style={{display: 'flex', gap: '1rem'}}> 
+             <div style={{display: 'flex', gap: '1rem'}} className="flex"> 
                
 
               <div className="content-top__group">

@@ -1,4 +1,4 @@
-import { Select,DatePicker, Table, Input, Button, Form, Drawer, Skeleton } from 'antd'
+import { Select,DatePicker, Table, Input, Button, Form, Drawer, Skeleton, Modal } from 'antd'
 import React, { useState, useEffect } from 'react' 
 
 import axios from 'axios';
@@ -19,7 +19,12 @@ const Baskets = () => {
     const [to, setTo] = useState(moment(Date.now()).format('YYYY-MM-DD'))
 
     const { t } = useTranslation()
-     
+
+    const [open, setOpen] = useState(false); 
+    const [currentBasketId, setCurrentBasketId] = useState('');
+    const [currentSelectedBasket, setCurrentSelectedBasket] = useState({});
+    const [productDetails, setProductDetails] = useState({});
+    const [productDetailsIsOpen, setProductDetailsIsOpen] = useState(false);
     useEffect(() => {
         setLoading(true) 
 
@@ -84,7 +89,12 @@ const Baskets = () => {
             title: t('seller'),
             dataIndex: 'employee',
             key: 'key'
-        }
+        },
+        {
+          title: t('date'),
+          dataIndex: 'date',
+          key: 'key'
+      }
       ];
 
  
@@ -93,6 +103,59 @@ const Baskets = () => {
   return (
     <div>
       <div className="section main-page"> 
+
+
+
+      {/* MODAL WINDOW */}
+      {!open && productDetailsIsOpen ? (
+        <Modal
+          footer={null}
+          visible={productDetailsIsOpen}
+          onCancel={() => {
+            setProductDetailsIsOpen(false);
+            setProductDetails({});
+          }}
+        >
+          <h2>{productDetails?.client.name}</h2>
+          <table className="product__details-table">
+            <tbody className="product__details-table__body">
+              <tr>
+                <td>{t("fio")}</td>
+                <td>
+                  {productDetails.client.name}
+                </td>
+              </tr>
+              <tr>
+                <td>{t("cash")}</td>
+                <td>
+                  <span>{productDetails?.amount_paid.cash ? productDetails?.amount_paid.cash.toLocaleString() : null}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>{t("card")}</td>
+                <td>
+                  {productDetails?.amount_paid.card !== null ? productDetails?.amount_paid.card.toLocaleString() : null} 
+                </td>
+              </tr>
+              <tr>
+                <td>{t("total_income")}</td>
+                <td>
+                  {(productDetails?.amount_paid.card + productDetails?.amount_paid.cash) !== null ? (productDetails?.amount_paid.card + productDetails?.amount_paid.cash).toLocaleString() : null}
+                </td>
+              </tr> 
+              <tr>
+                <td>{t("seller")}</td>
+                <td>
+                  {productDetails?.employee.name}
+                </td>
+              </tr>   
+            </tbody>
+          </table> 
+        </Modal>
+      ) : null}
+
+
+
       <h1 className="heading">{t('clients')}</h1>
 
       <div className="content">
@@ -124,9 +187,37 @@ const Baskets = () => {
 
           <Skeleton loading={loading} active table>
           <Table 
-            className="content-table"
+            className="content-table lg-table"
             dataSource={dataSource && dataSource}
             columns={columns} />
+
+
+            <div className="responsive__table">
+              {baskets &&
+                baskets.length > 0 &&
+                baskets.map((item, index) => {
+                  return (
+                    <div
+                      className="responsive__table-item"
+                      key={index}
+                      onClick={(e) => {
+                        !(e.target.classList.value.includes("bx")) && 
+                          setProductDetailsIsOpen(true); 
+                          setProductDetails(item);
+                      }}
+                    >
+                      <div className="responsive__table-item__details-name">
+                        <h3>{item?.client.name}</h3>
+                        <h4>{(item?.amount_paid.card + item?.amount_paid.cash).toLocaleString()}</h4> 
+                      </div> 
+                      <div> 
+
+                      <span className='text-xs align-left'>{item?.paid_time}</span> 
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
           </Skeleton>
           </div>
       </div>

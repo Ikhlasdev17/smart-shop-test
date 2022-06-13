@@ -50,32 +50,29 @@ export function Login() {
         <div className="login-content">
             <h1>{t('login')}</h1> 
             <p>{t('kirish')}</p>
-        <Form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
+        <form className="login-form" onSubmit={handleSubmit} layout="vertical" > 
 
-        <Form.Item  className="form-label" label={t('telefon_raqami')} name="mobile">
-        <NumberFormat
-            format="+998(##)###-##-##"
+        <div  className="form-label" label={t('telefon_raqami')} name="mobile">
+        <input
             style={{padding: '5px'}}
             mask={"_"}
-            onValueChange={e => {
-              setUser({...user, phone: `+998${e.floatValue}`})
-            }}
+            onChange={(e) => setUser({...user, phone: e.target.value})}
             className="input__input"
             placeholder={t('telefon_raqami')}
             value={user.phone} 
             required
           />
 
-        </Form.Item>
+        </div>
 
-        <Form.Item className="form-label" label={t('parol')}>
+        <div className="form-label" label={t('parol')}>
             <Input.Password htmlType="password" className="input__input" onChange={(e) => setUser({...user, password: e.target.value})}  placeholder="Password" required/>
-        </Form.Item>
+        </div>
         <br />
         <Button htmlType="submit" className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
             {t('login')}
         </Button>
-        </Form>
+        </form>
         </div>
     </div>
   )

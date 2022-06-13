@@ -369,6 +369,16 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
             }
           </Select>
         </Form.Item>
+        
+        <Form.Item className="form__item" label={t('mahsulot_nomini_tanlang')} required>
+          <Input 
+            required
+            placeholder={t('mahsulot_nomini_tanlang')}
+            value={product.name}
+            onChange={e => {setProduct({...product, name: e.target.value})}}
+            className="form__input"
+          />
+        </Form.Item>
 
         <Form.Item className="form__item" label={t('brend_nomini_tanlang')}>
           <Input
@@ -381,15 +391,6 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
           />
         </Form.Item>
 
-        <Form.Item className="form__item" label={t('mahsulot_nomini_tanlang')} required>
-          <Input 
-            required
-            placeholder={t('mahsulot_nomini_tanlang')}
-            value={product.name}
-            onChange={e => {setProduct({...product, name: e.target.value})}}
-            className="form__input"
-          />
-        </Form.Item>
 
         <Form.Item className="form__item" label={t('cost_price')} required>
         <Input.Group compact label={t('cost_price')} required className='form-group'>

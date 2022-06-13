@@ -91,18 +91,18 @@ const Categories = () => {
         },
     
         {
-          title: t('ulgurji_foiz'),
+          title: t('ulgurji_foiz_text'),
           dataIndex: 'whole_percent',
           key: 'key'
         },
         {
-          title: t('minimum_foiz'),
+          title: t('minimum_foiz_text'),
           dataIndex: 'min_percent',
           key: 'key'
         },
     
         {
-          title: t('maksumum_foiz'),
+          title: t('maksumum_foiz_text'),
           dataIndex: 'max_percent',
           key: 'key'
         },

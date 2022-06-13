@@ -424,6 +424,12 @@ img {
     .lg-table {
         display: none;   
     }
+
+    .content__range-picker, .content-top__group {
+        width: 100%!important;
+    }
+
+
 }
 
 
@@ -531,4 +537,14 @@ img {
 
 .justify-between {
     justify-content: space-between;
+}
+
+.text-xs {
+    font-size: 13px;
+}
+
+.align-left {
+    text-align: left;
+    display: block;
+    width: 100px;
 }
