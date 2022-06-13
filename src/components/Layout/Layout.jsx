@@ -45,8 +45,7 @@ const Wrapper = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      navigate("/", { replace: true });
-      localStorage.setItem('token', '69|Dc5XO8wRyob8mPKHlqGBIcYufXg83HTuI3ctB9PV')
+      navigate("/login", { replace: true });
     }
  
       setWidth(window.innerWidth) 
