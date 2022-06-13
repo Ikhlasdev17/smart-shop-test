@@ -82,11 +82,11 @@ export function Login() {
         </div> */}
 
         <input
+            value={user.phone}
+            onChange={(e) => setUser({...user, phone: e.target.value})}
             type="text"
             className="input__input"
             placeholder={t('telefon_raqami')}
-            onChange={(e) => setUser({...user, phone: e.target.value})}
-            defaultValue={user.phone}
             required
         />
 
