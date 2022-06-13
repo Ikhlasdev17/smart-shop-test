@@ -39,7 +39,13 @@ export function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            axios.post(`${URL}/api/login`, user).then(res => {
+        const spl = (user.phone.split(')').join(''))
+        const spl2 = (spl.split('(').join(''))
+        const spl3 = (spl2.split('-').join(''))
+            axios.post(`${URL}/api/login`, {
+                phone: spl3,
+                password: user.password
+            }).then(res => {
                 localStorage.setItem('token', res.data.payload.token)
                 localStorage.setItem('role', res.data.payload.role)
                 localStorage.setItem('user', JSON.stringify(res.data.payload))
