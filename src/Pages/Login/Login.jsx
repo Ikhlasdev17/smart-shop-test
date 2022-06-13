@@ -14,18 +14,21 @@ import { useRef } from 'react';
 
 
 export function Login() {
-    let navigate = useNavigate();
-    const dispatch = useDispatch();
-    const {t} = useTranslation()
     const [user, setUser] = useState({
         password: '',
         phone: ""
     })
+    let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {t} = useTranslation()
     
     useEffect(() => {
         if (localStorage.getItem('token')) {
             navigate("/", { replace: true });
         }
+
+        name.current.focus();
+        
     }, [])
 
     const name = useRef(null);
@@ -48,6 +51,8 @@ export function Login() {
             .catch(err => {
                 message.error(t('parol_yoki_login_xato'))
             })
+
+
 
         console.info(name.current.value);
         console.info(password.current.value);
@@ -75,9 +80,9 @@ export function Login() {
             <input className="input__input"  placeholder="Password" ref={password} required/>
         </div>
         <br />
-        <Button htmlType="submit" className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
+        <button type='submit' className="btn btn-primary" style={{width: '100%',}} onClick={handleSubmit}>
             {t('login')}
-        </Button>
+        </button>
         </form>
         </div>
     </div>
