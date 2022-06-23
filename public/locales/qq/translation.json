@@ -116,6 +116,45 @@
                     "icon": "bx bx-cart-alt"
                 }
             ]
+        },
+        {
+            "id": 10,
+            "label": "Islep shig'ariw",
+            "path": "",
+            "icon": "bx bx-purchase-tag-alt",
+            "submenu": [
+                {
+                    "id": "subitem10",
+                    "label": "Quramliq o'nimler",
+                    "path": "/ingredients",
+                    "icon": "bx bx-cart-alt"         
+                },{
+                    "id": "subitem12",
+                    "label": "Buyirtpa beriw",
+                    "path": "/production/order_ingredient",
+                    "icon": "bx bx-cart-alt"
+                  },{
+                    "id": "subitem11",
+                    "label": "O'nimge biriktiriw",
+                    "path": "/add_product",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem13",
+                    "label": "Islep shig'ariw",
+                    "path": "/production",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem14",
+                    "label": "Islep shig'ariw procesi",
+                    "path": "/production/basket",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem15",
+                    "label": "Islep shig'ariw tariyxi",
+                    "path": "/production/history",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
         }
     ],
     "main": "Bas bet",
@@ -283,6 +322,37 @@
 
     "tolangan_qarz": "To'lengen qariz",
 
-    "client": "Aliwshi"
+    "client": "Aliwshi",
+
+    "ingredients": "Quramliq o'nimler",
+    "add_ingredient": "Quramliq o'nimdi qosiw",
+    "ingredient": "Quramliq o'nim",
+    "ingredient_name": "Quramliq o'nim atı",
+    "ingredient_quantity": "Quramliq o'nim sanı",
+    "ingredient_price": "Quramliq o'nim bahasi",
+
+    "orders_history": "Buyirtparalar tariyxi",
+
+    "unit": "O'lshem birlik",
+
+    "price": "Bahasi",
+
+    "addIngredient": "Quramliq o'nimdi qosiw",
+
+    "notdeleted": "Bul quramliq o'nimdi o'shiriwge bolmaydi!",
+
+    "ishlab_chiqarish_soni": "Islep shig'ariw sani",
+    "ishlab_chiqarish": "Islep shig'ariw",
+    
+  "yetarli": "Jetedi",
+  "yetmaydi": "Jetpeydi ",
+  "islep_shigariw_mumkin": "Islep shig'ariw mu'mkin",
+  "islep_shigariw_mumkin_emes": "Islep shig'ariw mu'mkin emes",
+  "cancel": "Biykar etiw",
+
+  "production__process": "Islep shig'ariw procesi",
+  "production__history": "Islep shig'ariw tariyxi"
+
+
 
 }

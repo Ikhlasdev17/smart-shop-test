@@ -117,6 +117,45 @@
                     "icon": "bx bx-cart-alt"
                 }
             ]
+        },
+        {
+            "id": 10,
+            "label": "Производство",
+            "path": "",
+            "icon": "bx bx-purchase-tag-alt",
+            "submenu": [
+                {
+                    "id": "subitem7",
+                    "label": "Составная часть",
+                    "path": "/ingredients",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem9",
+                    "label": "Заказ",
+                    "path": "/production/order_ingredient",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id": "subitem8",
+                    "label": "Прикрепить к продукту",
+                    "path": "/add_product",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem13",
+                    "label": "Производство",
+                    "path": "/production",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem14",
+                    "label": "Производственный процесс",
+                    "path": "/production/basket",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem15",
+                    "label": "История производства",
+                    "path": "/production/history",
+                    "icon": "bx bx-cart-alt"
+                }
+            ]
         }
     ],
 
@@ -284,7 +323,37 @@
     "remove__image": "Удалить изображение",
     "tolangan_qarz": "Oплаченный долг",
 
-    "client": "Клиент"
+    "client": "Клиент",
+
+    
+    
+    "ingredients": "Ингредиенты",
+    "add_ingredient": "Добавить ингредиент",
+    "ingredient": "Ингредиент",
+    "ingredient_name": "Название ингредиента",
+    "ingredient_quantity": "Количество ингредиента",
+    "ingredient_price": "Цена ингредиента",
+
+    
+    "orders_history": "История заказов",
+
+    "unit": "Единица",
+    "price": "Цена",
+
+    "addIngredient": "Добавить ингредиент",
+
+    "notdeleted": "Этот компонент нельзя удалить",
+    "ishlab_chiqarish_soni": "Количество продукции",
+    "ishlab_chiqarish": "Производство",
+    
+  "yetarli": "Достаточно",
+  "yetmaydi": "Недостаточно",
+  
+  "islep_shigariw_mumkin": "Возможно производство",
+  "islep_shigariw_mumkin_emes": "Производство невозможно",
+  "cancel": "Отмена",
+  "production__process": "Производственный процесс",
+  "production__history": "История производства"
 }
 
 

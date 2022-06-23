@@ -20,7 +20,10 @@ const ReturnOrder = () => {
     
     useEffect(() =>{
         setLoading(true)
-        axios.get(`${URL}/api/warehouse?page=${page}&search=${search} `, setToken())
+        axios.get(
+          `${URL}/api/products?search=${search}&page=${page}&search=${search}`,
+          setToken()
+        )
         .then(res => {
             setOrders(res.data.payload.data)
             setLoading(false)
@@ -44,15 +47,15 @@ const ReturnOrder = () => {
 
 
         if (value === null){
-            const newItem = dataForReturn.filter(x => x.product_id !== item.product.id)
+            const newItem = dataForReturn.filter(x => x.product_id !== item.id)
             setData(newItem)
         } else {
 
-        const index = dataForReturn.findIndex(x => x.product_id === item.product.id)
+        const index = dataForReturn.findIndex(x => x.product_id === item.id)
 
         if (index === -1) {
           setData([...dataForReturn, {
-            product_id: item.product.id,
+            product_id: item.id,
             count: value
           }])
         } else {
@@ -87,21 +90,20 @@ const ReturnOrder = () => {
 
 
 
-
   orders?.map(item => {
     dataSource.push({
-      key: item?.product.id,
+      key: item?.id,
       product: <div className="product__table-product">
           <div className="product__table-product__image"> 
               <Zoom>
-                <img src={item?.product.image && item?.product.image !== null ? item?.product.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
+                <img src={item?.image && item?.image !== null ? item?.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
               </Zoom>
           </div>
           <div className="product__tabel-product_name">
-              <h3>{item?.product.name}</h3>
+              <h3>{item?.name}</h3>
           </div>
       </div>,
-      count: item?.count,
+      count: item?.warehouse?.count !== null ? item?.warehouse?.count : '0',
       addCount: <div className="form-group">
         <InputNumber size="small" className="form__input form-group__item table_input" onChange={(e) => {
         onChange(e, item)

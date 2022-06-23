@@ -491,12 +491,12 @@ const Content = ({ open, refresh,  setRefresh, type, currentProduct, setOpen, US
             className={"form__input"}
             formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
             onChange={e => setProduct(prev => ({...product, warehouse: {...prev.warehouse, count: e}}))}
-            value={product.warehouse.count}
+            value={product?.warehouse?.count}
             required
           />
           </div>
           <div className="form-group__min-item">
-          <Select className="form__select form__input"  value={product.warehouse.unit_id} onChange={e => setProduct(prev => ({...product, warehouse: {...prev.cost_price, unit_id: e}}))} required>
+          <Select className="form__select form__input"  value={product?.warehouse?.unit_id} onChange={e => setProduct(prev => ({...product, warehouse: {...prev.cost_price, unit_id: e}}))} required>
             {
               unit_id_options?.map(item => (
                 <Select.Option key={item.id} value={item.id}>{item.label}</Select.Option>

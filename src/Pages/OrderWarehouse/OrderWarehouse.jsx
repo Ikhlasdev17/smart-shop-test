@@ -54,8 +54,10 @@ const OrderWarehouse = () => {
 
     
 
-    const response = await axios.get(`${URL}/api/warehouse?page=${page}&search=${search}`, setToken())
-
+    const response = await axios.get(
+      `${URL}/api/products?search=${search}&page=${page}`,
+      setToken()
+    );
     if (response.status === 200) {
       setStatisticProducts(response.data.payload.data)
       setLoading(false)
@@ -104,26 +106,26 @@ const OrderWarehouse = () => {
 
 
   const handleChange = (e, currentItem, type) => {
-    const index = updatedProducts.findIndex(item => item.product_id === currentItem.product.id) 
+    const index = updatedProducts.findIndex(item => item.product_id === currentItem.id) 
     if (index === -1) {
         updatedProducts = [...updatedProducts,  {
-            product_id: currentItem.product.id,
+            product_id: currentItem.id,
             count: type === 'count' ? e : currentItem.count,
-            unit_id: currentItem.unit.id,
+            unit_id: currentItem?.warehouse?.unit.id,
             price: {
-                currency_id: type === 'currency' ? e : currentItem.product.cost_price.currency_id,
-                price: type === 'price' ? e : currentItem.product.cost_price.price
+                currency_id: type === 'currency' ? e : currentItem.cost_price.currency_id,
+                price: type === 'price' ? e : currentItem.cost_price.price
             }
         }]
     } else {
         if (type === 'price') {
           if (e === null){
-            updatedProducts[index].price.price = currentItem?.product.cost_price.price
+            updatedProducts[index].price.price = currentItem?.cost_price.price
           }
           updatedProducts[index].price.price = e
           } else if (type === 'count') {
             if (e === null){
-              updatedProducts[index].price.price = currentItem?.count
+              updatedProducts[index].price.price = currentItem?.warehouse?.count
             }
             updatedProducts[index].count = e 
         } else if (type === 'currency') {
@@ -142,22 +144,22 @@ const OrderWarehouse = () => {
 
 
   statisticProducts.length > 0 && statisticProducts?.map(item => {
-    const currentCurrency = currency?.filter(x => x.id == item?.product?.cost_price.currency_id)[0]
+    const currentCurrency = currency?.filter(x => x.id == item?.cost_price.currency_id)[0]
     dataSource.push({
-      key: item?.product.id,
+      key: item?.id,
       product: <div className="product__table-product">
           <div className="product__table-product__image"> 
               <Zoom>
-                <img src={item?.product.image && item?.product.image !== null ? item?.product.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
+                <img src={item?.image && item?.image !== null ? item?.image : 'https://seafood.vasep.com.vn/no-image.png'} alt="Product Photo" /> 
               </Zoom>
           </div>
           <div className="product__tabel-product_name">
-              <h3>{item?.product.name}</h3>
+              <h3>{item?.name}</h3>
           </div>
       </div>,
-      count: item?.count,
+      count: item?.warehouse?.count !== null ? item?.warehouse?.count : 0,
       cost_price: <div className="form-group">
-        <InputNumber size="small" className="form__input  table_input" placeholder={item.product.cost_price.price} onChange={(e) => {
+        <InputNumber size="small" className="form__input  table_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
         handleChange(e, item, 'price')
       }} />
 
@@ -176,7 +178,7 @@ const OrderWarehouse = () => {
       </Select>
       </div>,
       addCount: <>
-        <InputNumber size="small" className="form__input table_input" placeholder={item.count} onChange={(e) => {
+        <InputNumber size="small" className="form__input table_input" placeholder={item?.warehouse?.count !== null ? item?.warehouse?.count : 0} onChange={(e) => {
             handleChange(e, item, 'count')
         }}/>
       </>

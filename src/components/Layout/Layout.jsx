@@ -29,7 +29,13 @@ import ReturnOrder from "../../Pages/ReturnOrder/ReturnOrder";
 import Casheir from "../../Pages/Casheir/Casheir";
 import logo from '../../assets/images/LOGOTEXNOPOS.png'
 import Profile from "../../Pages/Profile/Profile";
-
+import Ingredients from "../../Pages/Production/Ingredients/Ingredients";
+import OrderIngredient from "../../Pages/Production/OrderIngredient/OrderIngredient";
+import IngredientProducts from "../../Pages/Products/Products";
+import IngredientProduct from "../../Pages/Production/Products/Products";
+import Production from "../../Pages/Production/Production/Production";
+import ProductionBasket from "../../Pages/Production/Basket/Basket";
+import HistoryProduction from "../../Pages/Production/HistoryProduction/HistoryProduction";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -116,6 +122,12 @@ const Wrapper = () => {
               <Route path={"/operations/return"} element={<ReturnOrder />} />  
               <Route path="/casheir" element={<Casheir />} />
               <Route path={"/profile"} element={<Profile />} />
+              <Route path={"/ingredients"} element={<Ingredients />} />
+              <Route path="/production/order_ingredient" element={<OrderIngredient />} />
+              <Route path="/add_product" element={<IngredientProduct />} />
+              <Route path="/production" element={<Production />} />
+              <Route path="/production/basket" element={<ProductionBasket />} />
+              <Route path="/production/history" element={<HistoryProduction />} />
             </Routes>
           </Content>
           <Footer 

@@ -109,10 +109,6 @@ const Products = () => {
       }
     });
   };
-
-
-
-
   const dataSource = [];
   products.length > 0 &&
     products?.map((item) => {
@@ -146,7 +142,10 @@ const Products = () => {
         brand: item?.brand,
         cost_price: (
           <span>
-            <strong>{item?.cost_price?.price !== null && item?.cost_price?.price.toLocaleString()}</strong>{" "}
+            <strong>
+              {item?.cost_price?.price !== null &&
+                item?.cost_price?.price.toLocaleString()}
+            </strong>{" "}
             {item?.cost_price?.code}
           </span>
         ),
@@ -158,23 +157,33 @@ const Products = () => {
         ),
         max_price: (
           <span>
-            <strong>{item?.max_price?.price !== null && item?.max_price?.price.toLocaleString()}</strong>{" "}
+            <strong>
+              {item?.max_price?.price !== null &&
+                item?.max_price?.price.toLocaleString()}
+            </strong>{" "}
             {item?.max_price?.code}
           </span>
         ),
         min_price: (
           <span>
-            <strong>{item?.min_price?.price !== null && item?.min_price?.price.toLocaleString()}</strong>{" "}
+            <strong>
+              {item?.min_price?.price !== null &&
+                item?.min_price?.price.toLocaleString()}
+            </strong>{" "}
             {item?.min_price?.code}
           </span>
         ),
         warehouse: (
           <span className="table-text-group">
-            <strong>{item?.warehouse !== null ? item?.warehouse?.count : 0} </strong>{" "}
+            <strong>
+              {item?.warehouse !== null ? item?.warehouse?.count : 0}{" "}
+            </strong>{" "}
             <p>
-              {item?.warehouse !== null ? unit_id_options?.filter(
-                (x) => x.id === item?.warehouse?.unit?.id
-              )[0]?.label || "" : '0'}
+              {item?.warehouse !== null
+                ? unit_id_options?.filter(
+                    (x) => x.id === item?.warehouse?.unit?.id
+                  )[0]?.label || ""
+                : "0"}
             </p>
           </span>
         ),
@@ -207,7 +216,6 @@ const Products = () => {
         ),
       });
     });
-
 
   const exportData = () => {
     setExporting(true);
@@ -301,11 +309,6 @@ const Products = () => {
     }
   }, [open, page, category, refresh, search]);
 
-
-
-
-
-
   useEffect(async () => {
     const res2 = await axios.get(`${URL}/api/currency`, setToken());
 
@@ -319,7 +322,6 @@ const Products = () => {
     if (open) {
       setProductDetailsIsOpen(false);
     }
-
   }, [open]);
 
   return (
@@ -376,21 +378,24 @@ const Products = () => {
               <tr>
                 <td>{t("cost_price")}</td>
                 <td>
-                  {productDetails?.cost_price.price !== null && productDetails?.cost_price.price.toLocaleString()}{" "}
+                  {productDetails?.cost_price.price !== null &&
+                    productDetails?.cost_price.price.toLocaleString()}{" "}
                   {productDetails?.cost_price.code}
                 </td>
               </tr>
               <tr>
                 <td>{t("whole_price")}</td>
                 <td>
-                  {productDetails?.whole_price.price !== null && productDetails?.whole_price.price.toLocaleString()}{" "}
+                  {productDetails?.whole_price.price !== null &&
+                    productDetails?.whole_price.price.toLocaleString()}{" "}
                   {productDetails?.whole_price.code}
                 </td>
               </tr>
               <tr>
                 <td>{t("min_price")}</td>
                 <td>
-                  {productDetails?.min_price.price !== null && productDetails?.min_price.price.toLocaleString()}{" "}
+                  {productDetails?.min_price.price !== null &&
+                    productDetails?.min_price.price.toLocaleString()}{" "}
                   {productDetails?.min_price.code}
                 </td>
               </tr>
@@ -398,7 +403,8 @@ const Products = () => {
               <tr>
                 <td>{t("max_price")}</td>
                 <td>
-                  {productDetails?.max_price.price !== null && productDetails?.max_price.price.toLocaleString()}{" "}
+                  {productDetails?.max_price.price !== null &&
+                    productDetails?.max_price.price.toLocaleString()}{" "}
                   {productDetails?.max_price.code}
                 </td>
               </tr>
@@ -444,8 +450,8 @@ const Products = () => {
             debounceTimeout={800}
             placeholder={t("search")}
             onChange={(e) => {
-              setPage(1)
-              setSearch(e.target.value)
+              setPage(1);
+              setSearch(e.target.value);
             }}
             className="form__input"
           />
@@ -481,7 +487,7 @@ const Products = () => {
         </div>
 
         <div className="content-body">
-          <Skeleton
+        <Skeleton
             loading={loading}
             active
             avatar
@@ -508,9 +514,9 @@ const Products = () => {
                       className="responsive__table-item"
                       key={index}
                       onClick={(e) => {
-                        !(e.target.classList.value.includes("bx")) && 
-                          setProductDetailsIsOpen(true); 
-                          setProductDetails(item);
+                        !e.target.classList.value.includes("bx") &&
+                          setProductDetailsIsOpen(true);
+                        setProductDetails(item);
                       }}
                     >
                       <div className="responsive__table-item__details-name">
@@ -526,7 +532,11 @@ const Products = () => {
                           <h3>
                             <i className="bx bx-package"></i>
                           </h3>
-                          <h4>{item?.warehouse.count}</h4>
+                          <h4>
+                            {item?.warehouse?.count !== null
+                              ? item?.warehouse?.count
+                              : 0}
+                          </h4>
                         </div>
 
                         <div className="responsive__table-item__details-actions">
@@ -554,7 +564,7 @@ const Products = () => {
                             <Button
                               className=""
                               onClick={() => {
-                                deleteProductFunc(item?.id)
+                                deleteProductFunc(item?.id);
                               }}
                             >
                               <i className="bx bx-trash"></i>
@@ -575,8 +585,8 @@ const Products = () => {
                 pageSize={perPage ? perPage : 0}
                 current={page}
                 onChange={(c) => {
-                  setPage(c)
-                  console.info(c)
+                  setPage(c);
+                  console.info(c);
                 }}
                 showSizeChanger={false}
               />

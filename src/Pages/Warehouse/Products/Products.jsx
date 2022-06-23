@@ -123,9 +123,9 @@ const Products = () => {
             </div>
         </div>,
         category: currentCategory?.name,
-        count: item?.warehouse.count,
+        count: item?.warehouse !== null && item?.warehouse?.count !== null ? item?.warehouse?.count : '0',
         defect: <><InputNumber ref={count} onChange={(e) => {
-          handleChange(e, item?.id, item?.warehouse.count)
+          handleChange(e, item?.id, item?.warehouse?.count !== null ? item?.warehouse?.count : '0')
         }} /></>  
       })
     })
