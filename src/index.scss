@@ -87,6 +87,10 @@ img {
     max-height: 500px;
 }
 
+.capitalize {
+    text-transform: capitalize!important;
+}
+
 
 
 .btn-primary {
@@ -586,6 +590,7 @@ img {
         align-items: center;
         display: flex;
         align-items: center;
+        text-transform: capitalize!important;
     }
 }
 

@@ -284,7 +284,10 @@ const Production = () => {
                 responseData?.map((item, index) => (
                   <Collapse.Panel header={<div className="calculator-info__header">
                     <td className="info-table__th">
-                      <b>{item?.product_name}</b> {" "}{" "}{" "}
+                      <b className="capitalize">{products?.find(x =>x?.id === item?.product_id)?.category?.name}</b> {" "}{" "}{" "}
+                    </td>
+                    <td className="info-table__th">
+                      <b className="capitalize">{item?.product_name}</b> {" "}{" "}{" "}
                     </td>
                     <td className="info-table__th">
                     {
