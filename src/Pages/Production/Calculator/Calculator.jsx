@@ -212,7 +212,7 @@ const Production = () => {
                             {ingredient?.ingredient_name}
                           </td>
                           <td className="info-table__td">
-                            {ingredient?.count}
+                            {ingredient?.count.toFixed(2)}
                           </td>
                           {
                             ingredient?.ordered_at !== null ? (

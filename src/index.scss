@@ -598,6 +598,15 @@ img {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        b {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        span.text {
+            color: #367FA9;
+            padding: .3rem;
+        }
         h3 {
             font-size: 16px;
             font-weight: 500;

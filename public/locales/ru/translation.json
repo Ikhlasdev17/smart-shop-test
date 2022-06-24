@@ -361,7 +361,9 @@
   "islep_shigariw_mumkin_emes": "Производство невозможно",
   "cancel": "Отмена",
   "production__process": "Производственный процесс",
-  "production__history": "История производства"
+  "production__history": "История производства",
+  
+  "faqat_ishlab_chiqarish_mumkin": "Пожалуйста, оставьте только те продукты, которые можно изготовить!"
 }
 
 

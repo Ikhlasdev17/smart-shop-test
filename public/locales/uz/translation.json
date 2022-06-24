@@ -367,5 +367,7 @@
   "cancel": "Bekor qilish",
   
   "production__process": "Ishlab chiqarish procesi",
-  "production__history": "Ishlab chiqarish tarixi"
+  "production__history": "Ishlab chiqarish tarixi",
+  
+  "faqat_ishlab_chiqarish_mumkin": "Iltimos!, Faqat ishlab chiqarish mumkin bo'lgan mahsulotlarni qoldiring!"
 }

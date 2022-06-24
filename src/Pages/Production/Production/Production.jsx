@@ -1,4 +1,4 @@
-import { Button, DatePicker, InputNumber, message, Modal, Pagination, Select, Skeleton, Table, Tag } from "antd";
+import { Button, Collapse, DatePicker, InputNumber, message, Modal, Pagination, Select, Skeleton, Table, Tag } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -95,6 +95,8 @@ const Production = () => {
     onChange: onSelectChange,
   };
 
+  console.info(products)
+
   // SET SELECTED ITEMS
   useEffect(() => {
     let newSelectedArray = [];
@@ -135,7 +137,13 @@ const Production = () => {
       deadline: deadLine,
       products: selectedItems
     },
-    setToken())
+    setToken()).catch(() => {
+      Swal.fire({
+        title: t('faqat_ishlab_chiqarish_mumkin'),
+        icon: 'error'
+      })
+    })
+    .finally(() => setLoading(false))
 
     if (res.status === 200) {
       Swal.fire({
@@ -213,6 +221,27 @@ const Production = () => {
   ];
 
 
+  console.info(responseData)
+  
+
+  // getTotalSum
+  const getTotalSum = (arr) => {
+    let ourPrice = []
+    arr?.map(item => {
+      ourPrice.push(item?.price * item?.count)
+    })
+
+    let totalSum = ourPrice.reduce((prev, current) => prev + current, 0)
+
+    return totalSum.toLocaleString()
+  }
+
+
+  // get total ingredient count price
+  const getIngredientCountPrice = (item) => {
+    return (item?.count * item?.price).toLocaleString()
+  }
+
   // MAIN RETURN
   return (
     <div className="section main-page">
@@ -220,15 +249,26 @@ const Production = () => {
       <div className="content">
         <Modal
             width={780}
-            visible={responseModal}
+            visible={responseModal} 
+            footer={
+              <>
+                <Button onClick={() => {
+                  setResponseModal(false)
+                  setResponseData([])
+                }}>
+                  {t('cancel')}
+                </Button>
+                <Button type="primary" onClick={sendToOrder}
+                >
+                  {t('save')}
+                </Button>
+              </>
+            }
+            title={t('ishlab_chiqarish')}
             onCancel={() => {
               setResponseModal(false)
               setResponseData([])
             }}
-            title={t('ishlab_chiqarish')}
-            okText={t('order')}
-            onOk={sendToOrder}
-            cancelText={t('cancel')}
           >
             <DatePicker 
               onChange={(e) => setDeadLine(e)}
@@ -237,14 +277,17 @@ const Production = () => {
             />
             <br />
             <div className="h-500 overlfow-y-auto">
-            {
-              responseData?.map(item => (
-                <table className="info-table">
-                  {/* HEAD */}
-                  <thead className="info-table__head">
+             
+
+          <Collapse className="calculator-info">
+              {
+                responseData?.map((item, index) => (
+                  <Collapse.Panel header={<div className="calculator-info__header">
                     <td className="info-table__th">
                       <b>{item?.product_name}</b> {" "}{" "}{" "}
-                      {
+                    </td>
+                    <td className="info-table__th">
+                    {
                         item?.ingredients?.findIndex(x => x.status === 'not enough') !== -1 ? (
                           <Tag color={'error'}>
                             {t('islep_shigariw_mumkin_emes')}
@@ -256,25 +299,38 @@ const Production = () => {
                         )
                       }
                     </td>
+                      <td className="info-table__th">
+                      <b>{t('price')}: </b>
+                      <span>{
+                        getTotalSum(item?.ingredients)
+                      }</span>{" "}
+                      </td>
                     <td className="info-table__th">
-                      <b>{t('count')} {item?.count} </b>
+                      <b>{t('count')} </b><span>{item?.count}</span>
                       <Button type="link" danger
-                        onClick={() =>deleteFromSelected(item?.product_id)}
+                        onClick={() =>{
+                          deleteFromSelected(item?.product_id)
+                          Swal.fire({
+                            title: t('deleted'),
+                            icon: 'success'
+                          })
+                        }}
                       >
                         <i className="bx bx-trash"></i>
                       </Button>
-                    </td> 
-                  </thead>
-                  {/* BODY */}
-                  <tbody className="info-table__body">
-                    {
+                    </td>
+                  </div>} key={index}>
+                  {
                       item?.ingredients?.map(ingredient => (
                         <tr className="info-table__row">
                           <td className="info-table__td">
                             {ingredient?.ingredient_name}
-                          </td>
+                          </td> 
                           <td className="info-table__td">
                             {ingredient?.count}
+                          </td>
+                          <td className="info-table__td">
+                            <b>{t('price')}:</b> {getIngredientCountPrice(ingredient)}
                           </td>
                           {
                             ingredient?.ordered_at !== null ? (
@@ -296,11 +352,10 @@ const Production = () => {
                         </tr>
                       ))
                     }
-              
-                  </tbody>
-                </table>
-              ))
-            }
+                  </Collapse.Panel>
+                ))
+              } 
+            </Collapse>
             </div>
         </Modal>
         <div className="content-top">

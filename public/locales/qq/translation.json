@@ -155,7 +155,7 @@
                     "path": "/production/history",
                     "icon": "bx bx-cart-alt"
                 },{
-                    "id":"subitem16",
+                    "id":"sub   item16",
                     "label": "Kalkulyator",
                     "path": "/production/calculator",
                     "icon": "bx bx-cart-alt"
@@ -357,7 +357,8 @@
   "cancel": "Biykar etiw",
 
   "production__process": "Islep shig'ariw procesi",
-  "production__history": "Islep shig'ariw tariyxi"
+  "production__history": "Islep shig'ariw tariyxi",
+  "faqat_ishlab_chiqarish_mumkin": "Iltimas!, tek g'ana islep shig'ariw mu'mkin bolg'an o'nimlerdi qaldirin'!"
 
 
 
