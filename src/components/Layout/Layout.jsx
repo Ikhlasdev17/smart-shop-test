@@ -36,6 +36,7 @@ import IngredientProduct from "../../Pages/Production/Products/Products";
 import Production from "../../Pages/Production/Production/Production";
 import ProductionBasket from "../../Pages/Production/Basket/Basket";
 import HistoryProduction from "../../Pages/Production/HistoryProduction/HistoryProduction";
+import Calculator from "../../Pages/Production/Calculator/Calculator";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -128,6 +129,7 @@ const Wrapper = () => {
               <Route path="/production" element={<Production />} />
               <Route path="/production/basket" element={<ProductionBasket />} />
               <Route path="/production/history" element={<HistoryProduction />} />
+              <Route path="/production/calculator" element={<Calculator />} />
             </Routes>
           </Content>
           <Footer 

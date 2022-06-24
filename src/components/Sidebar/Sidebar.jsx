@@ -37,7 +37,7 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
         }}>
           {sidebarItems && sidebarItems !== "sidebar__items" && sidebarItems.map((item, index) => {
               return <>
-              {!item.submenu && 
+              {!item.submenu && !item.disabled && 
                     <>
                       {item.groupTitle && !collapsed && <>
                         <span key={item.id} className="sidebar__item__group__title">{item.groupTitle}</span>
@@ -51,7 +51,7 @@ const Sidebar = ({ windowWidth, collapsed, setCollapsed }) => {
                       
                       } 
                       
-                  {item.submenu && 
+                  {item.submenu && !item.disabled && 
                   <Menu.SubMenu key={item.id} icon={<i className={`bx ${item.icon}`}></i>} title={item.label} className={`menu-item`}>
                       {item.submenu.map((subitem) => (
                         subitem.role ? subitem.role === localStorage.getItem('role') && (

@@ -122,6 +122,8 @@
             "id": 10,
             "label": "Производство",
             "path": "",
+            
+            "disabled": false,
             "icon": "bx bx-purchase-tag-alt",
             "submenu": [
                 {
@@ -153,6 +155,12 @@
                     "id":"subitem15",
                     "label": "История производства",
                     "path": "/production/history",
+                    "icon": "bx bx-cart-alt"
+                },
+                {
+                    "id":"subitem16",
+                    "label": "Калькулятор",
+                    "path": "/production/calculator",
                     "icon": "bx bx-cart-alt"
                 }
             ]

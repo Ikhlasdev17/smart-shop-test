@@ -129,6 +129,8 @@
       "id": 10,
       "label": "Ishlab chiqarish",
       "path": "",
+      
+      "disabled": false,
       "icon": "bx bx-purchase-tag-alt",
       "submenu": [
         {
@@ -163,7 +165,12 @@
           "label": "Ishlab chiqarish tarixi",
           "path": "/production/history",
           "icon": "bx bx-cart-alt"
-      }
+      },{
+        "id":"subitem16",
+        "label": "Kalkulyator",
+        "path": "/production/calculator",
+        "icon": "bx bx-cart-alt"
+    }
       ]
     }
   ],

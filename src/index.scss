@@ -588,3 +588,32 @@ img {
         align-items: center;
     }
 }
+
+.calculator-info{
+    min-width: 400px;
+    overflow-x: auto;
+    
+    .calculator-info__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+
+
+    .info-table__row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .info-table__td {
+            width: 100px;
+            font-size: 14px;
+            padding: .3rem 0;
+        }
+    }
+}

@@ -122,6 +122,7 @@
             "label": "Islep shig'ariw",
             "path": "",
             "icon": "bx bx-purchase-tag-alt",
+            "disabled": false,
             "submenu": [
                 {
                     "id": "subitem10",
@@ -152,6 +153,11 @@
                     "id":"subitem15",
                     "label": "Islep shig'ariw tariyxi",
                     "path": "/production/history",
+                    "icon": "bx bx-cart-alt"
+                },{
+                    "id":"subitem16",
+                    "label": "Kalkulyator",
+                    "path": "/production/calculator",
                     "icon": "bx bx-cart-alt"
                 }
             ]
