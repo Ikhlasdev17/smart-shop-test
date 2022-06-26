@@ -95,6 +95,7 @@ const ProductionBasket = () => {
   }, [refresh]);
 
   const dataSource = [];
+  
 
   // TABLE DATA
   baskets?.map((item) => {
@@ -142,6 +143,7 @@ const ProductionBasket = () => {
       .get(`${URL}/api/production/orders/${id}`, setToken())
       .then((res) => {
         setBasketOrders(res.data.payload);
+        console.info(res.data)
       })
       .finally(() => setLoading(false));
   };
@@ -182,6 +184,9 @@ const ProductionBasket = () => {
                       <td className="info-table__td">
                         {ingredient?.ingredient_name}
                       </td>
+                        <td>
+                        <b>{t('price')}</b> {ingredient?.price?.toLocaleString()}
+                        </td>
                       <td className="info-table__td">{ingredient?.count}</td>
                       {ingredient?.ordered_at !== null ? (
                         <td className="info-table__td">

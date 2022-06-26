@@ -185,6 +185,7 @@ const Production = () => {
     },
   ];
 
+  console.info(responseData)
 
   // MAIN RETURN
   return (
@@ -198,7 +199,7 @@ const Production = () => {
             title={t('ishlab_chiqarish')}
             onCancel={() => setResponseModal(false)}
           >   
-            <Collapse defaultActiveKey={['1']} className="calculator-info">
+            <Collapse  className="calculator-info">
               {
                 responseData?.map((item, index) => (
                   <Collapse.Panel header={<div className="calculator-info__header">
@@ -212,7 +213,8 @@ const Production = () => {
                             {ingredient?.ingredient_name}
                           </td>
                           <td className="info-table__td">
-                            {ingredient?.count.toFixed(2)}
+                            {ingredient?.count.toFixed(2)}{" "}
+                            <b>{unit_id_options.find(x => x.id === ingredient?.unit_id)?.label}</b>
                           </td>
                           {
                             ingredient?.ordered_at !== null ? (

@@ -46,6 +46,11 @@ const Ingredients = () => {
       key: "key",
     },
     {
+      title: t('price'),
+      dataIndex: 'price',
+      key: 'price'
+    },
+    {
       title: t("date"),
       dataIndex: "date",
       key: "key",
@@ -83,10 +88,14 @@ const Ingredients = () => {
             </span>
           </div>
         ),
-        usd: item?.usd_rate.toLocaleString(),
-        date: moment(item.created_at).format("DD/MM/YYYY"),
+        price: item?.price?.toLocaleString(),
+        usd: item?.usd_rate?.toLocaleString(),
+        date: moment(item.ordered_at).format('DD MMM, YYYY, hh:mm:ss '),
       });
     });
+
+
+    console.info(selectedIngredient?.items)
 
   // DELETE ITEM
   const deleteIngredient = (id) => {
@@ -212,6 +221,7 @@ const Ingredients = () => {
           setSelectedIngredient({});
         }}
         visible={modalIsOpen}
+        width={500}
       >
         {modaltype === "history" ? (
           <Table

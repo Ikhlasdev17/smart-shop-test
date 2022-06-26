@@ -241,7 +241,7 @@ const Production = () => {
   const getIngredientCountPrice = (item) => {
     return (item?.count * item?.price).toLocaleString()
   }
-
+  console.info(responseData)
   // MAIN RETURN
   return (
     <div className="section main-page">
@@ -331,6 +331,7 @@ const Production = () => {
                           </td> 
                           <td className="info-table__td">
                             {ingredient?.count}
+                            {ingredient?.unit_id}
                           </td>
                           <td className="info-table__td">
                             <b>{t('price')}:</b> {getIngredientCountPrice(ingredient)}
