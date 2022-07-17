@@ -1,4 +1,4 @@
-import { Select,DatePicker, Table, Skeleton, Input, InputNumber, Button, message, Pagination } from 'antd'
+import { Select,DatePicker, Table, Skeleton, Input, InputNumber, Button, message, Pagination, Form } from 'antd'
 import React, { useState, useEffect } from 'react'
 import ModalAction from '../../components/ModalAction/ModalAction';
 
@@ -41,7 +41,7 @@ const OrderWarehouse = () => {
   const [category, setCategory] = useState('')
   const [lastPage, setLastPage] = useState();
   const [perPage, setPerPage] = useState();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); 
   
   let updatedProducts = [];
 
@@ -49,11 +49,7 @@ const OrderWarehouse = () => {
 
   useEffect(async () => {
     dispatch(fetchingProducts());
-
     setLoading(true)
-
-    
-
     const response = await axios.get(
       `${URL}/api/products?search=${search}&page=${page}`,
       setToken()
@@ -64,9 +60,6 @@ const OrderWarehouse = () => {
       setLastPage(response.data.payload.last_page)
       setPerPage(response.data.payload.per_page) 
     }
-    
-
-
   } ,[from, to, sendOrder, search, page, category])
 
   
@@ -81,7 +74,7 @@ const OrderWarehouse = () => {
   useEffect(async () => {
     dispatch(fetchingCategories())
 
-    const res = await axios.get(`${URL}/api/categories}`, setToken());
+    const res = await axios.get(`${URL}/api/categories`, setToken());
     setLoading(true)
     if (res.status === 200) {
         dispatch(fetchedCategories(res.data.payload))
@@ -98,7 +91,7 @@ const OrderWarehouse = () => {
   // ZAKAZ BERISH 
   const sendToOrder = () => {
     axios.post(`${URL}/api/warehouse`, updatedProducts, setToken())
-    .then(res => {
+    .then(() => {
       message.success(t('muaffaqiyatli'))
       setSendOrder(!sendOrder)
     })
@@ -138,13 +131,12 @@ const OrderWarehouse = () => {
  
   }
 
-
-
   const dataSource = [];
 
 
   statisticProducts.length > 0 && statisticProducts?.map(item => {
     const currentCurrency = currency?.filter(x => x.id == item?.cost_price.currency_id)[0]
+    console.info(updatedProducts?.find(x => x?.product_id === item?.id)?.count)
     dataSource.push({
       key: item?.id,
       product: <div className="product__table-product">
@@ -158,30 +150,70 @@ const OrderWarehouse = () => {
           </div>
       </div>,
       count: item?.warehouse?.count !== null ? item?.warehouse?.count : 0,
-      cost_price: <div className="form-group">
-        <InputNumber size="small" className="form__input  table_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
-        handleChange(e, item, 'price')
-      }} />
-
-      <Select 
-        placeholder={currentCurrency?.code} 
-        size="small" 
-        className="table_inptop__grouput form__input-small form-group__min-item" 
-        style={{width: '80px'}}
-        onChange={(e) => {
-          handleChange(e, item, 'currency')
-        }}
-      >
-          {currency?.map(item => (
-              <Select.Option value={item.id}>{item.code}</Select.Option>
-          ))}
-      </Select>
+      cost_price: <div className='expanded-content'>
+        <>
+          <div className="expanded-label">
+            <span>{ t('cost_price') }</span>
+            <Input.Group compact>
+                <InputNumber   className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+                  handleChange(e, item, 'price')
+                }} />
+                <Select 
+                placeholder={currentCurrency?.code} 
+                
+                className="" 
+                style={{width: '80px'}}
+                onChange={(e) => {
+                  handleChange(e, item, 'currency')
+                }}
+              >
+                  {currency?.map(item => (
+                      <Select.Option value={item.id}>{item.code}</Select.Option>
+                  ))}
+              </Select>
+            </Input.Group>
+          </div>
+          <div className="expanded-label">
+            <span>{ t('whole_price') }</span>
+            <Input.Group compact>
+                <InputNumber   className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+                  handleChange(e, item, 'price')
+                }} />
+                <Select 
+                placeholder={currentCurrency?.code} 
+                
+                className="" 
+                style={{width: '80px'}}
+                onChange={(e) => {
+                  handleChange(e, item, 'currency')
+                }}
+              >
+                  {currency?.map(item => (
+                      <Select.Option value={item.id}>{item.code}</Select.Option>
+                  ))}
+              </Select>
+            </Input.Group>
+          </div>
+          <div className="expanded-label">
+            <span>{ t('min_price') }</span>
+            <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+              handleChange(e, item, 'price')
+            }} />
+          </div>
+          <div className="expanded-label">
+            <span>{ t('max_price') }</span>
+            <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+              handleChange(e, item, 'price')
+            }} />
+          </div>
+        </>
+      
       </div>,
-      addCount: <>
-        <InputNumber size="small" className="form__input table_input" placeholder={item?.warehouse?.count !== null ? item?.warehouse?.count : 0} onChange={(e) => {
+      addCount: <div className='form-group'>
+        <InputNumber value={updatedProducts?.find(x => x?.product_id === item?.id)?.count}  className="form__input table_input" placeholder={item?.warehouse?.count !== null ? item?.warehouse?.count : 0} onChange={(e) => {
             handleChange(e, item, 'count')
         }}/>
-      </>
+      </div>
     })
   })
   
@@ -196,11 +228,6 @@ const OrderWarehouse = () => {
       dataIndex: 'count',
       key: 'key',
     },
-    {
-        title: t('cost_price'),
-        dataIndex: 'cost_price',
-        key: 'key',
-      },
     {
         title: t('count'),
         dataIndex: 'addCount',
@@ -290,6 +317,18 @@ const OrderWarehouse = () => {
             dataSource={dataSource} 
             columns={columns} 
             pagination={false}
+            expandable={{
+              expandedRowRender: (record) => (
+                <p
+                  style={{
+                    margin: 0,
+                  }}
+                >
+                  {record.cost_price}
+                </p>
+              ),
+              rowExpandable: (record) => record.name !== 'Not Expandable',
+            }}
           />
           </Skeleton>
 
@@ -301,6 +340,7 @@ const OrderWarehouse = () => {
                 current={page}
                 onChange={(c) => setPage(c)}
                 showSizeChanger={false}
+                
               />
             </div>
           )}

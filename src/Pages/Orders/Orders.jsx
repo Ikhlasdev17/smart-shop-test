@@ -53,13 +53,14 @@ const Orders = () => {
 
   const [productDetailsIsOpen, setProductDetailsIsOpen] = useState(false);
   const [productDetails, setProductDetails] = useState({});
-
+  const [from, setFrom] = useState(moment(Date.now()).format('YYYY/MM/DD'))
+  const [to, setTo] = useState('')
   useEffect(async () => {
     dispatch(fetchingCategories())
 
     setLoading(true)
 
-    const res = await axios.get(`${URL}/api/categories`, setToken())
+     await axios.get(`${URL}/api/categories`, setToken())
     .then(res => {
       dispatch(fetchedCategories(res.data.payload))
       setLoading(false)
@@ -194,7 +195,7 @@ const Orders = () => {
 
     setLoading(true)
 
-    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}&user_id=${user}`, setToken())
+    const response = await axios.get(`${URL}/api/baskets?search=${search}&filter=${filter}&page=${page}&filter=${text}&user_id=${user}${from ? '&from=' + from : ''}${to ? '&to=' + to : ''}`, setToken())
 
     if (response.status === 200) {
       dispatch(fetchedOrders(response.data.payload.data.baskets));
@@ -202,10 +203,11 @@ const Orders = () => {
       setLoading(false)
       setPerPage(response.data.payload.per_page)
       setLastPage(response.data.payload.last_page)
+      console.info(response.data.payload)
     }
 
     
-  } ,[search, filter, page, category, user, refresh])
+  } ,[search, filter, page, category, user, refresh, from, to])
 
 
   useEffect(() => {
@@ -331,9 +333,10 @@ const Orders = () => {
 
       <div className="top__elements-right">
         <span><strong>{t('cash')}:</strong> {amount?.cash !== null && amount?.cash?.toLocaleString()}</span>
-        <span><strong>{t('card')}:</strong>: {amount?.card?.toLocaleString()}</span>
-        <span><strong>{t('total_income')}:</strong> {( amount?.cash !== null && amount?.cash  + amount?.card !== null && amount?.card)?.toLocaleString()}</span>
-      </div>
+        <span><strong>{t('card')}:</strong> {amount?.card?.toLocaleString()}</span>
+        <span><strong>{ t('qarz') }:</strong> {amount?.remaining?.toLocaleString()}</span>
+        <span><strong>{t('total_income')}:</strong> { amount?.sum?.toLocaleString()}</span>
+      </div>  
       </div>
 
       <div className="content">
@@ -345,11 +348,11 @@ const Orders = () => {
                   minLength={2}
                 placeholder={t('search')}
                 onChange={e => setSearch(e.target.value)}
-                className="form__input"
+                className="content-top__input"
                 />
               <Select
               mode='multiple'
-              className="form__input content-select content-top__input"
+              className="content-top__input"
               showSearch
               placeholder={t('all_payment')}
               optionFilterProp="children"
@@ -370,7 +373,7 @@ const Orders = () => {
                   }
               </Select>
               <Select 
-              className="form__input content-select content-top__input"
+              className="content-top__input  "
               showSearch
               placeholder={t('select_client')}
               optionFilterProp="children"
@@ -394,9 +397,16 @@ const Orders = () => {
        
 
           <DatePicker 
-            className="form__input wdith_3"
-            placeholder={t('qarz_muddati')}
+            className="content-top__input"
+            placeholder={t('from')}
             clearIcon={false}
+            onChange={(e) => setFrom(moment(e).format('YYYY/MM/DD'))}
+            />
+          <DatePicker 
+            className="content-top__input"
+            placeholder={t('to')}
+            clearIcon={false}
+            onChange={e => setTo(moment(e).format('YYYY/MM/DD'))}
             />
             </div>
           </div>

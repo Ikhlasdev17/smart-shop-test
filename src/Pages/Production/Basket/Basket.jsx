@@ -44,7 +44,7 @@ const ProductionBasket = () => {
   // DELETE ITEM
   const deleteBasket = (id) => {
     Swal.fire({
-      title: t("delete"),
+      title: t("process__end"),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -62,14 +62,14 @@ const ProductionBasket = () => {
           .then((res) => {
             setRefresh(!refresh);
             Swal.fire({
-              title: t("deleted"),
+              title: t("muaffaqiyatli"),
               icon: "success",
               confirmButtonText: t("OK"),
             });
           })
           .catch((res) => {
             Swal.fire({
-              title: t("notdeleted"),
+              title: t("xatolik"),
               icon: "info",
               confirmButtonText: t("OK"),
             });
@@ -148,6 +148,7 @@ const ProductionBasket = () => {
       .finally(() => setLoading(false));
   };
 
+  console.info(baskets)
   // MAIN RETURN
   return (
     <div className="section main-page">

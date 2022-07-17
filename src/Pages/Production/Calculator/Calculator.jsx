@@ -185,7 +185,6 @@ const Production = () => {
     },
   ];
 
-  console.info(responseData)
 
   // MAIN RETURN
   return (

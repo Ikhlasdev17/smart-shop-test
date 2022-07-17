@@ -36,6 +36,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
   ]
 
   const [pinCode, setPinCode] = useState(null)
+  const [savePinCode, setSavePinCode] = useState(0)
   const [photoUploaded, setPhotoUploaded] = useState("default") 
 
   const [generating, setGenerating] = useState(false)
@@ -100,6 +101,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
     .then(res => { 
         // setUser({ ...user, pincode: res.data.payload.pincode })
         setPinCode(res.data.payload.pincode)
+        setSavePinCode(res.data.payload.pincode)
         setGenerating(false)
     })
   }
@@ -122,7 +124,7 @@ const   Content = ({ open, setRefresh, setOpen, modalType = 'add', currentSallar
           dispatch(addSeller(user));
           setOpen(false)
           swal({
-            title: `${t('sotuvchiga_pinkod')}! ${user.pincode}`,
+            title: `${t('sotuvchiga_pinkod')}! ${savePinCode}`,
             icon: 'success'
           })
 

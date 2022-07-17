@@ -631,3 +631,19 @@ img {
         }
     }
 }
+
+.expanded-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-left: 50px;
+    .expanded-label {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+    .expanded_input {
+        width: 150px!important;  
+
+    }
+}

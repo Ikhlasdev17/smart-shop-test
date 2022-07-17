@@ -1,4 +1,16 @@
-import { Button, Collapse, DatePicker, InputNumber, message, Modal, Pagination, Select, Skeleton, Table, Tag } from "antd";
+import {
+  Button,
+  Collapse,
+  DatePicker,
+  InputNumber,
+  message,
+  Modal,
+  Pagination,
+  Select,
+  Skeleton,
+  Table,
+  Tag,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,7 +36,7 @@ const Production = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [responseData, setResponseData] = useState([]);
   const [responseModal, setResponseModal] = useState(false);
-  const [deadLine, setDeadLine] = useState('')
+  const [deadLine, setDeadLine] = useState("");
 
   // UNIT ITEMS
   const unit_id_options = [
@@ -69,21 +81,25 @@ const Production = () => {
 
   // UPDATE PRODUCTS
   const handleChangeCount = (value, product) => {
-    const index = selectedItems?.findIndex(item => item?.product_id === product?.id);
+    const index = selectedItems?.findIndex(
+      (item) => item?.product_id === product?.id
+    );
     const newArr = [...selectedItems];
-    newArr[index].count = value
+    newArr[index].count = value;
     setSelectedItems(newArr);
   };
 
   // DELETE FROM SELECTED
   const deleteFromSelected = (id) => {
-    const newArr = selectedItems.filter(item => item.product_id !== id);
-    setSelectedItems(newArr)
-    const newResponseData = responseData.filter(item => item.product_id !== id)
-    setResponseData(newResponseData)
-    const newSelectedRowKeys = selectedRowKeys.filter(item => item !== id)
-    setSelectedRowKeys(newSelectedRowKeys)
-  }
+    const newArr = selectedItems.filter((item) => item.product_id !== id);
+    setSelectedItems(newArr);
+    const newResponseData = responseData.filter(
+      (item) => item.product_id !== id
+    );
+    setResponseData(newResponseData);
+    const newSelectedRowKeys = selectedRowKeys.filter((item) => item !== id);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
 
   // SELECTING PRODUCTS
   const onSelectChange = (newSelectedRowKeys) => {
@@ -95,7 +111,7 @@ const Production = () => {
     onChange: onSelectChange,
   };
 
-  console.info(products)
+  console.info(products);
 
   // SET SELECTED ITEMS
   useEffect(() => {
@@ -111,58 +127,64 @@ const Production = () => {
 
   // SEND PRODUCTS TO ORDER
   const handleSend = async () => {
-    setLoading(true)
+    setLoading(true);
 
-    const res = await axios.post(`${URL}/api/production`, selectedItems, setToken()).finally(err => setLoading(false))
-    .catch(err => {
+    const res = await axios
+      .post(`${URL}/api/production`, selectedItems, setToken())
+      .finally((err) => setLoading(false))
+      .catch((err) => {
         Swal.fire({
-            title: 'Kechirasiz bu mahsulotni qoshib bolmaydi',
-            icon: 'info'
-        })
-    })
+          title: "Kechirasiz bu mahsulotni qoshib bolmaydi",
+          icon: "info",
+        });
+      });
 
     if (res.status === 200) {
-        setResponseData(res.data)
-        setLoading(false) 
-        setResponseModal(true)
+      setResponseData(res.data);
+      setLoading(false);
+      setResponseModal(true);
     }
-
-  }; 
+  };
 
   // SEND TO ORDER (FINAL)
   const sendToOrder = async () => {
-    if (deadLine !== '') {
-      setLoading(true)
-    const res = await axios.post(`${URL}/api/production/create`, {
-      deadline: deadLine,
-      products: selectedItems
-    },
-    setToken()).catch(() => {
-      Swal.fire({
-        title: t('faqat_ishlab_chiqarish_mumkin'),
-        icon: 'error'
-      })
-    })
-    .finally(() => setLoading(false))
+    if (deadLine !== "") {
+      setLoading(true);
+      const res = await axios
+        .post(
+          `${URL}/api/production/create`,
+          {
+            deadline: deadLine,
+            products: selectedItems,
+          },
+          setToken()
+        )
+        .catch(() => {
+          Swal.fire({
+            title: t("faqat_ishlab_chiqarish_mumkin"),
+            icon: "error",
+          });
+        })
+        .finally(() => setLoading(false));
 
-    if (res.status === 200) {
-      Swal.fire({
-        title: t('muaffaqiyatli'),
-        icon: 'success'
-      })
-      setLoading(false)
-      setResponseModal(false)
-      setSelectedItems([])
-      setSelectedRowKeys([])
-      setDeadLine('')
-    }
+      if (res.status === 200) {
+        Swal.fire({
+          title: t("muaffaqiyatli"),
+          icon: "success",
+        });
+        setLoading(false);
+        setResponseModal(false);
+        setSelectedItems([]);
+        setSelectedRowKeys([]);
+        setDeadLine("");
+      }
     } else {
       Swal.fire({
-        title: t('malumotni_toliq_kiriting'),
-        icon: 'warn'
-      })
+        title: t("malumotni_toliq_kiriting"),
+        icon: "warn",
+      });
     }
-  }
+  };
 
   // TABLE DATA
   const dataSource = [];
@@ -188,14 +210,19 @@ const Production = () => {
           </div>
         </div>
       ),
-      category: categories?.find((e) => e.id === item?.category?.id)?.name || '',
+      category:
+        categories?.find((e) => e.id === item?.category?.id)?.name || "",
       production_count: (
         <InputNumber
           className="form__input table_input"
           placeholder={t("count")}
-          onChange={e => handleChangeCount(e, item)}
-          disabled={selectedRowKeys.findIndex(e => e === item?.id) === -1}
-          value={selectedItems?.find(x => x?.product_id === item?.id) !== undefined ? selectedItems?.find(x => x?.product_id === item?.id).count : null}
+          onChange={(e) => handleChangeCount(e, item)}
+          disabled={selectedRowKeys.findIndex((e) => e === item?.id) === -1}
+          value={
+            selectedItems?.find((x) => x?.product_id === item?.id) !== undefined
+              ? selectedItems?.find((x) => x?.product_id === item?.id).count
+              : null
+          }
         />
       ),
     });
@@ -221,146 +248,154 @@ const Production = () => {
   ];
 
 
-  console.info(responseData)
-  
-
   // getTotalSum
   const getTotalSum = (arr) => {
-    let ourPrice = []
-    arr?.map(item => {
-      ourPrice.push(item?.price * item?.count)
-    })
+    let ourPrice = [];
+    arr?.map((item) => {
+      ourPrice.push(item?.price * item?.count);
+    });
 
-    let totalSum = ourPrice.reduce((prev, current) => prev + current, 0)
+    let totalSum = ourPrice.reduce((prev, current) => prev + current, 0);
 
-    return totalSum.toLocaleString()
-  }
-
+    return totalSum.toLocaleString();
+  };
 
   // get total ingredient count price
   const getIngredientCountPrice = (item) => {
-    return (item?.count * item?.price).toLocaleString()
-  }
-  console.info(responseData)
+    return (item?.count * item?.price).toLocaleString();
+  };
+  console.info(responseData);
   // MAIN RETURN
   return (
     <div className="section main-page">
       <h1 className="heading">{t("order")}</h1>
       <div className="content">
         <Modal
-            width={780}
-            visible={responseModal} 
-            footer={
-              <>
-                <Button onClick={() => {
-                  setResponseModal(false)
-                  setResponseData([])
-                }}>
-                  {t('cancel')}
-                </Button>
-                <Button type="primary" onClick={sendToOrder}
-                >
-                  {t('save')}
-                </Button>
-              </>
-            }
-            title={t('ishlab_chiqarish')}
-            onCancel={() => {
-              setResponseModal(false)
-              setResponseData([])
-            }}
-          >
-            <DatePicker 
-              onChange={(e) => setDeadLine(e)}
-              style={{margin: '0 0 20px 0', width: '100%'}}
-              value={deadLine}
-            />
-            <br />
-            <div className="h-500 overlfow-y-auto">
-             
-
-          <Collapse className="calculator-info">
-              {
-                responseData?.map((item, index) => (
-                  <Collapse.Panel header={<div className="calculator-info__header">
-                    <td className="info-table__th">
-                      <b className="capitalize">{products?.find(x =>x?.id === item?.product_id)?.category?.name}</b> {" "}{" "}{" "}
-                    </td>
-                    <td className="info-table__th">
-                      <b className="capitalize">{item?.product_name}</b> {" "}{" "}{" "}
-                    </td>
-                    <td className="info-table__th">
-                    {
-                        item?.ingredients?.findIndex(x => x.status === 'not enough') !== -1 ? (
-                          <Tag color={'error'}>
-                            {t('islep_shigariw_mumkin_emes')}
-                          </Tag>
-                        ) : ( 
-                          <Tag color={'success'}>
-                            {t('islep_shigariw_mumkin')}
-                          </Tag>
-                        )
-                      }
-                    </td>
+          width={780}
+          visible={responseModal}
+          footer={
+            <>
+              <Button
+                onClick={() => {
+                  setResponseModal(false);
+                  setResponseData([]);
+                }}
+              >
+                {t("cancel")}
+              </Button>
+              <Button type="primary" onClick={sendToOrder}>
+                {t("save")}
+              </Button>
+            </>
+          }
+          title={t("ishlab_chiqarish")}
+          onCancel={() => {
+            setResponseModal(false);
+            setResponseData([]);
+          }}
+        >
+          <DatePicker
+            onChange={(e) => setDeadLine(e)}
+            style={{ margin: "0 0 20px 0", width: "100%" }}
+            value={deadLine}
+          />
+          <br />
+          <div className="h-500 overlfow-y-auto">
+            <Collapse className="calculator-info">
+              {responseData?.map((item, index) => (
+                <Collapse.Panel
+                  header={
+                    <div className="calculator-info__header">
                       <td className="info-table__th">
-                      <b>{t('price')}: </b>
-                      <span>{
-                        getTotalSum(item?.ingredients)
-                      }</span>{" "}
-                      </td>
-                    <td className="info-table__th">
-                      <b>{t('count')} </b><span>{item?.count}</span>
-                      <Button type="link" danger
-                        onClick={() =>{
-                          deleteFromSelected(item?.product_id)
-                          Swal.fire({
-                            title: t('deleted'),
-                            icon: 'success'
-                          })
-                        }}
-                      >
-                        <i className="bx bx-trash"></i>
-                      </Button>
-                    </td>
-                  </div>} key={index}>
-                  {
-                      item?.ingredients?.map(ingredient => (
-                        <tr className="info-table__row">
-                          <td className="info-table__td">
-                            {ingredient?.ingredient_name}
-                          </td> 
-                          <td className="info-table__td">
-                            {ingredient?.count}
-                            {ingredient?.unit_id}
-                          </td>
-                          <td className="info-table__td">
-                            <b>{t('price')}:</b> {getIngredientCountPrice(ingredient)}
-                          </td>
+                        <b className="capitalize">
                           {
-                            ingredient?.ordered_at !== null ? (
-                              <td className="info-table__td">
-                                {moment(ingredient?.ordered_at).format('DD MMM, YYYY')}
-                              </td>
-                            ) : (
-                              <td className="info-table__td"></td>
-                            )
+                            products?.find((x) => x?.id === item?.product_id)
+                              ?.category?.name
                           }
-                          <td className="info-table__td">
-                          <Tag color={ingredient?.status === "enough" ? 'success' : 'error'}>
-                            {
-                              ingredient?.status === "enough" ? t('yetarli') : t('yetmaydi')
-                            }
+                        </b>{" "}
+                      </td>
+                      <td className="info-table__th">
+                        <b className="capitalize">{item?.product_name}</b>{" "}
+                      </td>
+                      <td className="info-table__th">
+                        {item?.ingredients?.findIndex(
+                          (x) => x.status === "not enough"
+                        ) !== -1 ? (
+                          <Tag color={"error"}>
+                            {t("islep_shigariw_mumkin_emes")}
                           </Tag>
-                          </td>
-                          
-                        </tr>
-                      ))
-                    }
-                  </Collapse.Panel>
-                ))
-              } 
+                        ) : (
+                          <Tag color={"success"}>
+                            {t("islep_shigariw_mumkin")}
+                          </Tag>
+                        )}
+                      </td>
+                      <td className="info-table__th">
+                        <b>{t("price")}: </b>
+                        <span>{getTotalSum(item?.ingredients)}</span>{" "}
+                      </td>
+                      <td className="info-table__th">
+                        <b>{t("count")} </b>
+                        <span>{item?.count}</span>
+                        <Button
+                          type="link"
+                          danger
+                          onClick={() => {
+                            deleteFromSelected(item?.product_id);
+                            Swal.fire({
+                              title: t("deleted"),
+                              icon: "success",
+                            });
+                          }}
+                        >
+                          <i className="bx bx-trash"></i>
+                        </Button>
+                      </td>
+                    </div>
+                  }
+                  key={index}
+                >
+                  {item?.ingredients?.map((ingredient) => (
+                    <tr className="info-table__row">
+                      <td className="info-table__td">
+                        {ingredient?.ingredient_name}
+                      </td>
+                      <td className="info-table__td">
+                        {ingredient?.count}
+                        {ingredient?.unit_id}
+                      </td>
+                      <td className="info-table__td">
+                        <b>{t("price")}:</b>{" "}
+                        {getIngredientCountPrice(ingredient)}
+                      </td>
+                      {ingredient?.ordered_at !== null ? (
+                        <td className="info-table__td">
+                          {moment(ingredient?.ordered_at).format(
+                            "DD MMM, YYYY"
+                          )}
+                        </td>
+                      ) : (
+                        <td className="info-table__td"></td>
+                      )}
+                      <td className="info-table__td">
+                        <Tag
+                          color={
+                            ingredient?.status === "enough"
+                              ? "success"
+                              : "error"
+                          }
+                        >
+                          {ingredient?.status === "enough"
+                            ? t("yetarli")
+                            : t("yetmaydi")}
+                        </Tag>
+                      </td>
+                    </tr>
+                  ))}
+                </Collapse.Panel>
+              ))}
             </Collapse>
-            </div>
+          </div>
         </Modal>
         <div className="content-top">
           <div className="content-top__group">
@@ -398,12 +433,12 @@ const Production = () => {
 
           <div className="content-top__group">
             <Button
-                className="btn btn-primary"
-                onClick={handleSend}
-                loading={loading}
-                disabled={selectedItems.length === 0}
+              className="btn btn-primary"
+              onClick={handleSend}
+              loading={loading}
+              disabled={selectedItems.length === 0}
             >
-                {t('save')}
+              {t("save")}
             </Button>
           </div>
         </div>
