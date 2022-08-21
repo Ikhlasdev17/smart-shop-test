@@ -42,6 +42,7 @@ const OrderWarehouse = () => {
   const [lastPage, setLastPage] = useState();
   const [perPage, setPerPage] = useState();
   const [page, setPage] = useState(1); 
+  const [updatedProductsState, setUpdatedProductsState] = useState([])
   
   let updatedProducts = [];
 
@@ -94,6 +95,13 @@ const OrderWarehouse = () => {
     .then(() => {
       message.success(t('muaffaqiyatli'))
       setSendOrder(!sendOrder)
+      setUpdatedProductsState([])
+      updatedProducts = []
+    })
+    .catch((err) => {
+      message.error(t('qayta_urinib_koring'))
+      setUpdatedProductsState([])
+      updatedProducts = []
     })
   }
 
@@ -108,7 +116,19 @@ const OrderWarehouse = () => {
             price: {
                 currency_id: type === 'currency' ? e : currentItem.cost_price.currency_id,
                 price: type === 'price' ? e : currentItem.cost_price.price
-            }
+            },
+            max_price: {
+              price: type === "max_price" ? e : currentItem.max_price.price,
+              currency_id: currentItem.max_price.currency_id,
+            },
+            min_price: {
+              price: type === "min_price" ? e : currentItem.min_price.price,
+              currency_id: currentItem.min_price.currency_id,
+            },
+            whole_price: {
+              price: type === "whole_price" ? e : currentItem.whole_price.price,
+              currency_id: currentItem.whole_price.currency_id,
+            },
         }]
     } else {
         if (type === 'price') {
@@ -123,11 +143,33 @@ const OrderWarehouse = () => {
             updatedProducts[index].count = e 
         } else if (type === 'currency') {
           if (e === null){
-            updatedProducts[index].price.currency_id = currentItem?.cost_price.currency_id
+            updatedProducts[index].price.currency_id = currentItem?.cost_price?.currency_id
           }
           updatedProducts[index].price.currency_id = e
+        } else if (type === "max_price") {
+          if (e === null){
+            updatedProducts[index].max_price.price = currentItem?.max_price?.price
+          }
+          updatedProducts[index].max_price.price = e
+        } else if (type === "min_price") {
+          if (e === null){
+            updatedProducts[index].min_price.price = currentItem?.min_price?.price
+          }
+          updatedProducts[index].min_price.price = e
+        } else if (type === "whole_price") {
+          if (e === null){
+            updatedProducts[index].whole_price.price = currentItem?.whole_price?.price
+          }
+          updatedProducts[index].whole_price.price = e
+        } else if (type === "whole_currency"){
+          if (e === null){
+            updatedProducts[index].whole_price.currency_id = currentItem?.whole_price?.currency_id
+          }
+          updatedProducts[index].whole_price.currency_id = e
         }
     }
+
+    setUpdatedProductsState(updatedProducts)
  
   }
 
@@ -155,7 +197,9 @@ const OrderWarehouse = () => {
           <div className="expanded-label">
             <span>{ t('cost_price') }</span>
             <Input.Group compact>
-                <InputNumber   className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+                <InputNumber   
+                  className="expanded_input" 
+                  placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
                   handleChange(e, item, 'price')
                 }} />
                 <Select 
@@ -177,7 +221,7 @@ const OrderWarehouse = () => {
             <span>{ t('whole_price') }</span>
             <Input.Group compact>
                 <InputNumber   className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
-                  handleChange(e, item, 'price')
+                  handleChange(e, item, 'whole_price')
                 }} />
                 <Select 
                 placeholder={currentCurrency?.code} 
@@ -185,7 +229,7 @@ const OrderWarehouse = () => {
                 className="" 
                 style={{width: '80px'}}
                 onChange={(e) => {
-                  handleChange(e, item, 'currency')
+                  handleChange(e, item, 'whole_currency')
                 }}
               >
                   {currency?.map(item => (
@@ -197,13 +241,13 @@ const OrderWarehouse = () => {
           <div className="expanded-label">
             <span>{ t('min_price') }</span>
             <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
-              handleChange(e, item, 'price')
+              handleChange(e, item, 'min_price')
             }} />
           </div>
           <div className="expanded-label">
             <span>{ t('max_price') }</span>
             <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
-              handleChange(e, item, 'price')
+              handleChange(e, item, 'max_price')
             }} />
           </div>
         </>
@@ -305,7 +349,7 @@ const OrderWarehouse = () => {
                 
               </div>
 
-              <Button onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
+              <Button disabled={updatedProductsState.length === 0} onClick={() =>sendToOrder()}className="btn btn-primary">{t('saqlash')}</Button>
                 </div>
           </div>
 
