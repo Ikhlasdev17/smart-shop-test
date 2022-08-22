@@ -44,7 +44,6 @@ const OrderWarehouse = () => {
   const [page, setPage] = useState(1); 
   const [updatedProductsState, setUpdatedProductsState] = useState([])
   
-  let updatedProducts = [];
 
   
 
@@ -89,29 +88,16 @@ const OrderWarehouse = () => {
 
 
 
-  // ZAKAZ BERISH 
-  const sendToOrder = () => {
-    axios.post(`${URL}/api/warehouse`, updatedProducts, setToken())
-    .then(() => {
-      message.success(t('muaffaqiyatli'))
-      setSendOrder(!sendOrder)
-      setUpdatedProductsState([])
-      updatedProducts = []
-    })
-    .catch((err) => {
-      message.error(t('qayta_urinib_koring'))
-      setUpdatedProductsState([])
-      updatedProducts = []
-    })
-  }
+
 
 
   const handleChange = (e, currentItem, type) => {
+    let updatedProducts = updatedProductsState
     const index = updatedProducts.findIndex(item => item.product_id === currentItem.id) 
     if (index === -1) {
         updatedProducts = [...updatedProducts,  {
             product_id: currentItem.id,
-            count: type === 'count' ? e : currentItem.count,
+            count: type === 'count' ? e !== null ? e : 0 : 0,
             unit_id: currentItem?.warehouse?.unit.id,
             price: {
                 currency_id: type === 'currency' ? e : currentItem.cost_price.currency_id,
@@ -127,58 +113,71 @@ const OrderWarehouse = () => {
             },
             whole_price: {
               price: type === "whole_price" ? e : currentItem.whole_price.price,
-              currency_id: currentItem.whole_price.currency_id,
+              currency_id: type === "whole_currency" ? e : currentItem.whole_price.currency_id,
             },
         }]
+        setUpdatedProductsState(updatedProducts) 
     } else {
         if (type === 'price') {
           if (e === null){
             updatedProducts[index].price.price = currentItem?.cost_price.price
+          } else {
+            updatedProducts[index].price.price = e
           }
-          updatedProducts[index].price.price = e
           } else if (type === 'count') {
-            if (e === null){
-              updatedProducts[index].price.price = currentItem?.warehouse?.count
+            if (e == null){
+              updatedProducts[index].count = 0
+            } else {
+              updatedProducts[index].count = e 
             }
-            updatedProducts[index].count = e 
         } else if (type === 'currency') {
           if (e === null){
             updatedProducts[index].price.currency_id = currentItem?.cost_price?.currency_id
+          } else {
+            updatedProducts[index].price.currency_id = e
           }
-          updatedProducts[index].price.currency_id = e
         } else if (type === "max_price") {
           if (e === null){
             updatedProducts[index].max_price.price = currentItem?.max_price?.price
+          } else {
+            updatedProducts[index].max_price.price = e
           }
-          updatedProducts[index].max_price.price = e
         } else if (type === "min_price") {
           if (e === null){
             updatedProducts[index].min_price.price = currentItem?.min_price?.price
+          } else {
+            updatedProducts[index].min_price.price = e
           }
-          updatedProducts[index].min_price.price = e
         } else if (type === "whole_price") {
           if (e === null){
             updatedProducts[index].whole_price.price = currentItem?.whole_price?.price
+          } else {
+            updatedProducts[index].whole_price.price = e
           }
-          updatedProducts[index].whole_price.price = e
         } else if (type === "whole_currency"){
           if (e === null){
             updatedProducts[index].whole_price.currency_id = currentItem?.whole_price?.currency_id
+          } else {
+            updatedProducts[index].whole_price.currency_id = e
+            setUpdatedProductsState(updatedProducts) 
           }
-          updatedProducts[index].whole_price.currency_id = e
         }
+        setUpdatedProductsState(updatedProducts) 
     }
 
-    setUpdatedProductsState(updatedProducts)
- 
+    console.info(currentItem)
+
+    
   }
+
+  
 
   const dataSource = [];
 
 
   statisticProducts.length > 0 && statisticProducts?.map(item => {
     const currentCurrency = currency?.filter(x => x.id == item?.cost_price.currency_id)[0]
-    console.info(updatedProducts?.find(x => x?.product_id === item?.id)?.count)
+    const currentWholeCurrency = currency?.filter(x => x.id == item?.whole_price?.currency_id)[0]
     dataSource.push({
       key: item?.id,
       product: <div className="product__table-product">
@@ -220,18 +219,18 @@ const OrderWarehouse = () => {
           <div className="expanded-label">
             <span>{ t('whole_price') }</span>
             <Input.Group compact>
-                <InputNumber   className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+                <InputNumber   className="expanded_input" placeholder={item?.whole_price?.price !== null ? item?.whole_price?.price : '0'} onChange={(e) => {
                   handleChange(e, item, 'whole_price')
                 }} />
                 <Select 
-                placeholder={currentCurrency?.code} 
-                
-                className="" 
-                style={{width: '80px'}}
-                onChange={(e) => {
-                  handleChange(e, item, 'whole_currency')
-                }}
-              >
+                    placeholder={currentWholeCurrency?.code} 
+                    className="" 
+                    style={{width: '80px'}}
+                    onChange={(e) => {
+                      handleChange(e, item, 'whole_currency')
+                      console.info(e)
+                    }}
+                  >
                   {currency?.map(item => (
                       <Select.Option value={item.id}>{item.code}</Select.Option>
                   ))}
@@ -240,13 +239,13 @@ const OrderWarehouse = () => {
           </div>
           <div className="expanded-label">
             <span>{ t('min_price') }</span>
-            <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+            <InputNumber  className="expanded_input" placeholder={item?.min_price?.price !== null ? item?.min_price?.price : '0'} onChange={(e) => {
               handleChange(e, item, 'min_price')
             }} />
           </div>
           <div className="expanded-label">
             <span>{ t('max_price') }</span>
-            <InputNumber  className="expanded_input" placeholder={item?.cost_price?.price !== null ? item?.cost_price?.price : '0'} onChange={(e) => {
+            <InputNumber  className="expanded_input" placeholder={item?.max_price?.price !== null ? item?.max_price?.price : '0'} onChange={(e) => {
               handleChange(e, item, 'max_price')
             }} />
           </div>
@@ -254,7 +253,7 @@ const OrderWarehouse = () => {
       
       </div>,
       addCount: <div className='form-group'>
-        <InputNumber value={updatedProducts?.find(x => x?.product_id === item?.id)?.count}  className="form__input table_input" placeholder={item?.warehouse?.count !== null ? item?.warehouse?.count : 0} onChange={(e) => {
+        <InputNumber className="form__input table_input" placeholder={item?.warehouse?.count !== null ? item?.warehouse?.count : 0} onChange={(e) => {
             handleChange(e, item, 'count')
         }}/>
       </div>
@@ -278,6 +277,22 @@ const OrderWarehouse = () => {
         key: 'key'
     }
   ];
+
+    // ZAKAZ BERISH 
+    const sendToOrder = () => {
+      axios.post(`${URL}/api/warehouse`, updatedProductsState, setToken())
+      .then(() => {
+        message.success(t('muaffaqiyatli'))
+        setSendOrder(!sendOrder)
+        setUpdatedProductsState([])
+      })
+      .catch((err) => {
+        message.error(t('qayta_urinib_koring'))
+        setUpdatedProductsState([])
+      })
+
+      console.info(updatedProductsState)
+    }
  
 
   return (
