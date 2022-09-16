@@ -37,6 +37,7 @@ const Production = () => {
   const [responseData, setResponseData] = useState([]);
   const [responseModal, setResponseModal] = useState(false);
   const [deadLine, setDeadLine] = useState("");
+  const [ingredients, setIngredients] = useState([])
 
   // UNIT ITEMS
   const unit_id_options = [
@@ -56,8 +57,12 @@ const Production = () => {
       if (res.status === 200) {
         setCategories(res.data.payload);
       }
-    }
 
+      const res2 = await axios.get(`${URL}/api/ingredients`, setToken());
+      if (res2.status === 200) {
+        setIngredients(res2.data.payload)
+      }
+    }
     fetchingCategories();
   }, []);
 
@@ -260,6 +265,8 @@ const Production = () => {
     return totalSum.toLocaleString();
   };
 
+  console.info(responseData)
+
   // get total ingredient count price
   const getIngredientCountPrice = (item) => {
     return (item?.count * item?.price).toLocaleString();
@@ -331,7 +338,7 @@ const Production = () => {
                         )}
                       </td>
                       <td className="info-table__th">
-                        <b>{t("price")}: </b>
+                        <b>{t("total_price")}: </b>
                         <span>{getTotalSum(item?.ingredients)}</span>{" "}
                       </td>
                       <td className="info-table__th">
@@ -361,12 +368,12 @@ const Production = () => {
                         {ingredient?.ingredient_name}
                       </td>
                       <td className="info-table__td">
-                        {ingredient?.count}
-                        {ingredient?.unit_id}
+                        {ingredient?.count}{" "}
+                        <b>{unit_id_options?.find(x => x?.id === ingredients?.find(item => item.name === ingredient?.ingredient_name)?.unit_id)?.label}</b>
                       </td>
                       <td className="info-table__td">
-                        <b>{t("price")}:</b>{" "}
-                        {getIngredientCountPrice(ingredient)}
+                        <b>{t("total_price")}:</b>{" "}
+                        {getIngredientCountPrice(ingredient)} $
                       </td>
                       {ingredient?.ordered_at !== null ? (
                         <td className="info-table__td">

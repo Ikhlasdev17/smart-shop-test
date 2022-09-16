@@ -1,4 +1,5 @@
 import {
+  Collapse,
   Select,
   DatePicker,
   Table,
@@ -40,7 +41,20 @@ const ProductionBasket = () => {
   const [modaltype, setModaltype] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [basketOrders, setBasketOrders] = useState([]);
- 
+  const [products, setProducts] = useState([])
+  const [ingredients, setIngredients] = useState([])
+
+    // UNIT ITEMS
+    const unit_id_options = [
+      { id: 1, label: t("dona") },
+      { id: 2, label: t("tonna") },
+      { id: 3, label: t("kilogram") },
+      { id: 4, label: t("gramm") },
+      { id: 5, label: t("meter") },
+      { id: 6, label: t("sm") },
+      { id: 7, label: t("liter") },
+    ];
+
   // DELETE ITEM
   const deleteBasket = (id) => {
     Swal.fire({
@@ -78,6 +92,26 @@ const ProductionBasket = () => {
     });
     
   };
+
+  useEffect(async () => {
+    setLoading(true);
+
+    const response = await axios.get(
+      `${URL}/api/products/ingredient`,
+      setToken()
+    );
+    setLoading(true);
+
+    if (response.status === 200) {
+      setProducts(response.data.payload.data);
+      setLoading(false); 
+    }
+
+    const res2 = await axios.get(`${URL}/api/ingredients`, setToken());
+    if (res2.status === 200) {
+      setIngredients(res2.data.payload)
+    }
+  }, []);
 
   // FETCHING INGREDIENTS
   useEffect(async () => {
@@ -148,7 +182,26 @@ const ProductionBasket = () => {
       .finally(() => setLoading(false));
   };
 
-  console.info(baskets)
+  
+  // getTotalSum
+  const getTotalSum = (arr) => {
+    let ourPrice = [];
+    arr?.map((item) => {
+      ourPrice.push(item?.price * item?.count);
+    });
+
+    let totalSum = ourPrice.reduce((prev, current) => prev + current, 0);
+
+    return totalSum.toLocaleString();
+  };
+ 
+
+  // get total ingredient count price
+  const getIngredientCountPrice = (item) => {
+    return (item?.count * item?.price).toLocaleString();
+  };
+
+  console.info(basketOrders)
   // MAIN RETURN
   return (
     <div className="section main-page">
@@ -164,31 +217,60 @@ const ProductionBasket = () => {
         title={t("ishlab_chiqarish")}
       >
         <div className="h-500 overlfow-y-auto">
-          {basketOrders?.map((item) => (
-            <Skeleton loading={loading}>
-              <table className="info-table">
-                {/* HEAD */}
-                <thead className="info-table__head">
-                  <td className="info-table__th">
-                    <b>{item?.product_name}</b>{" "}
-                  </td>
-                  <td className="info-table__th">
-                    <b>
-                      {t("count")} {item?.count}{" "}
-                    </b>
-                  </td>
-                </thead>
-                {/* BODY */}
-                <tbody className="info-table__body">
+            <Collapse className="calculator-info">
+              {basketOrders?.map((item, index) => (
+                <Collapse.Panel
+                  header={
+                    <div className="calculator-info__header">
+                      <td className="info-table__th">
+                        <b className="capitalize">
+                          {
+                            products?.find((x) => x?.id === item?.product_id)
+                              ?.category?.name
+                          }
+                        </b>{" "}
+                      </td>
+                      <td className="info-table__th">
+                        <b className="capitalize">{item?.product_name}</b>{" "}
+                      </td>  
+                      <td className="info-table__th">
+                        <b>{t("total_price")}: </b>
+                        <span>{getTotalSum(item?.ingredients)}</span>{" "}
+                      </td>
+                      <td className="info-table__th">
+                        <b>{t("count")} </b>
+                        <span>{item?.count}</span>
+                        {/* <Button
+                          type="link"
+                          danger
+                          onClick={() => {
+                            deleteFromSelected(item?.product_id);
+                            Swal.fire({
+                              title: t("deleted"),
+                              icon: "success",
+                            });
+                          }}
+                        >
+                          <i className="bx bx-trash"></i>
+                        </Button> */}
+                      </td>
+                    </div>
+                  }
+                  key={index}
+                >
                   {item?.ingredients?.map((ingredient) => (
                     <tr className="info-table__row">
                       <td className="info-table__td">
                         {ingredient?.ingredient_name}
                       </td>
-                        <td>
-                        <b>{t('price')}</b> {ingredient?.price?.toLocaleString()}
-                        </td>
-                      <td className="info-table__td">{ingredient?.count}</td>
+                      <td className="info-table__td">
+                        {ingredient?.count}{" "}
+                        <b>{unit_id_options?.find(x => x?.id === ingredients?.find(item => item.name === ingredient?.ingredient_name)?.unit_id)?.label}</b>
+                      </td>
+                      <td className="info-table__td">
+                        <b>{t("total_price")}:</b>{" "}
+                        {getIngredientCountPrice(ingredient)} $
+                      </td>
                       {ingredient?.ordered_at !== null ? (
                         <td className="info-table__td">
                           {moment(ingredient?.ordered_at).format(
@@ -197,14 +279,13 @@ const ProductionBasket = () => {
                         </td>
                       ) : (
                         <td className="info-table__td"></td>
-                      )}
+                      )} 
                     </tr>
                   ))}
-                </tbody>
-              </table>
-            </Skeleton>
-          ))}
-        </div>
+                </Collapse.Panel>
+              ))}
+            </Collapse>
+          </div>
       </Modal>
       <div className="content">
         <div className="content-top"> 

@@ -205,10 +205,10 @@ const IngredientProduct = () => {
 
       <div className="content">
         <Drawer
-          title={t("addIngredient")}
+          title={<b>{selectedProduct?.name}</b>}
           visible={modalIsOpen}
           onClose={() => setModalIsOpen(false)}
-        >
+        >  
           {modalType === "add" ? (
             <Content
               open={modalIsOpen}

@@ -72,6 +72,7 @@ const OrderIngredient = () => {
 
   // UPDATE PRODUCTS
   const handleChange = (e, currentItem, type) => {
+    console.info(currentItem)
     const index = updatedProducts.findIndex(
       (item) => item.ingredient_id === currentItem.ingredient_id
     );
@@ -80,7 +81,7 @@ const OrderIngredient = () => {
         ...updatedProducts,
         {
           ingredient_id: currentItem.ingredient_id,
-          price: type === "price" ? e : currentItem.price,
+          price: type === "price" ? e : 0,
           count: type === "count" ? e : 1,
         },
       ];
