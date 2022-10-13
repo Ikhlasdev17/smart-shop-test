@@ -123,13 +123,13 @@ const Wrapper = () => {
               <Route path={"/operations/return"} element={<ReturnOrder />} />  
               <Route path="/casheir" element={<Casheir />} />
               <Route path={"/profile"} element={<Profile />} />
-              <Route path={"/ingredients"} element={<Ingredients />} />
-              <Route path="/production/order_ingredient" element={<OrderIngredient />} />
-              <Route path="/add_product" element={<IngredientProduct />} />
-              <Route path="/production" element={<Production />} />
+              {/* <Route path={"/ingredients"} element={<Ingredients />} /> */}
+              {/* <Route path="/production/order_ingredient" element={<OrderIngredient />} /> */}
+              {/* <Route path="/add_product" element={<IngredientProduct />} /> */}
+              {/* <Route path="/production" element={<Production />} />
               <Route path="/production/basket" element={<ProductionBasket />} />
               <Route path="/production/history" element={<HistoryProduction />} />
-              <Route path="/production/calculator" element={<Calculator />} />
+              <Route path="/production/calculator" element={<Calculator />} /> */}
             </Routes>
           </Content>
           <Footer 

@@ -41,7 +41,7 @@
         },
         {
             "id": 7,
-            "label": "Operatsiyalar", 
+            "label": "Operatsiyalar",
             "icon": "bx-copy-alt",
             "submenu": [
                 {
@@ -49,12 +49,14 @@
                     "label": "Klientler",
                     "path": "/operations/client",
                     "icon": "bx bx-cart-alt"
-                },{
+                },
+                {
                     "id": "subitem2",
                     "label": "Buyırtpa beriw",
                     "path": "/operations/offer",
                     "icon": "bx bx-cart-alt"
-                },{
+                },
+                {
                     "id": "subitem3",
                     "label": "Buyırtpanı qaytarıw",
                     "path": "/operations/return",
@@ -74,19 +76,22 @@
                     "path": "/consumptions/consumption",
                     "icon": "bx bx-cart-alt",
                     "role": "ceo"
-                },{
+                },
+                {
                     "id": "subitem5",
                     "label": "Tabıslar",
                     "path": "/consumptions/income",
                     "icon": "bx bx-cart-alt",
                     "role": "ceo"
-                },{
+                },
+                {
                     "id": "subitem6",
                     "label": "Sap payda",
                     "path": "/casheir",
                     "icon": "bx bx-cart-alt",
                     "role": "ceo"
-                },{
+                },
+                {
                     "id": "subitem15",
                     "label": "Valyutalar",
                     "path": "/finans/valutes",
@@ -104,13 +109,16 @@
                     "id": "subitem7",
                     "label": "Ónimler",
                     "path": "/warehouse/products",
-                    "icon": "bx bx-cart-alt"         },{
+                    "icon": "bx bx-cart-alt"
+                },
+                {
                     "id": "subitem8",
                     "label": "Kem qalǵan ónimler",
                     "path": "/warehouse/lowProducts",
                     "icon": "bx bx-cart-alt"
-                },{
-                    "id":"subitem9",
+                },
+                {
+                    "id": "subitem9",
                     "label": "Jaramsız ónimler",
                     "path": "/warehouse/defect",
                     "icon": "bx bx-cart-alt"
@@ -128,34 +136,40 @@
                     "id": "subitem10",
                     "label": "Quramliq o'nimler",
                     "path": "/ingredients",
-                    "icon": "bx bx-cart-alt"         
-                },{
+                    "icon": "bx bx-cart-alt"
+                },
+                {
                     "id": "subitem12",
                     "label": "Buyirtpa beriw",
                     "path": "/production/order_ingredient",
                     "icon": "bx bx-cart-alt"
-                  },{
+                },
+                {
                     "id": "subitem11",
                     "label": "O'nimge biriktiriw",
                     "path": "/add_product",
                     "icon": "bx bx-cart-alt"
-                },{
-                    "id":"subitem13",
+                },
+                {
+                    "id": "subitem13",
                     "label": "Islep shig'ariw",
                     "path": "/production",
                     "icon": "bx bx-cart-alt"
-                },{
-                    "id":"subitem14",
+                },
+                {
+                    "id": "subitem14",
                     "label": "Islep shig'ariw procesi",
                     "path": "/production/basket",
                     "icon": "bx bx-cart-alt"
-                },{
-                    "id":"subitem15",
+                },
+                {
+                    "id": "subitem15",
                     "label": "Islep shig'ariw tariyxi",
                     "path": "/production/history",
                     "icon": "bx bx-cart-alt"
-                },{
-                    "id":"sub   item16",
+                },
+                {
+                    "id": "sub   item16",
                     "label": "Kalkulyator",
                     "path": "/production/calculator",
                     "icon": "bx bx-cart-alt"
@@ -166,7 +180,7 @@
     "main": "Bas bet",
     "clients": "Klientler",
     "sellers": "Satiwshilar",
-    "seller": "Satiwshi", 
+    "seller": "Satiwshi",
     "categories": "Kategoriyalar",
     "products": "O'nimler",
     "offers": "Satiwlar",
@@ -180,14 +194,11 @@
     "fio": "FIO",
     "balance": "Esap",
     "stir": "STIR",
-    "about__client":"Klient haqqinda",
+    "about__client": "Klient haqqinda",
     "action": "Ha'reket",
     "search": "Izlew...",
     "add__client": "Paydalaniwshi qosiw",
     "save": "Saqlaw",
-    
-
-
     "count": "Sani",
     "from": "Waqittan...",
     "to": "Waqitqa deyin...",
@@ -295,16 +306,13 @@
     "import_product": "O'nimlerdi import qiliw",
     "product_qr": "O'nim ushin QR-kodi",
     "minus": "Minus",
-    
     "kirim_qoshish": "Kirim qosiw",
     "xarajat_qoshish": "Shig'im qosiw",
     "tolov_turi": "To'lem tu'ri",
-
-    
     "valuta_juftligi": "Valyuta birligi",
     "kurs": "Kurs",
     "valyutalar": "Valyutalar",
-    "valyuta_qosiw":"Valyuta qosiw",
+    "valyuta_qosiw": "Valyuta qosiw",
     "oy": "Ay",
     "sof_foyda": "Sap payda",
     "delete": "Mag'luwmatti o'shirmekshisizbe?",
@@ -313,11 +321,8 @@
     "no": "Yaq",
     "update_client": "Paydalaniwshini o'zgertiw",
     "mahsulotni_tahrirlash": "O'nimdi o'zgertiw",
-
-
     "kirish": "SmartSHOP penen o'z bisnesin'izdi basqarin'",
     "login": "Kiriw",
-
     "select_client": "Qariydardi tan'lan'",
     "all_client": "Ba'rshe qariydarlar",
     "all_payment": "Ba'rshe tu'rdegi to'lemler",
@@ -325,42 +330,28 @@
     "paid_debt": "To'lengen qariz",
     "money_mistaken": "Pul jeterli emes! To'lem tu'rin o'zgertin'!",
     "remove__image": "Su'wretti o'shiriw",
-
     "tolangan_qarz": "To'lengen qariz",
-
     "client": "Aliwshi",
-
     "ingredients": "Quramliq o'nimler",
     "add_ingredient": "Quramliq o'nimdi qosiw",
     "ingredient": "Quramliq o'nim",
     "ingredient_name": "Quramliq o'nim atı",
     "ingredient_quantity": "Quramliq o'nim sanı",
     "ingredient_price": "Quramliq o'nim bahasi",
-
     "orders_history": "Buyirtparalar tariyxi",
-
     "unit": "O'lshem birlik",
-
     "price": "Bahasi",
-
     "addIngredient": "Quramliq o'nimdi qosiw",
-
     "notdeleted": "Bul quramliq o'nimdi o'shiriwge bolmaydi!",
-
     "ishlab_chiqarish_soni": "Islep shig'ariw sani",
     "ishlab_chiqarish": "Islep shig'ariw",
-    
-  "yetarli": "Jetedi",
-  "yetmaydi": "Jetpeydi ",
-  "islep_shigariw_mumkin": "Islep shig'ariw mu'mkin",
-  "islep_shigariw_mumkin_emes": "Islep shig'ariw mu'mkin emes",
-  "cancel": "Biykar etiw",
-
-  "production__process": "Islep shig'ariw procesi",
-  "production__history": "Islep shig'ariw tariyxi",
-  "faqat_ishlab_chiqarish_mumkin": "Iltimas!, tek g'ana islep shig'ariw mu'mkin bolg'an o'nimlerdi qaldirin'!",
-  "process__end": "Processdi tawisiwdi qaleyiszbe?"
-
-
-
+    "yetarli": "Jetedi",
+    "yetmaydi": "Jetpeydi ",
+    "islep_shigariw_mumkin": "Islep shig'ariw mu'mkin",
+    "islep_shigariw_mumkin_emes": "Islep shig'ariw mu'mkin emes",
+    "cancel": "Biykar etiw",
+    "production__process": "Islep shig'ariw procesi",
+    "production__history": "Islep shig'ariw tariyxi",
+    "faqat_ishlab_chiqarish_mumkin": "Iltimas!, tek g'ana islep shig'ariw mu'mkin bolg'an o'nimlerdi qaldirin'!",
+    "process__end": "Processdi tawisiwdi qaleyiszbe?"
 }

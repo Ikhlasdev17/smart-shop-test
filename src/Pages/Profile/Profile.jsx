@@ -18,13 +18,13 @@ const Profile = () => {
   const password = localStorage.getItem("password");
   const [photoUploaded, setPhotoUploaded] = useState("default");
   const [newUser, setUser] = useState({
-    employee_id: user.id,
-    avatar: user.avatar,
-    name: user.name,
-    phone: user.phone,
+    employee_id: user?.id,
+    avatar: user?.avatar,
+    name: user?.name,
+    phone: user?.phone,
     password: password,
     pincode: null,
-    role: user.role,
+    role: user?.role,
   });
 
   const [copied, setCopied] = useState(false);
@@ -74,6 +74,9 @@ const Profile = () => {
           icon: "success",
         });
         setPhotoUploaded("default");
+        const oldUser = JSON.parse(localStorage.getItem("user"))
+        localStorage.setItem("user", JSON.stringify({...oldUser, ...res.data.payload}))
+        window.location.reload()
       }
     } else {
       message.warn(t("malumotni_toliq_kiriting"))

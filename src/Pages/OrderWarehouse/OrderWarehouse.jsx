@@ -51,7 +51,7 @@ const OrderWarehouse = () => {
     dispatch(fetchingProducts());
     setLoading(true)
     const response = await axios.get(
-      `${URL}/api/products?search=${search}&page=${page}`,
+      `${URL}/api/products?search=${search}&page=${page}&category_id=${category}`,
       setToken()
     );
     if (response.status === 200) {

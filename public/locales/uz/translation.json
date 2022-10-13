@@ -129,7 +129,6 @@
       "id": 10,
       "label": "Ishlab chiqarish",
       "path": "",
-      
       "disabled": false,
       "icon": "bx bx-purchase-tag-alt",
       "submenu": [
@@ -139,7 +138,6 @@
           "path": "/ingredients",
           "icon": "bx bx-cart-alt"
         },
-        
         {
           "id": "subitem12",
           "label": "Buyurtma berish",
