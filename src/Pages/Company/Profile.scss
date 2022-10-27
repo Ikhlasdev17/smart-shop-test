@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+.profile__update {
+    width: 100%;
+    display: flex;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    .profile__info {
+        width: 500px;
+        box-shadow:  0 0 25px 0 rgba(0, 0, 0, 0.08);
+        border-radius: .3rem;
+        img {
+            border-radius: 1rem;
+        }
+        padding: 1rem;
+
+        h2{
+            color: #666;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        h4 {
+            font-size: 1rem;
+            color: $primary-color;
+        }
+    }
+    
+    .profile__settings {
+        width: 500px;
+        box-shadow:  0 0 25px 0 rgba(0, 0, 0, 0.08);
+        padding: 2rem 1rem;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .profile__update {
+        flex-direction: column;
+        padding: 1rem;
+        .profile__info {
+            width: 100%;
+        }
+        .profile__settings {
+            width: 100%;
+        }
+    }
+}

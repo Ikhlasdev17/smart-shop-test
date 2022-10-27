@@ -5,7 +5,7 @@ import logo from '../../assets/images/SmartSHOP.svg'
 import brandIcon from '../../assets/images/top-nav-brand-name-icon.svg'
 import avatarLogo from '../../assets/images/avatar.jpg'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './TopNav.scss'
 import { userLogout } from '../../redux/userSlice';
@@ -13,7 +13,10 @@ import i18next from 'i18next';
 
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import axios from 'axios';
+import { setToken, URL } from '../../assets/api/URL';
+import { changeData } from '../../redux/companySlice';
 const { Header } = Layout;
 
 
@@ -32,12 +35,21 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
   const dispatch = useDispatch()
   const [currentLang, setCurrentLang] = useState(document.cookie.split('=')[1])
   const [currentLangLabel, setCurrentLabel] = useState(languages.filter(item => item.lang === currentLang)[0] ? languages.filter(item => item.lang === currentLang)[0].label : "O'zbekcha")
-
+  const [userData, setUserData] = useState()
+  const { name } = useSelector(state => state.company)
+  
   const changeLang = (lang, label) => {
     i18next.changeLanguage(lang)
     setCurrentLang(lang)
     setCurrentLabel(label)
   }
+
+  useEffect(() => {
+    axios.get(`${URL}/api/company`, setToken())
+      .then((res) => {
+        dispatch(changeData(res.data.payload))
+      })
+  }, [])
 
   const { t } = useTranslation()
 
@@ -46,14 +58,8 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
   const brandMenu = (
     <Menu>
       <Menu.Item>
-          {t('statistika')}
-      </Menu.Item>
-      <Menu.Item>
-          {t('malumot')}
-      </Menu.Item>
-      <Menu.Item>
-          {t('korish')}
-      </Menu.Item>
+          <Link to={"/company"}>{t('sozlamalar')}</Link>
+      </Menu.Item> 
     </Menu>
   );
   
@@ -116,11 +122,11 @@ const TopNav = ({ collapsed, setCollapsed, width, setLogged }) => {
       <i className='bx bx-menu'></i></Button>
       </div>
       <div className="topnav__right-menu">
-        <Dropdown overlay={brandMenu} placement="bottomLeft" className="dropdown">
+        <Dropdown overlay={brandMenu} placement="bottomLeft" className="cursor-pointer">
           <span >
             <img src={brandIcon} alt="" />
             <span className='dropdown__text'>
-            {t('brend')}
+            {name}
             </span>
           </span>
         </Dropdown>

@@ -47,6 +47,7 @@ const Main = () => {
 
     if (response.status === 200) {
       setStatisticProducts(response.data.payload)
+      console.info(response.data)
       setLoading(false)
     }
 

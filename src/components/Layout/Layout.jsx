@@ -37,6 +37,7 @@ import Production from "../../Pages/Production/Production/Production";
 import ProductionBasket from "../../Pages/Production/Basket/Basket";
 import HistoryProduction from "../../Pages/Production/HistoryProduction/HistoryProduction";
 import Calculator from "../../Pages/Production/Calculator/Calculator";
+import Company from "../../Pages/Company/Company";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -123,6 +124,7 @@ const Wrapper = () => {
               <Route path={"/operations/return"} element={<ReturnOrder />} />  
               <Route path="/casheir" element={<Casheir />} />
               <Route path={"/profile"} element={<Profile />} />
+              <Route path={"/company"} element={<Company />} />
               {/* <Route path={"/ingredients"} element={<Ingredients />} /> */}
               {/* <Route path="/production/order_ingredient" element={<OrderIngredient />} /> */}
               {/* <Route path="/add_product" element={<IngredientProduct />} /> */}

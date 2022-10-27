@@ -124,7 +124,7 @@
           "icon": "bx bx-cart-alt"
         }
       ]
-    },
+    }, 
     {
       "id": 10,
       "label": "Ishlab chiqarish",
@@ -368,5 +368,6 @@
   "production__history": "Ishlab chiqarish tarixi",
   
   "faqat_ishlab_chiqarish_mumkin": "Iltimos!, Faqat ishlab chiqarish mumkin bo'lgan mahsulotlarni qoldiring!",
-  "process__end": "Processni yakunlamoqchimisiz?"
+  "process__end": "Processni yakunlamoqchimisiz?",
+  "address":"Manzil"
 }
