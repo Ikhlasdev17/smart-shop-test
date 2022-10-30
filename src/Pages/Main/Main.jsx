@@ -44,25 +44,19 @@ const Main = () => {
         from=${from}&to=${to}
         ${`&${category_id !== '' ? 'category_id='+category_id : ''}`}
         ${employeeId !== "" ? '&employee_id='+employeeId : '' }`, setToken())
-
-    if (response.status === 200) {
-      setStatisticProducts(response.data.payload)
-      console.info(response.data)
-      setLoading(false)
-    }
-
+        if (response.status === 200) {
+          setStatisticProducts(response.data.payload)
+          setLoading(false)
+        }
   } ,[from, to, category_id, employeeId])
 
   useEffect(() => {
     axios.get(`${URL}/api/categories`, setToken())
     .then(res => setCategories(res.data.payload))
-
-
     axios.get(`${URL}/api/employees`, setToken())
     .then(res => {
       setEmployes(res.data.payload)
     })
-    
   }, [])
 
 
